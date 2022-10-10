@@ -5,23 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e035ace-d6a4-4633-9f73-d7c52b73191f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/c36d9239-c857-46f4-aa53-c9ff4b913499.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/c36d9239-c857-46f4-aa53-c9ff4b913499/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_8_0_30.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AirportInfo.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/mysql-connector-java-8.0.30.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/airportinfo/Airport.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/airportinfo/AirportController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/airportinfo/DBManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/airportinfo/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/airportinfo/csv/CSVReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/airportinfo/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/airportinfo/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +76,7 @@
       <updated>1665373902006</updated>
       <workItem from="1665373905285" duration="890000" />
       <workItem from="1665375435211" duration="53000" />
-      <workItem from="1665375701312" duration="7902000" />
+      <workItem from="1665375701312" duration="8250000" />
     </task>
     <servers />
   </component>

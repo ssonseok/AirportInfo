@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AirportController {
-    private ArrayList<Airport> airports;
+    private ArrayList<Airport> airports = new ArrayList<>();
 
     public void loadFromDB() throws SQLException, ClassNotFoundException {
         try (DBManager dbManager = new DBManager()) {
