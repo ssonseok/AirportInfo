@@ -35,7 +35,7 @@ public class DBManager implements AutoCloseable {
         ArrayList<Airport> airports = new ArrayList<>();
         while (result.next()) {
             Airport airport = new Airport();
-            airport.englishCityName = result.getString("EnglishName");
+            airport.englishName = result.getString("EnglishName");
             airport.koreanName = result.getString("KoreanName");
             airport.IATA = result.getString("IATA");
             airport.ICAO = result.getString("ICAO");
