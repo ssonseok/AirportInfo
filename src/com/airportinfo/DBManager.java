@@ -14,6 +14,11 @@ public class DBManager implements AutoCloseable {
         connection = DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
+    public void clear() throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM airport");
+        statement.execute();
+    }
+
     public boolean insertAirport(Airport airport) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("INSERT INTO airport(EnglishName, KoreanName, IATA, ICAO, Region, EnglishCountryName, KoreanCountryName, EnglishCityName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         String[] items = airport.toArray();
