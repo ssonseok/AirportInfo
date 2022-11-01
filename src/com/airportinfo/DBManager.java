@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class DBManager implements AutoCloseable {
     private final Connection connection;
-    private static final String URL = "jdbc:mysql://43.200.99.92:54233/airport?characterEncoding=UTF-8&serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://aws.lalaalal.com:3306/airport?characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String USER = "airport";
     private static final String PASSWORD = "rhrorcp0809";
 
