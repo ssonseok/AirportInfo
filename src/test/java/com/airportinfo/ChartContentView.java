@@ -1,4 +1,4 @@
-package test;
+package com.airportinfo;
 
 import com.airportinfo.utils.Screenshot;
 import com.airportinfo.view.ChartView;
