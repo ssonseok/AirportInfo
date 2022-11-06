@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
-public class MainFrame extends JFrame {
+public abstract class MainFrame extends JFrame {
     private final HashMap<String, ContentView> contentViewHashMap = new HashMap<>();
     private static final Dimension DEFAULT_SIZE = new Dimension(700, 500);
 
@@ -36,6 +36,8 @@ public class MainFrame extends JFrame {
             throw new IllegalArgumentException();
 
         contentView.load();
-        setContentPane(contentView.getPanel());
+        changeContent(contentView.getPanel());
     }
+
+    protected abstract void changeContent(JPanel content);
 }
