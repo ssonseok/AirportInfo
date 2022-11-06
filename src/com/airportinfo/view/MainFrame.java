@@ -37,6 +37,9 @@ public abstract class MainFrame extends JFrame {
 
         contentView.load();
         changeContent(contentView.getPanel());
+
+        revalidate();
+        repaint();
     }
 
     protected abstract void changeContent(JPanel content);
