@@ -1,6 +1,6 @@
 package com.airportinfo;
 
-import com.airportinfo.csv.CSVReader;
+import com.airportinfo.utils.CSVReader;
 
 import java.io.IOException;
 import java.sql.SQLException;

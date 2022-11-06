@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /** *
  * ChartPanel show chart with bar (histogram)
  */
-public class ChartPanel extends JPanel {
+public class ChartView implements ComponentView {
     private static final Color[] COLORS = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
 
     private JPanel panel;
@@ -21,11 +21,11 @@ public class ChartPanel extends JPanel {
 
     private final ArrayList<ChartBar> chartBars = new ArrayList<>();
 
-    public ChartPanel() {
+    public ChartView() {
 
     }
 
-    public ChartPanel(String title) {
+    public ChartView(String title) {
         titleLabel.setText(title);
     }
 
@@ -76,8 +76,12 @@ public class ChartPanel extends JPanel {
         }
     }
 
+    @Override
+    public JPanel getPanel() {
+        return panel;
+    }
+
     private void createUIComponents() {
-        panel = this;
         GridLayout gridLayout = new GridLayout(1, 0);
         GridLayout axisGridLayout = new GridLayout(0, 1);
         chartPanel = new JPanel();
