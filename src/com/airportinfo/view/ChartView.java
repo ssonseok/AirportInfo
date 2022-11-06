@@ -8,13 +8,15 @@ import java.util.ArrayList;
  * ChartPanel show chart with bar (histogram)
  */
 public class ChartView implements ComponentView {
-    private static final Color[] COLORS = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
+    private static final Color[] DEFAULT_COLOR_SCHEME = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
 
     private JPanel panel;
     private JLabel titleLabel;
     private JPanel chartPanel;
     private JPanel entryPanel;
     private JPanel axisPanel;
+
+    private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
 
     private double max = 0.0;
     private int numEntry = 0;
@@ -29,12 +31,6 @@ public class ChartView implements ComponentView {
         titleLabel.setText(title);
     }
 
-    private double calcMax(double value) {
-        int digit = (int) Math.log10(value);
-        int firstDigit = (int) (value / Math.pow(10, digit));
-        return (firstDigit + 1) * Math.pow(10, digit);
-    }
-
     /** *
      * Add new Entry with name, value
      * @param name - entry name
@@ -43,7 +39,7 @@ public class ChartView implements ComponentView {
     public void addEntry(String name, double value) {
         updateAxis(value);
 
-        ChartBar bar = new ChartBar(value, max, COLORS[numEntry % COLORS.length]);
+        ChartBar bar = new ChartBar(value, max, colorScheme[numEntry % colorScheme.length]);
         chartPanel.add(bar);
         chartBars.add(bar);
 
@@ -52,6 +48,17 @@ public class ChartView implements ComponentView {
         entryPanel.add(label);
 
         numEntry += 1;
+    }
+
+    public void setColorScheme(Color[] colorScheme) {
+        if (colorScheme != null)
+            this.colorScheme = colorScheme;
+    }
+
+    private double calcMax(double value) {
+        int digit = (int) Math.log10(value);
+        int firstDigit = (int) (value / Math.pow(10, digit));
+        return (firstDigit + 1) * Math.pow(10, digit);
     }
 
     private void updateAxis(double value) {
