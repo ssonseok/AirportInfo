@@ -2,14 +2,13 @@ package com.airportinfo.view;
 
 import com.airportinfo.Airport;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
 /** *
  * An abstract class handling airports
  */
-public abstract class AirportView extends JPanel {
+public abstract class AirportView implements ComponentView {
     protected final ArrayList<Airport> airports = new ArrayList<>();
 
     /** *
