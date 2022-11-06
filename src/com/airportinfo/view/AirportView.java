@@ -2,13 +2,14 @@ package com.airportinfo.view;
 
 import com.airportinfo.Airport;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
 /** *
  * An abstract class handling airports
  */
-public abstract class AirportView {
+public abstract class AirportView extends JPanel {
     protected final ArrayList<Airport> airports = new ArrayList<>();
 
     /** *
@@ -56,5 +57,8 @@ public abstract class AirportView {
         airports.remove(airport);
     }
 
+    /** *
+     * Update view according to airports
+     */
     public abstract void updateView();
 }
