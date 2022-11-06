@@ -15,7 +15,7 @@ public class AirportController {
     /**
      * Initialize airports with loadFromDB().
      *
-     * @throws SQLException           if a database access error occurs
+     * @throws SQLException           If a database access error occurs
      * @throws ClassNotFoundException If mysql driver not found
      */
     public AirportController() throws SQLException, ClassNotFoundException {
@@ -35,13 +35,14 @@ public class AirportController {
     }
 
     /**
-     * Insert all airports that AirportController has.
+     * Clear and insert all airports that AirportController has.
      *
      * @throws SQLException           If a database access error occurs
      * @throws ClassNotFoundException If mysql driver not found
      */
     public void updateDB() throws SQLException, ClassNotFoundException {
         try (DBManager dbManager = new DBManager()) {
+            dbManager.clear();
             for (Airport airport : airports) {
                 dbManager.insertAirport(airport);
             }
