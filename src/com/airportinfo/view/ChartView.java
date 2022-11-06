@@ -50,6 +50,16 @@ public class ChartView implements ComponentView {
         numEntry += 1;
     }
 
+    /** *
+     * Remove all chart data
+     */
+    public void clear() {
+        chartPanel.removeAll();
+        entryPanel.removeAll();
+        axisPanel.removeAll();
+        chartBars.clear();
+    }
+
     public void setColorScheme(Color[] colorScheme) {
         if (colorScheme != null)
             this.colorScheme = colorScheme;
