@@ -3,17 +3,12 @@ package com.airportinfo.view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * ChartBar includes auto resized label and bar.
+ */
 public class ChartBar extends JPanel {
     private static final GridBagConstraints labelConstraints;
     private static final GridBagConstraints barConstraints;
-
-    private final JLabel label;
-    private final JPanel bar;
-
-    private final GridBagLayout gridBagLayout;
-
-    private double value;
-    private double max;
 
     static {
         labelConstraints = new GridBagConstraints();
@@ -31,11 +26,18 @@ public class ChartBar extends JPanel {
         barConstraints.insets = new Insets(0, 15, 0, 15);
     }
 
-    /** *
-     * Create a ChartBar automatically resized with value, max rate
-     * @param value - entry value
-     * @param max - entry max value
-     * @param barColor - color of bar
+    private final JLabel label;
+    private final JPanel bar;
+    private final GridBagLayout gridBagLayout;
+    private double value;
+    private double max;
+
+    /**
+     * Create a ChartBar automatically resized with value, max rate.
+     *
+     * @param value    Entry value
+     * @param max      Entry max value
+     * @param barColor Color of bar
      */
     public ChartBar(double value, double max, Color barColor) {
         this.value = value;
@@ -61,10 +63,11 @@ public class ChartBar extends JPanel {
         add(bar);
     }
 
-    /** *
-     * Update entry value, max value
-     * @param value - entry value
-     * @param max - entry max value
+    /**
+     * Update entry value, max value.
+     *
+     * @param value Entry value
+     * @param max   Entry max value
      */
     public void updateBar(double value, double max) {
         this.value = value;
@@ -73,9 +76,10 @@ public class ChartBar extends JPanel {
         updateWeight();
     }
 
-    /** *
-     * Update entry max value
-     * @param max - entry max value
+    /**
+     * Update entry max value.
+     *
+     * @param max Entry max value
      */
     public void updateMax(double max) {
         this.max = max;

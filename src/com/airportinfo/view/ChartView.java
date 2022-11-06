@@ -4,24 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-/** *
- * ChartPanel show chart with bar (histogram)
+/**
+ * ChartPanel shows chart with bar (histogram).
  */
 public class ChartView implements ComponentView {
     private static final Color[] DEFAULT_COLOR_SCHEME = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
-
+    private final ArrayList<ChartBar> chartBars = new ArrayList<>();
     private JPanel panel;
     private JLabel titleLabel;
     private JPanel chartPanel;
     private JPanel entryPanel;
     private JPanel axisPanel;
-
     private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
-
     private double max = 0.0;
     private int numEntry = 0;
-
-    private final ArrayList<ChartBar> chartBars = new ArrayList<>();
 
     public ChartView() {
 
@@ -31,10 +27,11 @@ public class ChartView implements ComponentView {
         titleLabel.setText(title);
     }
 
-    /** *
-     * Add new Entry with name, value
-     * @param name - entry name
-     * @param value - entry value
+    /**
+     * Add new Entry with name, value.
+     *
+     * @param name  Entry name
+     * @param value Entry value
      */
     public void addEntry(String name, double value) {
         updateAxis(value);
@@ -50,8 +47,8 @@ public class ChartView implements ComponentView {
         numEntry += 1;
     }
 
-    /** *
-     * Remove all chart data
+    /**
+     * Remove all chart data.
      */
     public void clear() {
         chartPanel.removeAll();
@@ -60,6 +57,11 @@ public class ChartView implements ComponentView {
         chartBars.clear();
     }
 
+    /**
+     * Set color scheme with param.
+     *
+     * @param colorScheme New color scheme to change
+     */
     public void setColorScheme(Color[] colorScheme) {
         if (colorScheme != null)
             this.colorScheme = colorScheme;

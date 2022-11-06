@@ -40,16 +40,13 @@ public class Airport {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(englishName).append(", ");
-        builder.append(koreanName).append(", ");
-        builder.append(IATA).append(", ");
-        builder.append(ICAO).append(", ");
-        builder.append(region).append(", ");
-        builder.append(englishCountryName).append(", ");
-        builder.append(koreanCountryName).append(", ");
-        builder.append(englishCityName);
-
-        return builder.toString();
+        return englishName + ", " +
+                koreanName + ", " +
+                IATA + ", " +
+                ICAO + ", " +
+                region + ", " +
+                englishCountryName + ", " +
+                koreanCountryName + ", " +
+                englishCityName;
     }
 }

@@ -6,31 +6,39 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/** *
- * Controller handling airports
+/**
+ * Controller handling airports.
  */
 public class AirportController {
     private ArrayList<Airport> airports = new ArrayList<>();
 
-    /** *
-     * Initialize airports with loadFromDB()
-     * @throws SQLException - when sql incorrect
-     * @throws ClassNotFoundException - when mysql not found
+    /**
+     * Initialize airports with loadFromDB().
+     *
+     * @throws SQLException           if a database access error occurs
+     * @throws ClassNotFoundException If mysql driver not found
      */
     public AirportController() throws SQLException, ClassNotFoundException {
         loadFromDB();
     }
 
+    /**
+     * Load airports from Database.
+     *
+     * @throws SQLException           If a database access error occurs
+     * @throws ClassNotFoundException If mysql driver not found
+     */
     public void loadFromDB() throws SQLException, ClassNotFoundException {
         try (DBManager dbManager = new DBManager()) {
             airports = dbManager.selectAirport();
         }
     }
 
-    /** *
-     * Insert all airports that AirportController has
-     * @throws SQLException - when sql incorrect
-     * @throws ClassNotFoundException - when mysql not found
+    /**
+     * Insert all airports that AirportController has.
+     *
+     * @throws SQLException           If a database access error occurs
+     * @throws ClassNotFoundException If mysql driver not found
      */
     public void updateDB() throws SQLException, ClassNotFoundException {
         try (DBManager dbManager = new DBManager()) {
@@ -40,10 +48,11 @@ public class AirportController {
         }
     }
 
-    /** *
+    /**
      * Load from a CSV file. All airports will be removed.
-     * @param path - CSVFile path
-     * @throws IOException -
+     *
+     * @param path CSVFile path
+     * @throws IOException Exception when open and read file
      */
     public void loadFromFile(String path) throws IOException {
         try (CSVReader reader = new CSVReader(path)) {
@@ -60,6 +69,12 @@ public class AirportController {
         return airports;
     }
 
+    /**
+     * Search airports with filter.
+     *
+     * @param filter To compare airport
+     * @return Matching airports with filter
+     */
     public ArrayList<Airport> search(Filter filter) {
         ArrayList<Airport> result = new ArrayList<>();
         for (Airport airport : airports) {
@@ -70,12 +85,16 @@ public class AirportController {
         return result;
     }
 
+    /**
+     * Filtering while search airports.
+     */
     @FunctionalInterface
     public interface Filter {
-        /** *
-         * Filtering airport with param airport
-         * @param airport : airport to filter
-         * @return true if you want to contain airport
+        /**
+         * Filtering airport with param airport.
+         *
+         * @param airport Airport to filter
+         * @return True if you want to contain airport
          */
         boolean filter(Airport airport);
     }
