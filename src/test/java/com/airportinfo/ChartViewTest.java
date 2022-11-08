@@ -12,24 +12,19 @@ import java.io.InputStream;
 
 public class ChartViewTest {
     public static void main(String[] args) {
-        try (InputStream is = ChartViewTest.class.getClassLoader().getResourceAsStream("font/SCDream4.otf")) {
-            UIManager.setLookAndFeel(new MaterialLookAndFeel());
-            if (is == null)
-                throw new IOException("Font not found");
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(12f);
-            FontManager.setUIFont(new FontUIResource(font));
-
+        try {
             MainFrame mainFrame = new MainFrame() {
                 @Override
                 protected void changeContent(JPanel content) {
                     setContentPane(content);
                 }
             };
-            mainFrame.addContentView("ChartContentView", new ChartContentView());
+            FontManager.loadFont();
+            mainFrame.addContentView("ChartContentView", new ChartContentView(mainFrame));
             mainFrame.setContentView("ChartContentView");
 
             mainFrame.setVisible(true);
-        } catch (IOException | UnsupportedLookAndFeelException | FontFormatException e) {
+        } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
     }

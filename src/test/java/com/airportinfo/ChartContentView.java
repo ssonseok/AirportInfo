@@ -4,6 +4,7 @@ import com.airportinfo.utils.Screenshot;
 import com.airportinfo.view.AbstractChartView;
 import com.airportinfo.view.BarChartView;
 import com.airportinfo.view.ContentView;
+import com.airportinfo.view.MainFrame;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -17,10 +18,11 @@ public class ChartContentView implements ContentView {
     private JPanel panel;
     private JButton saveButton;
     private JPanel chartViewPanel;
+    private JButton toggleThemeButton;
 
     private AbstractChartView chartView;
 
-    public ChartContentView() {
+    public ChartContentView(MainFrame mainFrame) {
         $$$setupUI$$$();
         saveButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -31,6 +33,13 @@ public class ChartContentView implements ContentView {
                 } catch (IOException exception) {
                     JOptionPane.showMessageDialog(panel, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
+
+            }
+        });
+        toggleThemeButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mainFrame.toggleTheme();
             }
         });
     }
@@ -69,11 +78,14 @@ public class ChartContentView implements ContentView {
     private void $$$setupUI$$$() {
         createUIComponents();
         panel = new JPanel();
-        panel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel.add(chartViewPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         saveButton = new JButton();
         saveButton.setText("Save");
         panel.add(saveButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        toggleThemeButton = new JButton();
+        toggleThemeButton.setText("Toggle Theme");
+        panel.add(toggleThemeButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -82,4 +94,5 @@ public class ChartContentView implements ContentView {
     public JComponent $$$getRootComponent$$$() {
         return panel;
     }
+
 }

@@ -1,8 +1,12 @@
 package com.airportinfo.utils;
 
+import com.airportinfo.view.MainFrame;
+
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 
 /**
@@ -12,6 +16,15 @@ import java.util.Enumeration;
  */
 public class FontManager {
     public static final Font HEADER_FONT = UIManager.getDefaults().getFont("Label.font").deriveFont(18f);
+
+    public static void loadFont() throws IOException, FontFormatException {
+        try (InputStream is = FontManager.class.getClassLoader().getResourceAsStream("font/SCDream4.otf")) {
+            if (is == null)
+                throw new IOException("Font not found");
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(12f);
+            setUIFont(new FontUIResource(font));
+        }
+    }
 
     /**
      * Set default font to param.

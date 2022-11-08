@@ -111,6 +111,8 @@ public class BarChartView extends AbstractChartView {
         GridLayout axisGridLayout = new GridLayout(0, 1);
         chartPanel = new JPanel();
         chartPanel.setLayout(gridLayout);
+        Color borderColor = UIManager.getDefaults().getColor("Label.foreground");
+        chartPanel.setBorder(BorderFactory.createLineBorder(borderColor, 1));
         entryPanel = new JPanel();
         entryPanel.setLayout(gridLayout);
         axisPanel = new JPanel();
@@ -139,7 +141,6 @@ public class BarChartView extends AbstractChartView {
         panel2.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel.add(panel2, BorderLayout.CENTER);
         panel2.add(chartPanel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        chartPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(-16777216)), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         panel2.add(entryPanel, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
         panel2.add(axisPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, 1, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
     }
@@ -194,4 +195,5 @@ public class BarChartView extends AbstractChartView {
     public JComponent $$$getRootComponent$$$() {
         return panel;
     }
+
 }
