@@ -10,7 +10,7 @@ import java.util.Collection;
  *
  * @author lalaalal
  */
-public abstract class AirportView implements ComponentView {
+public abstract class AirportView extends ComponentView {
     protected final ArrayList<Airport> airports = new ArrayList<>();
 
     /**

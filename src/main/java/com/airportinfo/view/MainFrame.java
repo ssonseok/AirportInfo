@@ -1,8 +1,13 @@
 package com.airportinfo.view;
 
+import mdlaf.MaterialLookAndFeel;
+import mdlaf.themes.MaterialLiteTheme;
+import mdlaf.themes.MaterialOceanicTheme;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * An abstract JFrame which is able to change ContentView set before.
@@ -11,6 +16,9 @@ import java.util.HashMap;
  * @author lalaalal
  */
 public abstract class MainFrame extends JFrame {
+    private static final LookAndFeel LITE_THEME = new MaterialLookAndFeel(new MaterialLiteTheme());
+    private static final LookAndFeel DARK_THEME = new MaterialLookAndFeel(new MaterialOceanicTheme());
+    private AppTheme theme = AppTheme.Lite;
     private static final Dimension DEFAULT_SIZE = new Dimension(700, 500);
     private final HashMap<String, ContentView> contentViewHashMap = new HashMap<>();
 
@@ -18,18 +26,21 @@ public abstract class MainFrame extends JFrame {
         setTitle("Main");
         setSize(DEFAULT_SIZE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setTheme(AppTheme.Lite);
     }
 
     public MainFrame(String title) {
         setTitle(title);
         setSize(DEFAULT_SIZE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setTheme(AppTheme.Lite);
     }
 
     public MainFrame(String title, int width, int height) {
         setTitle(title);
         setSize(width, height);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setTheme(AppTheme.Lite);
     }
 
     /**
@@ -66,4 +77,45 @@ public abstract class MainFrame extends JFrame {
      * @param content JPanel replacing content
      */
     protected abstract void changeContent(JPanel content);
+
+    /**
+     * Change Application theme.
+     *
+     * @param theme Theme to change
+     */
+    public void setTheme(AppTheme theme) {
+        try {
+            this.theme = theme;
+            if (theme == AppTheme.Lite)
+                UIManager.setLookAndFeel(LITE_THEME);
+            else
+                UIManager.setLookAndFeel(DARK_THEME);
+            SwingUtilities.updateComponentTreeUI(this);
+            for (ContentView contentView : contentViewHashMap.values())
+                contentView.onThemeChange();
+        } catch (UnsupportedLookAndFeelException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Toggle theme between lite and dark.
+     */
+    public void toggleTheme() {
+        if (theme == AppTheme.Lite)
+            setTheme(AppTheme.Dark);
+        else
+            setTheme(AppTheme.Lite);
+    }
+
+    /**
+     * Change Locale and call onLocaleChange from ContentViews.
+     *
+     * @param locale Locale to change
+     */
+    public void changeLocale(Locale locale) {
+        Locale.setDefault(locale);
+        for (ContentView contentView : contentViewHashMap.values())
+            contentView.onLocaleChange();
+    }
 }

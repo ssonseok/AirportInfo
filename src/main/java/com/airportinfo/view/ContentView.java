@@ -1,13 +1,14 @@
 package com.airportinfo.view;
 
 /**
- * ContentView is able to setContentPane of MainFrame.
+ * ContentView is able to be a ContentPane of MainFrame.
+ * Also contains ComponentViews.
  *
  * @author lalaalal
  */
-public interface ContentView extends ComponentView {
+public abstract class ContentView extends ComponentGroup {
     /**
      * Call load when change contentPane of Frame to ContentView.
      */
-    void load();
+    public abstract void load();
 }

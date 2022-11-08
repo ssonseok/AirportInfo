@@ -1,4 +1,6 @@
-package com.airportinfo.view;
+package com.airportinfo.view.chart;
+
+import com.airportinfo.view.ComponentView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +11,7 @@ import java.awt.*;
  *
  * @author lalaalal
  */
-public abstract class AbstractChartView implements ComponentView {
+public abstract class AbstractChartView extends ComponentView {
     public static final Color[] DEFAULT_COLOR_SCHEME = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
     private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
     protected NumberFormat numberFormat = NumberFormat.intFormat;
