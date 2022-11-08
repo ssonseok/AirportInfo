@@ -28,4 +28,14 @@ public abstract class ComponentGroup extends ComponentView {
         for (ComponentView componentView : componentViews)
             componentView.onLocaleChange();
     }
+
+    /**
+     * Do own and children's onThemeChange.
+     */
+    @Override
+    public void onThemeChange() {
+        super.onThemeChange();
+        for (ComponentView componentView : componentViews)
+            componentView.onThemeChange();
+    }
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public abstract class ComponentView {
     private final ArrayList<LocaleChangeListener> localeChangeListeners = new ArrayList<>();
+    private final ArrayList<ThemeChangeListener> themeChangeListeners = new ArrayList<>();
 
     /**
      * Get root panel of component.
@@ -33,5 +34,22 @@ public abstract class ComponentView {
     public void onLocaleChange() {
         for (LocaleChangeListener localeChangeListener : localeChangeListeners)
             localeChangeListener.onLocaleChange();
+    }
+
+    /**
+     * Add a new ThemeChangeListener.
+     *
+     * @param themeChangeListener New ThemeChangeListener
+     */
+    public void addThemeChangeListener(ThemeChangeListener themeChangeListener) {
+        themeChangeListeners.add(themeChangeListener);
+    }
+
+    /**
+     * Do all ThemeChangeListeners.
+     */
+    public void onThemeChange() {
+        for (ThemeChangeListener themeChangeListener : themeChangeListeners)
+            themeChangeListener.onThemeChange();
     }
 }

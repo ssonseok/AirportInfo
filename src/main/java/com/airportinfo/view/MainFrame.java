@@ -91,6 +91,8 @@ public abstract class MainFrame extends JFrame {
             else
                 UIManager.setLookAndFeel(DARK_THEME);
             SwingUtilities.updateComponentTreeUI(this);
+            for (ContentView contentView : contentViewHashMap.values())
+                contentView.onThemeChange();
         } catch (UnsupportedLookAndFeelException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
