@@ -69,6 +69,11 @@ public class BarChartView extends AbstractChartView {
         chartBars.clear();
     }
 
+    @Override
+    public void updateChartView(Graphics graphics) {
+
+    }
+
     private double calcMax(Number value) {
         int digit = (int) Math.log10(value.doubleValue());
         int firstDigit = (int) (value.doubleValue() / Math.pow(10, digit));
