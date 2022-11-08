@@ -1,7 +1,8 @@
 package com.airportinfo;
 
 import com.airportinfo.utils.Screenshot;
-import com.airportinfo.view.ChartView;
+import com.airportinfo.view.AbstractChartView;
+import com.airportinfo.view.BarChartView;
 import com.airportinfo.view.ContentView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -17,7 +18,7 @@ public class ChartContentView implements ContentView {
     private JButton saveButton;
     private JPanel chartViewPanel;
 
-    private ChartView chartView;
+    private AbstractChartView chartView;
 
     public ChartContentView() {
         $$$setupUI$$$();
@@ -54,7 +55,7 @@ public class ChartContentView implements ContentView {
     }
 
     private void createUIComponents() {
-        chartView = new ChartView();
+        chartView = new BarChartView();
         chartViewPanel = chartView.getPanel();
     }
 

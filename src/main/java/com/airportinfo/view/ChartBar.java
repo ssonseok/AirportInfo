@@ -5,6 +5,8 @@ import java.awt.*;
 
 /**
  * ChartBar includes auto resized label and bar.
+ *
+ * @author lalaalal
  */
 public class ChartBar extends JPanel {
     private static final GridBagConstraints labelConstraints;
@@ -29,38 +31,54 @@ public class ChartBar extends JPanel {
     private final JLabel label;
     private final JPanel bar;
     private final GridBagLayout gridBagLayout;
-    private double value;
+    private Number value;
     private double max;
 
     /**
      * Create a ChartBar automatically resized with value, max rate.
      *
-     * @param value    Entry value
-     * @param max      Entry max value
-     * @param barColor Color of bar
+     * @param value        Entry value
+     * @param max          Entry max value
+     * @param numberFormat Number format for label
+     * @param barColor     Color of bar
      */
-    public ChartBar(double value, double max, Color barColor) {
+    public ChartBar(Number value, double max, NumberFormat numberFormat, Color barColor) {
         this.value = value;
         this.max = max;
+        gridBagLayout = new GridBagLayout();
+        label = new JLabel(numberFormat.formatNumber(value));
+        bar = new JPanel();
 
-        label = new JLabel(String.valueOf(value));
+        setLayout(gridBagLayout);
+        addLabel(numberFormat);
+        addBar(barColor);
+    }
+
+    private void addLabel(NumberFormat numberFormat) {
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.BOTTOM);
 
-        bar = new JPanel();
-        bar.setBackground(barColor);
-
-        gridBagLayout = new GridBagLayout();
-        setLayout(gridBagLayout);
-
-        labelConstraints.weighty = 1 - (value / max);
-        barConstraints.weighty = value / max;
-
+        labelConstraints.weighty = 1 - (value.doubleValue() / max);
         gridBagLayout.setConstraints(label, labelConstraints);
         add(label);
+    }
+
+    private void addBar(Color barColor) {
+        bar.setBackground(barColor);
+
+        barConstraints.weighty = value.doubleValue() / max;
 
         gridBagLayout.setConstraints(bar, barConstraints);
         add(bar);
+    }
+
+    /**
+     * Update label number format.
+     *
+     * @param numberFormat Format for label
+     */
+    public void updateLabel(NumberFormat numberFormat) {
+        label.setText(numberFormat.formatNumber(value));
     }
 
     /**
@@ -88,8 +106,8 @@ public class ChartBar extends JPanel {
     }
 
     private void updateWeight() {
-        labelConstraints.weighty = 1 - (value / max);
-        barConstraints.weighty = value / max;
+        labelConstraints.weighty = 1 - (value.doubleValue() / max);
+        barConstraints.weighty = value.doubleValue() / max;
 
         gridBagLayout.setConstraints(label, labelConstraints);
         gridBagLayout.setConstraints(bar, barConstraints);

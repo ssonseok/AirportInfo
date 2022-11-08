@@ -11,39 +11,46 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
- * ChartPanel shows chart with bar (histogram).
+ * BarChartView shows chart with bar (histogram).
+ *
+ * @author lalaalal
  */
-public class ChartView implements ComponentView {
-    private static final Color[] DEFAULT_COLOR_SCHEME = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
+public class BarChartView extends AbstractChartView {
     private final ArrayList<ChartBar> chartBars = new ArrayList<>();
     private JPanel panel;
     private JLabel titleLabel;
     private JPanel chartPanel;
     private JPanel entryPanel;
     private JPanel axisPanel;
-    private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
     private double max = 0.0;
     private int numEntry = 0;
 
-    public ChartView() {
+    public BarChartView() {
         $$$setupUI$$$();
     }
 
-    public ChartView(String title) {
+    public BarChartView(String title) {
         $$$setupUI$$$();
         titleLabel.setText(title);
     }
 
     /**
-     * Add new Entry with name, value.
+     * Change number format and update chartBars labels.
      *
-     * @param name  Entry name
-     * @param value Entry value
+     * @param numberFormat Number format to change
      */
-    public void addEntry(String name, double value) {
+    @Override
+    public void setNumberFormat(NumberFormat numberFormat) {
+        super.setNumberFormat(numberFormat);
+        for (ChartBar chartBar : chartBars)
+            chartBar.updateLabel(numberFormat);
+    }
+
+    @Override
+    public void addEntry(String name, Number value) {
         updateAxis(value);
 
-        ChartBar bar = new ChartBar(value, max, colorScheme[numEntry % colorScheme.length]);
+        ChartBar bar = new ChartBar(value, max, numberFormat, getColor(numEntry));
         chartPanel.add(bar);
         chartBars.add(bar);
 
@@ -54,9 +61,7 @@ public class ChartView implements ComponentView {
         numEntry += 1;
     }
 
-    /**
-     * Remove all chart data.
-     */
+    @Override
     public void clear() {
         chartPanel.removeAll();
         entryPanel.removeAll();
@@ -64,23 +69,13 @@ public class ChartView implements ComponentView {
         chartBars.clear();
     }
 
-    /**
-     * Set color scheme with param.
-     *
-     * @param colorScheme New color scheme to change
-     */
-    public void setColorScheme(Color[] colorScheme) {
-        if (colorScheme != null)
-            this.colorScheme = colorScheme;
-    }
-
-    private double calcMax(double value) {
-        int digit = (int) Math.log10(value);
-        int firstDigit = (int) (value / Math.pow(10, digit));
+    private double calcMax(Number value) {
+        int digit = (int) Math.log10(value.doubleValue());
+        int firstDigit = (int) (value.doubleValue() / Math.pow(10, digit));
         return (firstDigit + 1) * Math.pow(10, digit);
     }
 
-    private void updateAxis(double value) {
+    private void updateAxis(Number value) {
         double prevMax = max;
         max = Math.max(max, calcMax(value));
 
@@ -90,13 +85,17 @@ public class ChartView implements ComponentView {
         for (ChartBar chartBar : chartBars)
             chartBar.updateMax(max);
 
+        updateAxisPanel(value);
+    }
+
+    private void updateAxisPanel(Number value) {
         axisPanel.removeAll();
-        int digit = (int) Math.log10(value);
-        int firstDigit = (int) (value / Math.pow(10, digit));
+        int digit = (int) Math.log10(value.doubleValue());
+        int firstDigit = (int) (value.doubleValue() / Math.pow(10, digit));
 
         for (int i = firstDigit; i >= 0; i--) {
-            double unit = i * Math.pow(10, digit);
-            JLabel unitLabel = new JLabel(String.valueOf(unit));
+            Number unit = i * Math.pow(10, digit);
+            JLabel unitLabel = createLabel(unit);
             unitLabel.setVerticalAlignment(JLabel.BOTTOM);
             axisPanel.add(unitLabel);
         }
