@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 /**
  * DBManager connect with MySQL.
+ *
+ * @author lalaalal
  */
 public class DBManager implements AutoCloseable {
     private static final String URL = "jdbc:mysql://aws.lalaalal.com:3306/airport?characterEncoding=UTF-8&serverTimezone=UTC";

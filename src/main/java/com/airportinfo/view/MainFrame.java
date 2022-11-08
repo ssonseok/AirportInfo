@@ -7,6 +7,8 @@ import java.util.HashMap;
 /**
  * An abstract JFrame which is able to change ContentView set before.
  * Implement changeContent(JPanel content) to set content area.
+ *
+ * @author lalaalal
  */
 public abstract class MainFrame extends JFrame {
     private static final Dimension DEFAULT_SIZE = new Dimension(700, 500);

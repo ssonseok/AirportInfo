@@ -6,6 +6,8 @@ import java.util.Arrays;
 
 /**
  * Read csv file. Need to close after use.
+ *
+ * @author lalaalal
  */
 public class CSVReader implements AutoCloseable {
     private final BufferedReader reader;

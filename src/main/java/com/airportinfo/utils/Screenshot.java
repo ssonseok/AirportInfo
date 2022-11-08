@@ -8,6 +8,8 @@ import java.io.IOException;
 
 /**
  * Provide a method to take screenshot.
+ *
+ * @author lalaalal
  */
 public class Screenshot {
     /** *

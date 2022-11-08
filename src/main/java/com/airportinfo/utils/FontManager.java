@@ -7,6 +7,8 @@ import java.util.Enumeration;
 
 /**
  * Provide some fonts and set default font.
+ *
+ * @author lalaalal
  */
 public class FontManager {
     public static final Font HEADER_FONT = UIManager.getDefaults().getFont("Label.font").deriveFont(18f);

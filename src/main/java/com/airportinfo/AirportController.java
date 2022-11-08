@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 /**
  * Controller handling airports.
+ *
+ * @author lalaalal
  */
 public class AirportController {
     private ArrayList<Airport> airports = new ArrayList<>();
