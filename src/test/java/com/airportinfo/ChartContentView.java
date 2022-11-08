@@ -14,7 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-public class ChartContentView implements ContentView {
+public class ChartContentView extends ContentView {
     private JPanel panel;
     private JButton saveButton;
     private JPanel chartViewPanel;
@@ -42,6 +42,8 @@ public class ChartContentView implements ContentView {
                 mainFrame.toggleTheme();
             }
         });
+
+        addComponentView(chartView);
     }
 
     @Override

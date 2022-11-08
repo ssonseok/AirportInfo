@@ -7,6 +7,7 @@ import mdlaf.themes.MaterialOceanicTheme;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * An abstract JFrame which is able to change ContentView set before.
@@ -103,5 +104,11 @@ public abstract class MainFrame extends JFrame {
             setTheme(AppTheme.Dark);
         else
             setTheme(AppTheme.Lite);
+    }
+
+    public void changeLocale(Locale locale) {
+        Locale.setDefault(locale);
+        for (ContentView contentView : contentViewHashMap.values())
+            contentView.onLocaleChange();
     }
 }
