@@ -6,6 +6,11 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Show entry detail using color.
+ *
+ * @author lalaalal
+ */
 public class EntryDetailView extends ComponentView {
     private JPanel panel;
     private JLabel label;

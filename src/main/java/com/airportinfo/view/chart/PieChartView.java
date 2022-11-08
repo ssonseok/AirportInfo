@@ -9,7 +9,13 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
+/**
+ * Show chart with pie.
+ *
+ * @author lalaalal
+ */
 public class PieChartView extends AbstractChartView {
     private JPanel panel;
     private JLabel titleLabel;
@@ -27,6 +33,12 @@ public class PieChartView extends AbstractChartView {
         return panel;
     }
 
+    /**
+     * Add Entry and add entry name to entry detail field.
+     *
+     * @param name  Entry name
+     * @param value Entry value
+     */
     @Override
     public void addEntry(String name, Number value) {
         super.addEntry(name, value);
@@ -42,27 +54,33 @@ public class PieChartView extends AbstractChartView {
         final int x = (pieChartPanel.getWidth() - diameter) / 2;
         final int y = (pieChartPanel.getHeight() - diameter) / 2;
 
+        drawChart((startAngle, angle, ratio, colorIndex, entry) -> {
+            graphics.setColor(getColor(colorIndex));
+            graphics.fillArc(x, y, diameter, diameter, startAngle, angle);
+        });
+        drawChart((startAngle, angle, ratio, colorIndex, entry) -> {
+            String label = numberFormat.formatNumber(entry.value()) + String.format(" (%.1f%%)", ratio * 100);
+            drawString(x, y, diameter / 2, startAngle, angle, graphics, label);
+        });
+    }
+
+    private void drawChart(ChartDrawer drawer) {
         final double sum = sumOfEntries();
         int startAngle = 90;
         int colorIndex = 0;
         for (Entry entry : entries) {
             double ratio = entry.value().doubleValue() / sum;
             int angle = (int) -(ratio * 360);
-            graphics.setColor(getColor(colorIndex));
-            graphics.fillArc(x, y, diameter, diameter, startAngle, angle);
+            drawer.draw(startAngle, angle, ratio, colorIndex, entry);
 
             startAngle += angle;
             colorIndex += 1;
         }
+    }
 
-        startAngle = 90;
-        for (Entry entry : entries) {
-            double ratio = entry.value().doubleValue() / sum;
-            int angle = (int) -(ratio * 360);
-            String label = numberFormat.formatNumber(entry.value()) + String.format(" (%.1f%%)", ratio * 100);
-            drawString(x, y, diameter / 2, startAngle, angle, graphics, label);
-            startAngle += angle;
-        }
+    @FunctionalInterface
+    private interface ChartDrawer {
+        void draw(int startAngle, int angle, double ratio, int colorIndex, Entry entry);
     }
 
     private void drawString(int x, int y, int radius, int startAngle, int angle, Graphics graphics, String string) {
