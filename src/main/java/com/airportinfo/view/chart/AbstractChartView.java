@@ -1,4 +1,6 @@
-package com.airportinfo.view;
+package com.airportinfo.view.chart;
+
+import com.airportinfo.view.ComponentView;
 
 import javax.swing.*;
 import java.awt.*;

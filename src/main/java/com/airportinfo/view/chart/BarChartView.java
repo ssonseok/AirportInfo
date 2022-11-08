@@ -1,4 +1,4 @@
-package com.airportinfo.view;
+package com.airportinfo.view.chart;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;

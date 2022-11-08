@@ -1,4 +1,4 @@
-package com.airportinfo.view;
+package com.airportinfo.view.chart;
 
 /**
  * Make number format String.

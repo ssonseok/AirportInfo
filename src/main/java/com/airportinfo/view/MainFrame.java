@@ -106,6 +106,11 @@ public abstract class MainFrame extends JFrame {
             setTheme(AppTheme.Lite);
     }
 
+    /**
+     * Change Locale and call onLocaleChange from ContentViews.
+     *
+     * @param locale Locale to change
+     */
     public void changeLocale(Locale locale) {
         Locale.setDefault(locale);
         for (ContentView contentView : contentViewHashMap.values())

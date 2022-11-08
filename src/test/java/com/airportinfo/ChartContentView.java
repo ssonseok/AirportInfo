@@ -1,8 +1,8 @@
 package com.airportinfo;
 
 import com.airportinfo.utils.Screenshot;
-import com.airportinfo.view.AbstractChartView;
-import com.airportinfo.view.BarChartView;
+import com.airportinfo.view.chart.AbstractChartView;
+import com.airportinfo.view.chart.BarChartView;
 import com.airportinfo.view.ContentView;
 import com.airportinfo.view.MainFrame;
 import com.intellij.uiDesigner.core.GridConstraints;
