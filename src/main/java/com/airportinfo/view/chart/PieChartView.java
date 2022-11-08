@@ -9,7 +9,6 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;
-import java.util.function.Function;
 
 /**
  * Show chart with pie.
@@ -20,12 +19,23 @@ public class PieChartView extends AbstractChartView {
     private JPanel panel;
     private JLabel titleLabel;
     private JPanel pieChartPanel;
-    private JPanel entryDetailPanel;
+    private JPanel legendDetailPanel;
+    private GridLayout legendDetailLayout;
+    private int maxLegendColumns = 4;
 
     public PieChartView() {
         $$$setupUI$$$();
 
         titleLabel.setFont(FontManager.HEADER_FONT);
+    }
+
+    /**
+     * Set number of max legend column.
+     *
+     * @param maxLegendColumns New max legend column
+     */
+    public void setMaxLegendColumns(int maxLegendColumns) {
+        this.maxLegendColumns = maxLegendColumns;
     }
 
     @Override
@@ -34,16 +44,18 @@ public class PieChartView extends AbstractChartView {
     }
 
     /**
-     * Add Entry and add entry name to entry detail field.
+     * Add Legend and add legend name to legend detail field.
      *
-     * @param name  Entry name
-     * @param value Entry value
+     * @param name  Legend name
+     * @param value Legend value
      */
     @Override
-    public void addEntry(String name, Number value) {
-        super.addEntry(name, value);
-        EntryDetailView entryDetailView = new EntryDetailView(name, getColor(entries.size() - 1));
-        entryDetailPanel.add(entryDetailView.getPanel());
+    public void addLegend(String name, Number value) {
+        super.addLegend(name, value);
+        LegendDetailView legendDetailView = new LegendDetailView(name, getColor(legends.size() - 1));
+        if (legends.size() <= maxLegendColumns)
+            legendDetailLayout.setColumns(legends.size());
+        legendDetailPanel.add(legendDetailView.getPanel());
     }
 
     @Override
@@ -54,33 +66,39 @@ public class PieChartView extends AbstractChartView {
         final int x = (pieChartPanel.getWidth() - diameter) / 2;
         final int y = (pieChartPanel.getHeight() - diameter) / 2;
 
-        drawChart((startAngle, angle, ratio, colorIndex, entry) -> {
+        drawChart((startAngle, angle, ratio, colorIndex, legend) -> {
             graphics.setColor(getColor(colorIndex));
             graphics.fillArc(x, y, diameter, diameter, startAngle, angle);
         });
-        drawChart((startAngle, angle, ratio, colorIndex, entry) -> {
-            String label = numberFormat.formatNumber(entry.value()) + String.format(" (%.1f%%)", ratio * 100);
+        drawChart((startAngle, angle, ratio, colorIndex, legend) -> {
+            if (Math.abs(angle) < 10)
+                return;
+            String label = numberFormat.formatNumber(legend.value()) + String.format(" (%.1f%%)", ratio * 100);
             drawString(x, y, diameter / 2, startAngle, angle, graphics, label);
         });
     }
 
     private void drawChart(ChartDrawer drawer) {
-        final double sum = sumOfEntries();
+        final double sum = sumOfLegends();
         int startAngle = 90;
         int colorIndex = 0;
-        for (Entry entry : entries) {
-            double ratio = entry.value().doubleValue() / sum;
+        for (Legend legend : legends) {
+            double ratio = legend.value().doubleValue() / sum;
             int angle = (int) -(ratio * 360);
-            drawer.draw(startAngle, angle, ratio, colorIndex, entry);
+            drawer.draw(startAngle, angle, ratio, colorIndex, legend);
 
             startAngle += angle;
             colorIndex += 1;
+        }
+        if (startAngle > -270) {
+            int angle = -(startAngle + 270);
+            drawer.draw(startAngle, angle, angle, colorIndex - 1, legends.get(legends.size() - 1));
         }
     }
 
     @FunctionalInterface
     private interface ChartDrawer {
-        void draw(int startAngle, int angle, double ratio, int colorIndex, Entry entry);
+        void draw(int startAngle, int angle, double ratio, int colorIndex, Legend legend);
     }
 
     private void drawString(int x, int y, int radius, int startAngle, int angle, Graphics graphics, String string) {
@@ -95,18 +113,19 @@ public class PieChartView extends AbstractChartView {
         graphics.drawString(string, stringX, stringY);
     }
 
-    private double sumOfEntries() {
+    private double sumOfLegends() {
         double sum = 0;
-        for (Entry entry : entries)
-            sum += entry.value().doubleValue();
+        for (Legend legend : legends)
+            sum += legend.value().doubleValue();
 
         return sum;
     }
 
     private void createUIComponents() {
         pieChartPanel = chartPanel;
-        entryDetailPanel = new JPanel();
-        entryDetailPanel.setLayout(new BoxLayout(entryDetailPanel, BoxLayout.X_AXIS));
+        legendDetailLayout = new GridLayout(0, 1);
+        legendDetailPanel = new JPanel();
+        legendDetailPanel.setLayout(legendDetailLayout);
     }
 
     /**
@@ -128,7 +147,7 @@ public class PieChartView extends AbstractChartView {
         panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel.add(panel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel1.add(pieChartPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        panel1.add(entryDetailPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
+        panel1.add(legendDetailPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, 1, null, null, null, 0, false));
     }
 
     private static Method $$$cachedGetBundleMethod$$$ = null;

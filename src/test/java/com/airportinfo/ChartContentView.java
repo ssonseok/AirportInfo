@@ -54,9 +54,12 @@ public class ChartContentView extends ContentView {
     @Override
     public void load() {
         chartView.clear();
-        chartView.addEntry("apple", 10);
-        chartView.addEntry("banana", 20);
-        chartView.addEntry("cherry", 30);
+        chartView.addLegend("apple", 10);
+        chartView.addLegend("banana", 20);
+        chartView.addLegend("cherry", 30);
+        chartView.addLegend("dragon", 25);
+        chartView.addLegend("eraser", 17);
+        chartView.addLegend("fruit", 15);
     }
 
     private void createUIComponents() {

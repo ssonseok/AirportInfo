@@ -7,16 +7,16 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Show entry detail using color.
+ * Show legend detail using color.
  *
  * @author lalaalal
  */
-public class EntryDetailView extends ComponentView {
+public class LegendDetailView extends ComponentView {
     private JPanel panel;
     private JLabel label;
     private JPanel indicator;
 
-    public EntryDetailView(String name, Color color) {
+    public LegendDetailView(String name, Color color) {
         indicator.setBorder(BorderFactory.createLineBorder(color, 5));
         label.setText(name);
     }
@@ -42,7 +42,7 @@ public class EntryDetailView extends ComponentView {
      */
     private void $$$setupUI$$$() {
         panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         indicator = new JPanel();
         indicator.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel.add(indicator);

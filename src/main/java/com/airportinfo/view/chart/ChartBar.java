@@ -37,8 +37,8 @@ public class ChartBar extends JPanel {
     /**
      * Create a ChartBar automatically resized with value, max rate.
      *
-     * @param value        Entry value
-     * @param max          Entry max value
+     * @param value        Legend value
+     * @param max          Legend max value
      * @param numberFormat Number format for label
      * @param barColor     Color of bar
      */
@@ -82,10 +82,10 @@ public class ChartBar extends JPanel {
     }
 
     /**
-     * Update entry value, max value.
+     * Update legend value, max value.
      *
-     * @param value Entry value
-     * @param max   Entry max value
+     * @param value Legend value
+     * @param max   Legend max value
      */
     public void updateBar(double value, double max) {
         this.value = value;
@@ -95,9 +95,9 @@ public class ChartBar extends JPanel {
     }
 
     /**
-     * Update entry max value.
+     * Update legend max value.
      *
-     * @param max Entry max value
+     * @param max Legend max value
      */
     public void updateMax(double max) {
         this.max = max;

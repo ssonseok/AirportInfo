@@ -20,10 +20,10 @@ public class BarChartView extends AbstractChartView {
     private JPanel panel;
     private JLabel titleLabel;
     private JPanel chartPanel;
-    private JPanel entryPanel;
+    private JPanel legendPanel;
     private JPanel axisPanel;
     private double max = 0.0;
-    private int numEntry = 0;
+    private int numLegend = 0;
 
     public BarChartView() {
         $$$setupUI$$$();
@@ -47,24 +47,24 @@ public class BarChartView extends AbstractChartView {
     }
 
     @Override
-    public void addEntry(String name, Number value) {
+    public void addLegend(String name, Number value) {
         updateAxis(value);
 
-        ChartBar bar = new ChartBar(value, max, numberFormat, getColor(numEntry));
+        ChartBar bar = new ChartBar(value, max, numberFormat, getColor(numLegend));
         chartPanel.add(bar);
         chartBars.add(bar);
 
         JLabel label = new JLabel(name);
         label.setHorizontalAlignment(JLabel.CENTER);
-        entryPanel.add(label);
+        legendPanel.add(label);
 
-        numEntry += 1;
+        numLegend += 1;
     }
 
     @Override
     public void clear() {
         chartPanel.removeAll();
-        entryPanel.removeAll();
+        legendPanel.removeAll();
         axisPanel.removeAll();
         chartBars.clear();
     }
@@ -118,8 +118,8 @@ public class BarChartView extends AbstractChartView {
         chartPanel.setLayout(gridLayout);
         Color borderColor = UIManager.getDefaults().getColor("Label.foreground");
         chartPanel.setBorder(BorderFactory.createLineBorder(borderColor, 1));
-        entryPanel = new JPanel();
-        entryPanel.setLayout(gridLayout);
+        legendPanel = new JPanel();
+        legendPanel.setLayout(gridLayout);
         axisPanel = new JPanel();
         axisPanel.setLayout(axisGridLayout);
     }
@@ -146,7 +146,7 @@ public class BarChartView extends AbstractChartView {
         panel2.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel.add(panel2, BorderLayout.CENTER);
         panel2.add(chartPanel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        panel2.add(entryPanel, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
+        panel2.add(legendPanel, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
         panel2.add(axisPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, 1, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
     }
 
