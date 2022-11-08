@@ -5,16 +5,24 @@ import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.util.Enumeration;
 
+/**
+ * Provide some fonts and set default font.
+ */
 public class FontManager {
     public static final Font HEADER_FONT = UIManager.getDefaults().getFont("Label.font").deriveFont(18f);
 
-    public static void setUIFont(FontUIResource f) {
+    /**
+     * Set default font to param.
+     *
+     * @param fontUIResource font resource to set as default font.
+     */
+    public static void setUIFont(FontUIResource fontUIResource) {
         Enumeration<Object> keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
             Object value = UIManager.get(key);
             if (value instanceof FontUIResource)
-                UIManager.put(key, f);
+                UIManager.put(key, fontUIResource);
         }
     }
 }

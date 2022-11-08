@@ -6,6 +6,9 @@ import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * Provide a method to take screenshot.
+ */
 public class Screenshot {
     /** *
      * Take a screenshot with component to png

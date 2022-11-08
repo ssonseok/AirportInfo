@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * An abstract class handling airports.
+ * An abstract view class handling airports.
  */
 public abstract class AirportView implements ComponentView {
     protected final ArrayList<Airport> airports = new ArrayList<>();

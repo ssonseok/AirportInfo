@@ -4,13 +4,28 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Read csv file. Need to close after use.
+ */
 public class CSVReader implements AutoCloseable {
     private final BufferedReader reader;
 
+    /**
+     * Initialize reader with file path.
+     *
+     * @param path File path
+     * @throws FileNotFoundException If file not found
+     */
     public CSVReader(String path) throws FileNotFoundException {
         reader = new BufferedReader(new FileReader(path));
     }
 
+    /**
+     * Read a line split with ','.
+     *
+     * @return Array of String split by ','
+     * @throws IOException If an I/O error occurs
+     */
     public String[] read() throws IOException {
         String line = reader.readLine();
         if (line == null)
