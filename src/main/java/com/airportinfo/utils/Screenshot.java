@@ -12,11 +12,12 @@ import java.io.IOException;
  * @author lalaalal
  */
 public class Screenshot {
-    /** *
-     * Take a screenshot with component to png
-     * @param component - screenshot area
-     * @param path - save path
-     * @throws IOException - exception while opening output stream
+    /**
+     * Take a screenshot with component to png.
+     *
+     * @param component screenshot area
+     * @param path      save path
+     * @throws IOException If the file exists but is a directory, does not exist but cannot be created or an error occurs during writing
      */
     public static void createScreenshot(Component component, String path) throws IOException {
         Rectangle rectangle = component.getBounds();

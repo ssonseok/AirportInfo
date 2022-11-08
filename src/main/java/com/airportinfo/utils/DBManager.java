@@ -1,4 +1,6 @@
-package com.airportinfo;
+package com.airportinfo.utils;
+
+import com.airportinfo.Airport;
 
 import java.sql.*;
 import java.util.ArrayList;
