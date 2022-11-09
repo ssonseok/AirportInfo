@@ -4,17 +4,21 @@ import com.airportinfo.view.ComponentView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Abstract class of ChartView.
- * Provide entry interface and support color scheme, number format.
+ * Provide legend interface and support color scheme, number format.
+ * The method updateChartView(Graphics) will draw in chartPanel.
  *
  * @author lalaalal
  */
 public abstract class AbstractChartView extends ComponentView {
     public static final Color[] DEFAULT_COLOR_SCHEME = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
-    private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
+    protected final ArrayList<Legend> legends = new ArrayList<>();
+    protected final ChartPanel chartPanel = new ChartPanel();
     protected NumberFormat numberFormat = NumberFormat.intFormat;
+    private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
 
     /**
      * Change color scheme.
@@ -57,15 +61,34 @@ public abstract class AbstractChartView extends ComponentView {
     }
 
     /**
-     * Add new Entry with name, value.
+     * Add new Legend with name, value. Need to call updateView() after add legends.
      *
-     * @param name  Entry name
-     * @param value Entry value
+     * @param name  Legend name
+     * @param value Legend value
      */
-    public abstract void addEntry(String name, Number value);
+    public void addLegend(String name, Number value) {
+        legends.add(new Legend(name, value));
+    }
 
     /**
      * Remove all chart data.
      */
-    public abstract void clear();
+    public void clear() {
+        legends.clear();
+    }
+
+    /**
+     * Draw chart using chartPanel's Graphics when ChartPanel.paintComponent(Graphics).
+     *
+     * @param graphics Graphics from chartPanel
+     */
+    public abstract void updateChartView(Graphics graphics);
+
+    private class ChartPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics graphics) {
+            super.paintComponent(graphics);
+            updateChartView(graphics);
+        }
+    }
 }

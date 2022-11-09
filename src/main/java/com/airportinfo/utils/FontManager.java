@@ -25,7 +25,7 @@ public class FontManager {
         try (InputStream is = FontManager.class.getClassLoader().getResourceAsStream("font/SCDream4.otf")) {
             if (is == null)
                 throw new IOException("Font not found");
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(12f);
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(13f);
             setUIFont(new FontUIResource(font));
         }
     }

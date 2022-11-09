@@ -1,10 +1,10 @@
 package com.airportinfo;
 
 import com.airportinfo.utils.Screenshot;
-import com.airportinfo.view.chart.AbstractChartView;
-import com.airportinfo.view.chart.BarChartView;
 import com.airportinfo.view.ContentView;
 import com.airportinfo.view.MainFrame;
+import com.airportinfo.view.chart.AbstractChartView;
+import com.airportinfo.view.chart.PieChartView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -54,19 +54,16 @@ public class ChartContentView extends ContentView {
     @Override
     public void load() {
         chartView.clear();
-        chartView.addEntry("a", 10);
-        chartView.addEntry("b", 20);
-        chartView.addEntry("c", 30);
-        chartView.addEntry("d", 40);
-        chartView.addEntry("e", 50);
-        chartView.addEntry("f", 60);
-        chartView.addEntry("g", 70);
-        chartView.addEntry("h", 80);
-        chartView.addEntry("i", 90);
+        chartView.addLegend("apple", 10);
+        chartView.addLegend("banana", 20);
+        chartView.addLegend("cherry", 30);
+        chartView.addLegend("dragon", 25);
+        chartView.addLegend("eraser", 17);
+        chartView.addLegend("fruit", 15);
     }
 
     private void createUIComponents() {
-        chartView = new BarChartView();
+        chartView = new PieChartView();
         chartViewPanel = chartView.getPanel();
     }
 
