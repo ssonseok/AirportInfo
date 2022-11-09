@@ -14,19 +14,11 @@ import java.util.ArrayList;
  * @author lalaalal
  */
 public abstract class AbstractChartView extends ComponentView {
-    private class ChartPanel extends JPanel {
-        @Override
-        protected void paintComponent(Graphics graphics) {
-            super.paintComponent(graphics);
-            updateChartView(graphics);
-        }
-    }
-
     public static final Color[] DEFAULT_COLOR_SCHEME = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
     protected final ArrayList<Legend> legends = new ArrayList<>();
-    private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
-    protected NumberFormat numberFormat = NumberFormat.intFormat;
     protected final ChartPanel chartPanel = new ChartPanel();
+    protected NumberFormat numberFormat = NumberFormat.intFormat;
+    private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
 
     /**
      * Change color scheme.
@@ -91,4 +83,12 @@ public abstract class AbstractChartView extends ComponentView {
      * @param graphics Graphics from chartPanel
      */
     public abstract void updateChartView(Graphics graphics);
+
+    private class ChartPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics graphics) {
+            super.paintComponent(graphics);
+            updateChartView(graphics);
+        }
+    }
 }
