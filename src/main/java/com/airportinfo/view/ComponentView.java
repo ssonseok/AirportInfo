@@ -13,6 +13,13 @@ public abstract class ComponentView {
     private final ArrayList<ThemeChangeListener> themeChangeListeners = new ArrayList<>();
 
     /**
+     * Add default themeChangeListener.
+     */
+    public ComponentView() {
+        themeChangeListeners.add(() -> SwingUtilities.updateComponentTreeUI(getPanel()));
+    }
+
+    /**
      * Get root panel of component.
      *
      * @return Root panel
