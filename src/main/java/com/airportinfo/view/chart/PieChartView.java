@@ -135,7 +135,7 @@ public class PieChartView extends AbstractChartView {
 
     private void createUIComponents() {
         titleLabel = new JLabel();
-        titleLabel.setFont(FontManager.HEADER_FONT);
+        titleLabel.setFont(FontManager.getFont(FontManager.HEADER_FONT_SIZE));
         pieChartPanel = chartPanel;
         legendDetailLayout = new GridLayout(0, 1);
         legendDetailPanel = new JPanel();

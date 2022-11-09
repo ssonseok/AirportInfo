@@ -128,7 +128,7 @@ public class BarChartView extends AbstractChartView {
         axisPanel = new JPanel();
         axisPanel.setLayout(axisGridLayout);
         titleLabel = new JLabel();
-        titleLabel.setFont(FontManager.HEADER_FONT);
+        titleLabel.setFont(FontManager.getFont(FontManager.HEADER_FONT_SIZE));
     }
 
     /**

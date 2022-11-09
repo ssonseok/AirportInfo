@@ -13,7 +13,18 @@ import java.util.Enumeration;
  * @author lalaalal
  */
 public class FontManager {
-    public static final Font HEADER_FONT = UIManager.getDefaults().getFont("Label.font").deriveFont(18f);
+    public static final float DEFAULT_FONT_SIZE = 13f;
+    public static final float HEADER_FONT_SIZE = 18f;
+
+    /**
+     * Get font with size.
+     *
+     * @param size Font size
+     * @return Sized font
+     */
+    public static Font getFont(float size) {
+        return UIManager.getDefaults().getFont("Label.font").deriveFont(size);
+    }
 
     /**
      * Set default font to SCDream in resources. Call after set LookAndFeels.
@@ -25,7 +36,7 @@ public class FontManager {
         try (InputStream is = FontManager.class.getClassLoader().getResourceAsStream("font/SCDream4.otf")) {
             if (is == null)
                 throw new IOException("Font not found");
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(13f);
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(DEFAULT_FONT_SIZE);
             setUIFont(new FontUIResource(font));
         }
     }
