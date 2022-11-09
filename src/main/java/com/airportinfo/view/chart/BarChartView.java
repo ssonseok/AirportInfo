@@ -143,9 +143,8 @@ public class BarChartView extends AbstractChartView {
         panel.setLayout(new BorderLayout(0, 0));
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 1, new Insets(10, 0, 10, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 10, 0), -1, -1));
         panel.add(panel1, BorderLayout.NORTH);
-        titleLabel = new JLabel();
         this.$$$loadLabelText$$$(titleLabel, this.$$$getMessageFromBundle$$$("string", "default_chart_title"));
         panel1.add(titleLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
