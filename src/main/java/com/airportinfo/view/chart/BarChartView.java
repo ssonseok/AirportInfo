@@ -49,6 +49,7 @@ public class BarChartView extends AbstractChartView {
 
     @Override
     public void addLegend(String name, Number value) {
+        super.addLegend(name, value);
         updateAxis(value);
 
         ChartBar bar = new ChartBar(value, max, numberFormat, getColor(numLegend));

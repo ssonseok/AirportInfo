@@ -4,7 +4,7 @@ import com.airportinfo.view.ComponentView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Abstract class of ChartView.
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public abstract class AbstractChartView extends ComponentView {
     public static final Color[] DEFAULT_COLOR_SCHEME = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
-    protected final ArrayList<Legend> legends = new ArrayList<>();
+    protected final ChartData legends = new ChartData();
     protected final ChartPanel chartPanel = new ChartPanel();
     protected NumberFormat numberFormat = NumberFormat.intFormat;
     private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
@@ -56,7 +56,21 @@ public abstract class AbstractChartView extends ComponentView {
      * @param value Legend value
      */
     public void addLegend(String name, Number value) {
-        legends.add(new Legend(name, value));
+        legends.addLegend(name, value);
+    }
+
+    /**
+     * Set legends if different with this chart.
+     *
+     * @param chartData New legends
+     */
+    public void setLegends(ChartData chartData) {
+        if (Objects.equals(legends, chartData))
+            return;
+
+        clear();
+        for (Legend legend : chartData)
+            addLegend(legend.name(), legend.value());
     }
 
     /**
@@ -73,7 +87,7 @@ public abstract class AbstractChartView extends ComponentView {
      */
     public abstract void updateChartView(Graphics graphics);
 
-    private class ChartPanel extends JPanel {
+    protected class ChartPanel extends JPanel {
         @Override
         protected void paintComponent(Graphics graphics) {
             super.paintComponent(graphics);
