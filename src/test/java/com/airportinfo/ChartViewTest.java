@@ -2,17 +2,15 @@ package com.airportinfo;
 
 import com.airportinfo.utils.FontManager;
 import com.airportinfo.view.MainFrame;
-import mdlaf.MaterialLookAndFeel;
 
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class ChartViewTest {
     public static void main(String[] args) {
         try {
+            Main.setSystemProperties();
             MainFrame mainFrame = new MainFrame() {
                 @Override
                 protected void changeContent(JPanel content) {

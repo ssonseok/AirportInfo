@@ -16,7 +16,7 @@ public class FontManager {
     public static final Font HEADER_FONT = UIManager.getDefaults().getFont("Label.font").deriveFont(18f);
 
     /**
-     * Set default font to SCDream in resources.
+     * Set default font to SCDream in resources. Call after set LookAndFeels.
      *
      * @throws IOException         If font file not found
      * @throws FontFormatException If the fontStream data does not contain the required font tables for the specified format
@@ -31,7 +31,7 @@ public class FontManager {
     }
 
     /**
-     * Set default font to param.
+     * Set default font to param. Call after set LookAndFeels.
      *
      * @param fontUIResource Font resource to set as default font
      */
