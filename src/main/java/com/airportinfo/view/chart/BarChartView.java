@@ -49,6 +49,7 @@ public class BarChartView extends AbstractChartView {
 
     @Override
     public void addLegend(String name, Number value) {
+        super.addLegend(name, value);
         updateAxis(value);
 
         ChartBar bar = new ChartBar(value, max, numberFormat, getColor(numLegend));
@@ -127,7 +128,7 @@ public class BarChartView extends AbstractChartView {
         axisPanel = new JPanel();
         axisPanel.setLayout(axisGridLayout);
         titleLabel = new JLabel();
-        titleLabel.setFont(FontManager.HEADER_FONT);
+        titleLabel.setFont(FontManager.getFont(FontManager.HEADER_FONT_SIZE));
     }
 
     /**
