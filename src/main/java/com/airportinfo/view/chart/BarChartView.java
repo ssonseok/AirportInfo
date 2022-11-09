@@ -1,5 +1,6 @@
 package com.airportinfo.view.chart;
 
+import com.airportinfo.utils.FontManager;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -63,10 +64,13 @@ public class BarChartView extends AbstractChartView {
 
     @Override
     public void clear() {
+        super.clear();
         chartPanel.removeAll();
         legendPanel.removeAll();
         axisPanel.removeAll();
         chartBars.clear();
+        numLegend = 0;
+        max = 0;
     }
 
     @Override
@@ -100,7 +104,7 @@ public class BarChartView extends AbstractChartView {
 
         for (int i = firstDigit; i >= 0; i--) {
             Number unit = i * Math.pow(10, digit);
-            JLabel unitLabel = createLabel(unit);
+            JLabel unitLabel = new JLabel(numberFormat.formatNumber(unit));
             unitLabel.setVerticalAlignment(JLabel.BOTTOM);
             axisPanel.add(unitLabel);
         }
@@ -122,6 +126,8 @@ public class BarChartView extends AbstractChartView {
         legendPanel.setLayout(gridLayout);
         axisPanel = new JPanel();
         axisPanel.setLayout(axisGridLayout);
+        titleLabel = new JLabel();
+        titleLabel.setFont(FontManager.HEADER_FONT);
     }
 
     /**

@@ -59,6 +59,13 @@ public class PieChartView extends AbstractChartView {
     }
 
     @Override
+    public void clear() {
+        super.clear();
+        legendDetailPanel.removeAll();
+        legendDetailLayout.setColumns(1);
+    }
+
+    @Override
     public void updateChartView(Graphics graphics) {
         final int width = (int) (pieChartPanel.getWidth() * 0.8);
         final int height = (int) (pieChartPanel.getHeight() * 0.8);
