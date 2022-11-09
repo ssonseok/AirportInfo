@@ -25,8 +25,11 @@ public class PieChartView extends AbstractChartView {
 
     public PieChartView() {
         $$$setupUI$$$();
+    }
 
-        titleLabel.setFont(FontManager.HEADER_FONT);
+    public PieChartView(String title) {
+        $$$setupUI$$$();
+        titleLabel.setText(title);
     }
 
     /**
@@ -131,6 +134,8 @@ public class PieChartView extends AbstractChartView {
     }
 
     private void createUIComponents() {
+        titleLabel = new JLabel();
+        titleLabel.setFont(FontManager.HEADER_FONT);
         pieChartPanel = chartPanel;
         legendDetailLayout = new GridLayout(0, 1);
         legendDetailPanel = new JPanel();
@@ -149,7 +154,6 @@ public class PieChartView extends AbstractChartView {
         panel = new JPanel();
         panel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
-        titleLabel = new JLabel();
         this.$$$loadLabelText$$$(titleLabel, this.$$$getMessageFromBundle$$$("string", "default_chart_title"));
         panel.add(titleLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel1 = new JPanel();
