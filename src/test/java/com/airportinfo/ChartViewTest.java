@@ -20,7 +20,7 @@ public class ChartViewTest {
             FontManager.loadFont();
             mainFrame.addContentView("ChartContentView", new ChartContentView(mainFrame));
             mainFrame.setContentView("ChartContentView");
-
+            
             mainFrame.setVisible(true);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
