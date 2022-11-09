@@ -59,6 +59,13 @@ public class PieChartView extends AbstractChartView {
     }
 
     @Override
+    public void clear() {
+        super.clear();
+        legendDetailPanel.removeAll();
+        legendDetailLayout.setColumns(1);
+    }
+
+    @Override
     public void updateChartView(Graphics graphics) {
         final int width = (int) (pieChartPanel.getWidth() * 0.8);
         final int height = (int) (pieChartPanel.getHeight() * 0.8);
@@ -110,6 +117,8 @@ public class PieChartView extends AbstractChartView {
         int stringY = centerY - (int) (radius * Math.sin(Math.toRadians(stringAngle)) * 0.6);
         graphics.setColor(Color.DARK_GRAY);
         graphics.setFont(UIManager.getDefaults().getFont("Label.font"));
+        if (graphics instanceof Graphics2D graphics2D)
+            graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         graphics.drawString(string, stringX, stringY);
     }
 

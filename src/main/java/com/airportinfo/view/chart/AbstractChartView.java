@@ -50,17 +50,6 @@ public abstract class AbstractChartView extends ComponentView {
     }
 
     /**
-     * Create a JLabel value of number using NumberFormatter set by setNumberFormat(NumberFormatter).
-     *
-     * @param number Number to show
-     * @return JLabel showing number
-     */
-    public JLabel createLabel(Number number) {
-        String label = numberFormat.formatNumber(number);
-        return new JLabel(label);
-    }
-
-    /**
      * Add new Legend with name, value. Need to call updateView() after add legends.
      *
      * @param name  Legend name

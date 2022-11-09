@@ -4,6 +4,7 @@ import com.airportinfo.utils.Screenshot;
 import com.airportinfo.view.ContentView;
 import com.airportinfo.view.MainFrame;
 import com.airportinfo.view.chart.AbstractChartView;
+import com.airportinfo.view.chart.BarChartView;
 import com.airportinfo.view.chart.PieChartView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -19,11 +20,15 @@ public class ChartContentView extends ContentView {
     private JButton saveButton;
     private JPanel chartViewPanel;
     private JButton toggleThemeButton;
-
+    private JButton barButton;
+    private JButton pieButton;
     private AbstractChartView chartView;
+    private final PieChartView pieChartView = new PieChartView();
+    private final BarChartView barChartView = new BarChartView();
 
     public ChartContentView(MainFrame mainFrame) {
         $$$setupUI$$$();
+        setChartView(barChartView);
         saveButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -43,7 +48,21 @@ public class ChartContentView extends ContentView {
             }
         });
 
-        addComponentView(chartView);
+        barButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setChartView(barChartView);
+            }
+        });
+        pieButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setChartView(pieChartView);
+            }
+        });
+
+        addComponentView(barChartView);
+        addComponentView(pieChartView);
     }
 
     @Override
@@ -60,11 +79,19 @@ public class ChartContentView extends ContentView {
         chartView.addLegend("dragon", 25);
         chartView.addLegend("eraser", 17);
         chartView.addLegend("fruit", 15);
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    private void setChartView(AbstractChartView chartView) {
+        this.chartView = chartView;
+        chartViewPanel.removeAll();
+        chartViewPanel.add(chartView.getPanel());
+        load();
     }
 
     private void createUIComponents() {
-        chartView = new PieChartView();
-        chartViewPanel = chartView.getPanel();
+        chartView = barChartView;
     }
 
     /**
