@@ -1,19 +1,32 @@
 package com.airportinfo;
 
-import javax.swing.JPanel;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import com.airportinfo.utils.EmailManager;
 
-import com.airportinfo.view.MainFrame;
+import java.io.UnsupportedEncodingException;
+import java.util.Scanner;
 
 public class EmailTest {
 	public static void main(String[] args) {
-		 Main.setSystemProperties();
-         MainFrame mainFrame = new MainFrame("Main", 700, 700) {
-             @Override
-             protected void changeContent(JPanel content) {
-                 setContentPane(content);
-             }
-         };
-         
-         mainFrame.setVisible(true);
+		try {
+			String Email;
+			String fileDir;
+			Scanner sc = new Scanner(System.in);
+			
+			System.out.print("전송 받을 이메일을 입력하세요 : ");
+			Email = sc.nextLine();
+			System.out.print("파일 경로를 입력하세요 : ");
+			fileDir = sc.nextLine();
+			sc.close();
+			
+			EmailManager.send(Email, fileDir);
+		} catch (AddressException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+        	e.printStackTrace();
+        }
 	}
 }

@@ -1,8 +1,10 @@
 package com.airportinfo.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -14,6 +16,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeUtility;
+
 
 public class EmailManager {
     // 1. 발신자의 메일 계정과 비밀번호 설정함
@@ -21,7 +25,7 @@ public class EmailManager {
     private static final String PASSWORD = "kpflpgpvgvxxzcxh";
 
 	
-	public static void send(String email, String filePath) throws AddressException, MessagingException {
+	public static void send(String email, String filePath) throws AddressException, MessagingException, UnsupportedEncodingException {
 		/* 일단은 스캐너 쓰고 gui는 이따가
     	Scanner sc = new Scanner(System.in);
     	System.out.print("Enter your Email : ");
@@ -64,10 +68,9 @@ public class EmailManager {
     	
     	// 첨부파일 파트 (합치는 과정 필요)
         MimeBodyPart attachPart = new MimeBodyPart();
-        attachPart.setDataHandler(new DataHandler(attachment,"text/xml"));
-        attachPart.setFileName("공항 정보 파일"); // 파일명
-        
-        //attachPart.setDataHandler(new DataHandler(new FileDataSource(new File("gmailSend.java"))));
+        FileDataSource fds = new FileDataSource(filePath);
+        attachPart.setDataHandler(new DataHandler(fds));
+        attachPart.setFileName(MimeUtility.encodeText(fds.getName(), "euc-kr","B"));
         MimeBodyPart bodypart = new MimeBodyPart();
         bodypart.setContent(content, "text/html;charset=euc-kr");
        
