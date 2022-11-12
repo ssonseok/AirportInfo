@@ -6,7 +6,12 @@ import com.airportinfo.utils.EmailManager;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
-
+/**
+ * Controller handling Email function (src/main/java/com.airportinfo/EmailManager.java)
+ * 
+ * @author ShinHeeYoun
+ *
+ */
 public class EmailTest {
 	public static void main(String[] args) {
 		try {
