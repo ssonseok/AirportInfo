@@ -46,9 +46,10 @@ public class EmailManager {
         prop.put("mail.smtp.ssl.enable", "true");
         prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         
+        System.out.println("Succeed : Connection to Google SMTP Mail Server");
+        
         /**
          * make Instance of Session class with SMTP server information
-         * (SMTP 서버정보와 사용자 정보를 기반으로 Session 클래스의 인스턴스 생성)
          * 
          */
         Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
@@ -59,40 +60,49 @@ public class EmailManager {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(USER));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+        System.out.println("Succeed : Destination Email (" + recipient + ") exist");
         
         /**
-         * Subject(제목) -> setSubject
-         * content(내용) 
+         * Subject
+         * content
          */
-        message.setSubject("고급객체지향 공항 정보");
-    	String content = "이 메일은 명지대 고급객체지향 프로그래밍 프로젝트에서 구현된 메일 전송 기능으로,"
-        		+ " 엑셀 파일에서 추출된 정보를 첨부파일로 받아올 수 있습니다.";
-    	
+        message.setSubject("MJU Airport information");
+    	String content = "This email was sent by using the Email sending function which is developed by team project of the advanced object-oriented class."
+    			+ "\nYou can send attachments with mail by entering the absolute path of the file which you want to send.";
     	/**
-    	 * Attachment(첨부파일) part
+    	 * Attachment part
     	 * divide 'text part' and 'attachment part' with MimeBodyPart object
     	 * fds: file path for attachment file
     	 * 
     	 */
-        MimeBodyPart attachPart = new MimeBodyPart();
-        FileDataSource fds = new FileDataSource(filePath);
-        attachPart.setDataHandler(new DataHandler(fds));
-        attachPart.setFileName(MimeUtility.encodeText(fds.getName(), "euc-kr","B"));
-        MimeBodyPart bodypart = new MimeBodyPart();
-        bodypart.setContent(content, "text/html;charset=euc-kr");
+    	if (filePath == "NONE") {
+    		message.setText(content);
+    		System.out.println("Sending...");
+    		Transport.send(message);
+    	} 
+    	else {
+    		MimeBodyPart attachPart = new MimeBodyPart();
+            FileDataSource fds = new FileDataSource(filePath);
+            attachPart.setDataHandler(new DataHandler(fds));
+            attachPart.setFileName(MimeUtility.encodeText(fds.getName(), "euc-kr","B"));
+            MimeBodyPart bodypart = new MimeBodyPart();
+            bodypart.setContent(content, "text/html;charset=euc-kr");
 
-        /**
-         * Combine two divided part(text+attachment) by using Multipart object
-         */
-        Multipart multipart = new MimeMultipart();
-        multipart.addBodyPart(bodypart);
-        multipart.addBodyPart(attachPart);
-        message.setContent(multipart);
-        /**
-         *  Send message by using Transport class
-         */
-        Transport.send(message);
-        System.out.println("Send Complete");
+            /**
+             * Combine two divided part(text+attachment) by using Multipart object
+             */
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(bodypart);
+            multipart.addBodyPart(attachPart);
+            message.setContent(multipart);
+            /**
+             *  Send message by using Transport class
+             */
+            System.out.println("Sending...");
+            Transport.send(message);
+            
+    	}
+        
+        System.out.println("Send Complete!");
 	}
-
 }

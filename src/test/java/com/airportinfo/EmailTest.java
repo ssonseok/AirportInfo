@@ -19,19 +19,34 @@ public class EmailTest {
 			String fileDir;
 			Scanner sc = new Scanner(System.in);
 			
-			System.out.print("전송 받을 이메일을 입력하세요 : ");
-			Email = sc.nextLine();
-			System.out.print("파일 경로를 입력하세요 : ");
+			System.out.print("Email : ");
+			Email = sc.nextLine();	
+			while (Email.isBlank()) {
+				System.out.println("Email not entered, you must Enter Email to use this function");
+				System.out.print("Email : ");
+				Email = sc.nextLine();
+			}
+			
+			System.out.print("Attachment file path : ");
 			fileDir = sc.nextLine();
+			
 			sc.close();
 			
-			EmailManager.send(Email, fileDir);
+			if (fileDir.isBlank()) {
+				System.out.println("\nSending Email without Attachment file...");
+				fileDir = "NONE";
+				EmailManager.send(Email, fileDir);
+			} else {
+				System.out.println("\nSending Email with Attachment file...");
+				EmailManager.send(Email, fileDir);
+			}
+			
 		} catch (AddressException e) {
             e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
         	e.printStackTrace();
-        }
+        } 
 	}
 }
