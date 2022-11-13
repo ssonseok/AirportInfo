@@ -1,6 +1,7 @@
 package com.airportinfo.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Objects;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -11,7 +12,6 @@ import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -22,16 +22,14 @@ import javax.mail.internet.MimeUtility;
  * Sending Email with attachments
  * 
  * @author ShinHeeYoun
- *
  */
 public class EmailManager {
 
     private static final String USER = "MJUairportFile@gmail.com";
     private static final String PASSWORD = "kpflpgpvgvxxzcxh";
     
-	public static void send(String email, String filePath) throws AddressException, MessagingException, UnsupportedEncodingException {
-    	String recipient = email;	
-    	/** 
+	public static void send(String email, String filePath) throws MessagingException, UnsupportedEncodingException {
+        /*
     	 * put SMTP server information in Property
     	 * 1) host : gmail.com
     	 * 2) port number : 465 (google)
@@ -48,7 +46,7 @@ public class EmailManager {
         
         System.out.println("Succeed : Connection to Google SMTP Mail Server");
         
-        /**
+        /*
          * make Instance of Session class with SMTP server information
          * 
          */
@@ -59,27 +57,25 @@ public class EmailManager {
         });
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(USER));
-        message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-        System.out.println("Succeed : Destination Email (" + recipient + ") exist");
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+        System.out.println("Succeed : Destination Email (" + email + ") exist");
         
-        /**
+        /*
          * Subject
          * content
          */
         message.setSubject("MJU Airport information");
     	String content = "This email was sent by using the Email sending function which is developed by team project of the advanced object-oriented class."
     			+ "\nYou can send attachments with mail by entering the absolute path of the file which you want to send.";
-    	/**
+    	/*
     	 * Attachment part
     	 * divide 'text part' and 'attachment part' with MimeBodyPart object
     	 * fds: file path for attachment file
     	 * 
     	 */
-    	if (filePath == "NONE") {
+    	if (Objects.equals(filePath, "NONE")) {
     		message.setText(content);
-    		System.out.println("Sending...");
-    		Transport.send(message);
-    	} 
+        }
     	else {
     		MimeBodyPart attachPart = new MimeBodyPart();
             FileDataSource fds = new FileDataSource(filePath);
@@ -88,21 +84,21 @@ public class EmailManager {
             MimeBodyPart bodypart = new MimeBodyPart();
             bodypart.setContent(content, "text/html;charset=euc-kr");
 
-            /**
+            /*
              * Combine two divided part(text+attachment) by using Multipart object
              */
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(bodypart);
             multipart.addBodyPart(attachPart);
             message.setContent(multipart);
-            /**
+            /*
              *  Send message by using Transport class
              */
-            System.out.println("Sending...");
-            Transport.send(message);
-            
-    	}
-        
+
+        }
+        System.out.println("Sending...");
+        Transport.send(message);
+
         System.out.println("Send Complete!");
 	}
 }
