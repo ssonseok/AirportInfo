@@ -119,6 +119,7 @@ public abstract class AbstractChartView extends ComponentView {
     /**
      * Add new Legend with name, value. Allocate color with name.
      * Maybe need to revalidate and repaint panel.
+     * DO NOT OVERRIDE, OVERRIDE addLegend(Legend)
      *
      * @param name  Legend name
      * @param value Legend value
@@ -135,9 +136,11 @@ public abstract class AbstractChartView extends ComponentView {
      */
     public void addLegend(Legend legend) {
         legends.add(legend);
-        legendDetailGroupView.addLegend(legend.name());
+
         int colorIndex = legends.size() - 1;
         legendColor.put(legend.name(), colorIndex);
+
+        legendDetailGroupView.addLegend(legend.name());
     }
 
     /**

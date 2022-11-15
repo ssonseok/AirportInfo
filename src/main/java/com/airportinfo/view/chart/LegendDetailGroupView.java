@@ -32,7 +32,7 @@ public class LegendDetailGroupView extends ComponentGroup {
      * @param name Name of legend to add.
      */
     public void addLegend(String name) {
-        Color color = chartView.getColor(chartView.getNumLegends() - 1);
+        Color color = chartView.getColor(name);
         LegendDetailView legendDetailView = new LegendDetailView(name, color);
         if (chartView.getNumLegends() <= legendColumnLimit)
             layout.setColumns(chartView.getNumLegends());
