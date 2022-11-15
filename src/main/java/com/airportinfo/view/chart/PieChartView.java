@@ -39,6 +39,9 @@ public class PieChartView extends AbstractChartView {
 
     @Override
     public void updateChartView(Graphics graphics) {
+        if (graphics instanceof Graphics2D graphics2D)
+            graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
         final int width = (int) (pieChartPanel.getWidth() * 0.8);
         final int height = (int) (pieChartPanel.getHeight() * 0.8);
         final int diameter = Math.min(width, height);
@@ -89,8 +92,6 @@ public class PieChartView extends AbstractChartView {
         int stringY = centerY - (int) (radius * Math.sin(Math.toRadians(stringAngle)) * 0.6);
         graphics.setColor(Color.DARK_GRAY);
         graphics.setFont(UIManager.getDefaults().getFont("Label.font"));
-        if (graphics instanceof Graphics2D graphics2D)
-            graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         graphics.drawString(string, stringX, stringY);
     }
 

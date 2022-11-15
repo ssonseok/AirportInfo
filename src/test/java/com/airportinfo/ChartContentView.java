@@ -3,10 +3,7 @@ package com.airportinfo;
 import com.airportinfo.utils.Screenshot;
 import com.airportinfo.view.ContentView;
 import com.airportinfo.view.MainFrame;
-import com.airportinfo.view.chart.AbstractChartView;
-import com.airportinfo.view.chart.BarChartView;
-import com.airportinfo.view.chart.ChartData;
-import com.airportinfo.view.chart.PieChartView;
+import com.airportinfo.view.chart.*;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -25,8 +22,8 @@ public class ChartContentView extends ContentView {
     private JButton pieButton;
     private JButton changeColorSchemeButton;
     private AbstractChartView chartView;
-    private final PieChartView pieChartView = new PieChartView();
-    private final BarChartView barChartView = new BarChartView();
+    private final AbstractChartView pieChartView = new PieChartView();
+    private final AbstractChartView barChartView = new HistogramView();
 
     public ChartContentView(MainFrame mainFrame) {
         setChartView(barChartView);
