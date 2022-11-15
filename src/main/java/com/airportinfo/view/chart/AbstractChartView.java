@@ -17,7 +17,7 @@ public abstract class AbstractChartView extends ComponentView {
     public static final Color[] DEFAULT_COLOR_SCHEME = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
     protected final ChartData legends = new ChartData();
     protected final ChartPanel chartPanel = new ChartPanel();
-    protected NumberFormat numberFormat = NumberFormat.intFormat;
+    protected NumberFormat numberFormat = NumberFormat.INT_FORMAT;
     private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
 
     /**
