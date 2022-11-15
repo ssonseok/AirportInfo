@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
  *
  * @author lalaalal
  */
+@Deprecated
 public class BarChartView extends AbstractChartView {
     private final ArrayList<ChartBar> chartBars = new ArrayList<>();
     private JPanel panel;

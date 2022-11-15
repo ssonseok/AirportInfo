@@ -8,6 +8,7 @@ import java.awt.*;
  *
  * @author lalaalal
  */
+@Deprecated
 public class ChartBar extends JPanel {
     private static final GridBagConstraints labelConstraints;
     private static final GridBagConstraints barConstraints;

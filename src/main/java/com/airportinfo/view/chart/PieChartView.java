@@ -5,7 +5,6 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;
@@ -16,56 +15,26 @@ import java.util.ResourceBundle;
  * @author lalaalal
  */
 public class PieChartView extends AbstractChartView {
+    public static final int DEFAULT_LEGEND_DETAIL_COLUMN_LIMIT = 4;
     private JPanel panel;
     private JLabel titleLabel;
     private JPanel pieChartPanel;
     private JPanel legendDetailPanel;
-    private GridLayout legendDetailLayout;
-    private int maxLegendColumns = 4;
 
     public PieChartView() {
         $$$setupUI$$$();
+        setLegendDetailColumnLimit(DEFAULT_LEGEND_DETAIL_COLUMN_LIMIT);
     }
 
     public PieChartView(String title) {
         $$$setupUI$$$();
+        setLegendDetailColumnLimit(DEFAULT_LEGEND_DETAIL_COLUMN_LIMIT);
         titleLabel.setText(title);
-    }
-
-    /**
-     * Set number of max legend column.
-     *
-     * @param maxLegendColumns New max legend column
-     */
-    public void setMaxLegendColumns(int maxLegendColumns) {
-        this.maxLegendColumns = maxLegendColumns;
     }
 
     @Override
     public JPanel getPanel() {
         return panel;
-    }
-
-    /**
-     * Add Legend and add legend name to legend detail field.
-     *
-     * @param name  Legend name
-     * @param value Legend value
-     */
-    @Override
-    public void addLegend(String name, Number value) {
-        super.addLegend(name, value);
-        LegendDetailView legendDetailView = new LegendDetailView(name, getColor(legends.size() - 1));
-        if (legends.size() <= maxLegendColumns)
-            legendDetailLayout.setColumns(legends.size());
-        legendDetailPanel.add(legendDetailView.getPanel());
-    }
-
-    @Override
-    public void clear() {
-        super.clear();
-        legendDetailPanel.removeAll();
-        legendDetailLayout.setColumns(1);
     }
 
     @Override
@@ -76,11 +45,11 @@ public class PieChartView extends AbstractChartView {
         final int x = (pieChartPanel.getWidth() - diameter) / 2;
         final int y = (pieChartPanel.getHeight() - diameter) / 2;
 
-        drawChart((startAngle, angle, ratio, colorIndex, legend) -> {
-            graphics.setColor(getColor(colorIndex));
+        drawChart((startAngle, angle, ratio, color, legend) -> {
+            graphics.setColor(color);
             graphics.fillArc(x, y, diameter, diameter, startAngle, angle);
         });
-        drawChart((startAngle, angle, ratio, colorIndex, legend) -> {
+        drawChart((startAngle, angle, ratio, color, legend) -> {
             if (Math.abs(angle) < 10)
                 return;
             String label = numberFormat.formatNumber(legend.value()) + String.format(" (%.1f%%)", ratio * 100);
@@ -91,24 +60,24 @@ public class PieChartView extends AbstractChartView {
     private void drawChart(ChartDrawer drawer) {
         final double sum = sumOfLegends();
         int startAngle = 90;
-        int colorIndex = 0;
+        Color color = getColor(0);
         for (Legend legend : legends) {
             double ratio = legend.value().doubleValue() / sum;
             int angle = (int) -(ratio * 360);
-            drawer.draw(startAngle, angle, ratio, colorIndex, legend);
+            color = getColor(legend.name());
+            drawer.draw(startAngle, angle, ratio, color, legend);
 
             startAngle += angle;
-            colorIndex += 1;
         }
         if (startAngle > -270) {
             int angle = -(startAngle + 270);
-            drawer.draw(startAngle, angle, angle, colorIndex - 1, legends.get(legends.size() - 1));
+            drawer.draw(startAngle, angle, angle, color, legends.get(legends.size() - 1));
         }
     }
 
     @FunctionalInterface
     private interface ChartDrawer {
-        void draw(int startAngle, int angle, double ratio, int colorIndex, Legend legend);
+        void draw(int startAngle, int angle, double ratio, Color color, Legend legend);
     }
 
     private void drawString(int x, int y, int radius, int startAngle, int angle, Graphics graphics, String string) {
@@ -136,10 +105,8 @@ public class PieChartView extends AbstractChartView {
     private void createUIComponents() {
         titleLabel = new JLabel();
         titleLabel.setFont(FontManager.getFont(FontManager.HEADER_FONT_SIZE));
-        pieChartPanel = chartPanel;
-        legendDetailLayout = new GridLayout(0, 1);
-        legendDetailPanel = new JPanel();
-        legendDetailPanel.setLayout(legendDetailLayout);
+        pieChartPanel = getChartPanel();
+        legendDetailPanel = getLegendDetailPanel();
     }
 
     /**
@@ -152,8 +119,7 @@ public class PieChartView extends AbstractChartView {
     private void $$$setupUI$$$() {
         createUIComponents();
         panel = new JPanel();
-        panel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
+        panel.setLayout(new GridLayoutManager(2, 1, new Insets(10, 10, 10, 10), -1, -1));
         this.$$$loadLabelText$$$(titleLabel, this.$$$getMessageFromBundle$$$("string", "default_chart_title"));
         panel.add(titleLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel1 = new JPanel();

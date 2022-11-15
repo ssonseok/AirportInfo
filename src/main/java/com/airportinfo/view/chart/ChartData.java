@@ -7,6 +7,7 @@ import java.util.ArrayList;
  *
  * @author lalaalal
  */
+@Deprecated
 public class ChartData extends ArrayList<Legend> {
     public void addLegend(String name, Number value) {
         add(new Legend(name, value));
