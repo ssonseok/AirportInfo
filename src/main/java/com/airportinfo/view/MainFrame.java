@@ -79,7 +79,7 @@ public abstract class MainFrame extends JFrame {
     protected abstract void changeContent(JPanel content);
 
     /**
-     * Change Application theme.
+     * Change Application theme. If you have another component in MainFrame, override and call ohThemeChange.
      *
      * @param theme Theme to change
      */
@@ -90,7 +90,6 @@ public abstract class MainFrame extends JFrame {
                 UIManager.setLookAndFeel(LITE_THEME);
             else
                 UIManager.setLookAndFeel(DARK_THEME);
-            SwingUtilities.updateComponentTreeUI(this);
             for (ContentView contentView : contentViewHashMap.values())
                 contentView.onThemeChange();
         } catch (UnsupportedLookAndFeelException e) {
