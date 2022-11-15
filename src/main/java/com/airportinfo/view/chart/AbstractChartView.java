@@ -20,7 +20,7 @@ public abstract class AbstractChartView extends ComponentView {
     protected final ArrayList<Legend> legends = new ArrayList<>();
     private final ChartPanel chartPanel = new ChartPanel();
     private final LegendDetailGroupView legendDetailGroupView = new LegendDetailGroupView(this);
-    private final HashMap<String, Color> legendColor = new HashMap<>();
+    private final HashMap<String, Integer> legendColor = new HashMap<>();
     protected NumberFormat numberFormat = NumberFormat.INT_FORMAT;
     private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
 
@@ -56,6 +56,7 @@ public abstract class AbstractChartView extends ComponentView {
         if (colorScheme != null) {
             this.colorScheme = colorScheme;
             legendDetailGroupView.updateColor();
+            getPanel().repaint();
         }
     }
 
@@ -76,7 +77,8 @@ public abstract class AbstractChartView extends ComponentView {
      * @return Color allocated to legend name
      */
     public Color getColor(String legendName) {
-        return legendColor.get(legendName);
+        int colorIndex = legendColor.get(legendName);
+        return getColor(colorIndex);
     }
 
     /**
@@ -100,6 +102,9 @@ public abstract class AbstractChartView extends ComponentView {
         clear();
         for (Legend legend : legends)
             addLegend(legend);
+
+        getPanel().revalidate();
+        getPanel().repaint();
     }
 
     /**
@@ -113,6 +118,7 @@ public abstract class AbstractChartView extends ComponentView {
 
     /**
      * Add new Legend with name, value. Allocate color with name.
+     * Maybe need to revalidate and repaint panel.
      *
      * @param name  Legend name
      * @param value Legend value
@@ -123,6 +129,7 @@ public abstract class AbstractChartView extends ComponentView {
 
     /**
      * Add new Legend. Allocate color with name.
+     * Maybe need to revalidate and repaint panel.
      *
      * @param legend Legend
      */
@@ -130,7 +137,7 @@ public abstract class AbstractChartView extends ComponentView {
         legends.add(legend);
         legendDetailGroupView.addLegend(legend.name());
         int colorIndex = legends.size() - 1;
-        legendColor.put(legend.name(), getColor(colorIndex));
+        legendColor.put(legend.name(), colorIndex);
     }
 
     /**
