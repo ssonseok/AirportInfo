@@ -6,7 +6,7 @@ import java.util.HashSet;
 /**
  * User control function.
  *
- * @author lalaalal
+ * @author ssonseok
  */
 public class UserController {
 	private HashSet<Airport> bookmark = new HashSet<Airport>();
@@ -92,19 +92,4 @@ public class UserController {
 		
 	}
 	
-//	public static void main(String[] args) {
-//		final Airport a = new Airport();
-//		final Airport b = new Airport();
-//		
-//		UserController uc = new UserController();
-//		
-//		uc.addBookmark(a);
-//		uc.addBookmark(b);
-//		uc.delBookmark(a);
-//		
-//		System.out.println(uc.bookmark.size());
-//		System.out.println(a.toString());
-//		
-//		
-//	}
 }
