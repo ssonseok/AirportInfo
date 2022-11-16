@@ -8,7 +8,7 @@ package com.airportinfo.view.chart;
  */
 public interface NumberFormat {
     NumberFormat INT_FORMAT = (number) -> String.valueOf(number.intValue());
-    NumberFormat DOUBLE_FORMAT = (number) -> String.valueOf(number.doubleValue());
+    NumberFormat DOUBLE_FORMAT = (number) -> String.format("%.2f", number.doubleValue());
 
     /**
      * Make a String with number.

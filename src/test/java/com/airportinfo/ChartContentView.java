@@ -78,13 +78,14 @@ public class ChartContentView extends ContentView {
     @Override
     public void load() {
         LegendList legendList = new LegendList();
-        legendList.addLegend("apple", 10);
-        legendList.addLegend("banana", 20);
-        legendList.addLegend("cherry", 30);
-        legendList.addLegend("dragon", 25);
-        legendList.addLegend("eraser", 17);
-        legendList.addLegend("fruit", 15);
+        legendList.addLegend("apple", 0.1);
+        legendList.addLegend("banana", 0.2);
+        legendList.addLegend("cherry", 0.3);
+        legendList.addLegend("dragon", 0.25);
+        legendList.addLegend("eraser", 0.17);
+        legendList.addLegend("fruit", 0.15);
         chartView.setLegends(legendList);
+        chartView.setNumberFormat(NumberFormat.DOUBLE_FORMAT);
 
         panel.revalidate();
         panel.repaint();

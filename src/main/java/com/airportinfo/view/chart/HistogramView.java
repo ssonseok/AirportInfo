@@ -51,13 +51,13 @@ public class HistogramView extends AbstractChartView {
     }
 
     private double calcMax(Number value) {
-        int digit = (int) Math.log10(value.doubleValue());
-        int firstDigit = (int) (value.doubleValue() / Math.pow(10, digit));
+        int digit = (int) Math.floor(Math.log10(value.doubleValue()));
+        int firstDigit = (int) (value.doubleValue() / Math.pow(10, digit) + 0.5);
         return (firstDigit + 1) * Math.pow(10, digit);
     }
 
     private double getUnit() {
-        int digit = (int) Math.log10(max);
+        int digit = (int) Math.floor(Math.log10(max));
         return Math.pow(10, digit);
     }
 
