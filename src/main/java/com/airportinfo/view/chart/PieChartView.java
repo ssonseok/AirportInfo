@@ -53,8 +53,6 @@ public class PieChartView extends AbstractChartView {
             graphics.fillArc(x, y, diameter, diameter, startAngle, angle);
         });
         drawChart((startAngle, angle, ratio, color, legend) -> {
-            if (Math.abs(angle) < 10)
-                return;
             String label = numberFormat.formatNumber(legend.value()) + String.format(" (%.1f%%)", ratio * 100);
             drawString(x, y, diameter / 2, startAngle, angle, graphics, label);
         });
@@ -63,18 +61,13 @@ public class PieChartView extends AbstractChartView {
     private void drawChart(ChartDrawer drawer) {
         final double sum = sumOfLegends();
         int startAngle = 90;
-        Color color = getColor(0);
         for (Legend legend : legends) {
             double ratio = legend.value().doubleValue() / sum;
-            int angle = (int) -(ratio * 360);
-            color = getColor(legend.name());
+            int angle = (int) -(ratio * 360 + 0.5);
+            Color color = getColor(legend.name());
             drawer.draw(startAngle, angle, ratio, color, legend);
 
             startAngle += angle;
-        }
-        if (startAngle > -270) {
-            int angle = -(startAngle + 270);
-            drawer.draw(startAngle, angle, angle, color, legends.get(legends.size() - 1));
         }
     }
 

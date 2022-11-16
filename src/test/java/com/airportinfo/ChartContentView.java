@@ -77,14 +77,14 @@ public class ChartContentView extends ContentView {
 
     @Override
     public void load() {
-        ChartData chartData = new ChartData();
-        chartData.addLegend("apple", 10);
-        chartData.addLegend("banana", 20);
-        chartData.addLegend("cherry", 30);
-        chartData.addLegend("dragon", 25);
-        chartData.addLegend("eraser", 17);
-        chartData.addLegend("fruit", 15);
-        chartView.setLegends(chartData);
+        LegendList legendList = new LegendList();
+        legendList.addLegend("apple", 10);
+        legendList.addLegend("banana", 20);
+        legendList.addLegend("cherry", 30);
+        legendList.addLegend("dragon", 25);
+        legendList.addLegend("eraser", 17);
+        legendList.addLegend("fruit", 15);
+        chartView.setLegends(legendList);
 
         panel.revalidate();
         panel.repaint();

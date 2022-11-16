@@ -4,7 +4,6 @@ import com.airportinfo.view.ComponentView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -17,7 +16,7 @@ import java.util.HashMap;
  */
 public abstract class AbstractChartView extends ComponentView {
     public static final Color[] DEFAULT_COLOR_SCHEME = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
-    protected final ArrayList<Legend> legends = new ArrayList<>();
+    protected final LegendList legends = new LegendList();
     private final ChartPanel chartPanel = new ChartPanel();
     private final LegendDetailGroupView legendDetailGroupView = new LegendDetailGroupView(this);
     private final HashMap<String, Integer> legendColor = new HashMap<>();
@@ -95,7 +94,7 @@ public abstract class AbstractChartView extends ComponentView {
      *
      * @param legends New legends
      */
-    public void setLegends(ArrayList<Legend> legends) {
+    public void setLegends(Iterable<? extends Legend> legends) {
         if (this.legends.equals(legends))
             return;
 
