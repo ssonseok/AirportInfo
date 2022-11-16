@@ -26,7 +26,8 @@ public class ChartContentView extends ContentView {
     private final AbstractChartView barChartView = new HistogramView();
 
     public ChartContentView(MainFrame mainFrame) {
-        setChartView(barChartView);
+        chartView = barChartView;
+        chartViewPanel.add(chartView.getPanel());
         saveButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -78,12 +79,12 @@ public class ChartContentView extends ContentView {
     @Override
     public void load() {
         LegendList legendList = new LegendList();
-        legendList.addLegend("apple", 0.1);
-        legendList.addLegend("banana", 0.2);
-        legendList.addLegend("cherry", 0.3);
-        legendList.addLegend("dragon", 0.25);
-        legendList.addLegend("eraser", 0.17);
-        legendList.addLegend("fruit", 0.15);
+        legendList.add("apple", 0.1);
+        legendList.add("banana", 0.2);
+        legendList.add("cherry", 0.3);
+        legendList.add("dragon", 0.25);
+        legendList.add("eraser", 0.17);
+        legendList.add("fruit", 0.15);
         chartView.setLegends(legendList);
         chartView.setNumberFormat(NumberFormat.DOUBLE_FORMAT);
 
