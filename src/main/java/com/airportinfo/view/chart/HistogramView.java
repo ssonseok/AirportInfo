@@ -190,7 +190,7 @@ public class HistogramView extends AbstractChartView {
     private void createUIComponents() {
         titleLabel = new JLabel();
         titleLabel.setFont(FontManager.getFont(FontManager.HEADER_FONT_SIZE));
-        histogramPanel = getChartPanel();
+        histogramPanel = createChartPanel();
         legendDetailPanel = getLegendDetailPanel();
     }
 
