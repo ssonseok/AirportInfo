@@ -3,23 +3,54 @@ package com.airportinfo;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * User control function.
+ *
+ * @author lalaalal
+ */
 public class UserController {
-	private HashSet<Airport> bookMark = new HashSet<Airport>();
+	private HashSet<Airport> bookmark = new HashSet<Airport>();
 	private HashMap<Airport, Integer> rating = new HashMap<Airport, Integer>();
 	
 	//즐겨찾기 추가
-	public void addBookMark(Airport airport){
-		bookMark.add(airport);
-		System.out.println(bookMark.contains(airport));
+	/**
+	 * Add bookmark.
+	 * 
+	 * @param airport
+	 */
+	public void addBookmark(Airport airport){
+		bookmark.add(airport);
+		System.out.println(bookmark.contains(airport));
 	}
 	//즐겨찾기 삭제
-	public void delBookMark(Airport airport) {
-		if (bookMark.contains(airport))
-			bookMark.remove(airport);
-		System.out.println(bookMark.contains(airport));
+	/**
+	 * Delete bookmark.
+	 * 
+	 * @param airport
+	 */
+	public void delBookmark(Airport airport) {
+		if (bookmark.contains(airport))
+			bookmark.remove(airport);
+		System.out.println(bookmark.contains(airport));
+	}
+	
+	//즐겨찾기 목록
+	/**
+	 * BookmarkList
+	 * 
+	 * @return bookmark
+	 */
+	public HashSet<Airport> getAllBookmark(){
+		return bookmark;
 	}
 	
 	//별점기능
+	/**
+	 * Rating
+	 * 
+	 * @param airport
+	 * @param rate
+	 */
 	public void addRating(Airport airport, int rate) {
 		//별점여부 확인
 		if(rating.containsKey(airport)) {
@@ -28,6 +59,37 @@ public class UserController {
 		else {
 			rating.put(airport, rate);
 		}
+		
+	}
+	/**
+	 * All rating list.
+	 * 
+	 * @return all airport
+	 */
+	//모든 공항
+	public HashMap<Airport, Integer> getAllRating() {
+		return rating;
+	}
+	//내가 원하는 공항
+	/**
+	 * Select airport rating.
+	 * 
+	 * @param airport
+	 * @return exist - rate
+	 * @return nonexistent - -1
+	 */
+	public int getRating(Airport airport) {
+		
+		if(rating.containsKey(airport)) {
+			int rate = (Integer) rating.get(airport);	
+			return rate;
+		}
+		
+		else {
+			return -1;
+		}
+	
+		
 	}
 	
 //	public static void main(String[] args) {
@@ -36,15 +98,13 @@ public class UserController {
 //		
 //		UserController uc = new UserController();
 //		
-//		uc.addBookMark(a);
-//		uc.addBookMark(b);
-//		uc.delBookMark(a);
+//		uc.addBookmark(a);
+//		uc.addBookmark(b);
+//		uc.delBookmark(a);
 //		
-//		System.out.println(uc.bookMark.size());
+//		System.out.println(uc.bookmark.size());
 //		System.out.println(a.toString());
 //		
 //		
 //	}
 }
-
-//airport x -> e.N
