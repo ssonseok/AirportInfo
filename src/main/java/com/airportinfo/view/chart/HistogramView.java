@@ -81,7 +81,7 @@ public class HistogramView extends AbstractChartView {
         int actualWidth = width - yAxisWidth;
 
         drawLegends(graphics, actualXOffset, yOffset, actualWidth, height);
-        drawGuidLine(graphics, actualXOffset, yOffset, actualWidth, height);
+        drawGuideline(graphics, actualXOffset, yOffset, actualWidth, height);
         drawAxis(graphics, actualXOffset, yOffset, actualWidth, height);
         drawYAxisLabel(graphics, xOffset, yOffset, height);
     }
@@ -132,7 +132,7 @@ public class HistogramView extends AbstractChartView {
     }
 
     /**
-     * Draw guid line.
+     * Draw guideline.
      *
      * @param graphics Graphic instance
      * @param xOffset  X offset of actual chart
@@ -140,7 +140,7 @@ public class HistogramView extends AbstractChartView {
      * @param width    Width of actual chart
      * @param height   Height of actual chart
      */
-    private void drawGuidLine(Graphics graphics, int xOffset, int yOffset, int width, int height) {
+    private void drawGuideline(Graphics graphics, int xOffset, int yOffset, int width, int height) {
         Color lineColor = UIManager.getDefaults().getColor("Label.foreground");
         graphics.setColor(lineColor);
         if (graphics instanceof Graphics2D graphics2D)
@@ -148,11 +148,11 @@ public class HistogramView extends AbstractChartView {
 
         double unit = getUnit();
         int numUnitLabels = (int) (max / unit);
-        int guidLineInterval = height / numUnitLabels;
-        int guidLineY = yOffset + height;
-        for (int i = 0; i < numUnitLabels; i++) {
-            graphics.drawLine(xOffset, guidLineY, xOffset + width, guidLineY);
-            guidLineY -= guidLineInterval;
+        int guidelineYOffset = yOffset + height;
+        for (double unitIndex = 1; unitIndex < numUnitLabels; unitIndex++) {
+            double guidelineRate = unitIndex / numUnitLabels;
+            int guidelineY = guidelineYOffset - (int) (height * guidelineRate + 0.5);
+            graphics.drawLine(xOffset, guidelineY, xOffset + width, guidelineY);
         }
     }
 
@@ -171,7 +171,7 @@ public class HistogramView extends AbstractChartView {
         int legendX = legendInterval;
         for (Legend legend : legends) {
             double legendRate = legend.value().doubleValue() / max;
-            int legendHeight = (int) (height * legendRate + 0.5) - AXIS_THICKNESS;
+            int legendHeight = (int) (height * legendRate + 0.5);
             int spaceHeight = height - legendHeight;
 
             Color color = getColor(legend.name());
