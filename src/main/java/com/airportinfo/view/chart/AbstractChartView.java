@@ -21,6 +21,7 @@ public abstract class AbstractChartView extends ComponentView {
     private final HashMap<String, Integer> legendColor = new HashMap<>();
     protected NumberFormat numberFormat = NumberFormat.INT_FORMAT;
     private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
+    public boolean showLegendLabel = true;
 
     /**
      * @return Chart panel type with JPanel.
@@ -163,7 +164,7 @@ public abstract class AbstractChartView extends ComponentView {
      *
      * @param graphics Graphics from chartPanel
      */
-    public abstract void updateChartView(Graphics graphics);
+    protected abstract void updateChartView(Graphics graphics);
 
     @Override
     public boolean equals(Object obj) {

@@ -38,7 +38,7 @@ public class PieChartView extends AbstractChartView {
     }
 
     @Override
-    public void updateChartView(Graphics graphics) {
+    protected void updateChartView(Graphics graphics) {
         if (graphics instanceof Graphics2D graphics2D)
             graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
@@ -53,7 +53,9 @@ public class PieChartView extends AbstractChartView {
             graphics.fillArc(x, y, diameter, diameter, startAngle, angle);
         });
         drawChart((startAngle, angle, ratio, color, legend) -> {
-            String label = numberFormat.formatNumber(legend.value()) + String.format(" (%.1f%%)", ratio * 100);
+            String label = String.format(" (%.1f%%)", ratio * 100);
+            if (showLegendLabel)
+                label = numberFormat.formatNumber(legend.value()) + label;
             drawString(x, y, diameter / 2, startAngle, angle, graphics, label);
         });
     }

@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class HistogramView extends AbstractChartView {
     public static final int AXIS_INTERVAL = 15;
     public static final int AXIS_THICKNESS = 2;
-    public static final int GUID_THICKNESS = 1;
+    public static final int GUIDE_THICKNESS = 1;
     public static final int DEFAULT_LEGEND_INTERVAL = 20;
     private JPanel panel;
     private JLabel titleLabel;
@@ -25,6 +25,7 @@ public class HistogramView extends AbstractChartView {
     private JPanel legendDetailPanel;
     private double max = 0;
     private int legendInterval = DEFAULT_LEGEND_INTERVAL;
+    public boolean showGuideline = true;
 
     public HistogramView() {
 
@@ -68,7 +69,7 @@ public class HistogramView extends AbstractChartView {
     }
 
     @Override
-    public void updateChartView(Graphics graphics) {
+    protected void updateChartView(Graphics graphics) {
         if (graphics instanceof Graphics2D graphics2D)
             graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
@@ -81,7 +82,8 @@ public class HistogramView extends AbstractChartView {
         int actualWidth = width - yAxisWidth;
 
         drawLegends(graphics, actualXOffset, yOffset, actualWidth, height);
-        drawGuideline(graphics, actualXOffset, yOffset, actualWidth, height);
+        if (showGuideline)
+            drawGuideline(graphics, actualXOffset, yOffset, actualWidth, height);
         drawAxis(graphics, actualXOffset, yOffset, actualWidth, height);
         drawYAxisLabel(graphics, xOffset, yOffset, height);
     }
@@ -144,7 +146,7 @@ public class HistogramView extends AbstractChartView {
         Color lineColor = UIManager.getDefaults().getColor("Label.foreground");
         graphics.setColor(lineColor);
         if (graphics instanceof Graphics2D graphics2D)
-            graphics2D.setStroke(new BasicStroke(GUID_THICKNESS));
+            graphics2D.setStroke(new BasicStroke(GUIDE_THICKNESS));
 
         double unit = getUnit();
         int numUnitLabels = (int) (max / unit);
@@ -168,17 +170,31 @@ public class HistogramView extends AbstractChartView {
     private void drawLegends(Graphics graphics, int xOffset, int yOffset, int width, int height) {
         int totalInterval = legendInterval * (legends.size() + 1);
         int legendWidth = (width - totalInterval) / legends.size();
-        int legendX = legendInterval;
+        int legendX = xOffset + legendInterval;
         for (Legend legend : legends) {
             double legendRate = legend.value().doubleValue() / max;
             int legendHeight = (int) (height * legendRate + 0.5);
             int spaceHeight = height - legendHeight;
+            int legendY = yOffset + spaceHeight;
 
-            Color color = getColor(legend.name());
-            graphics.setColor(color);
-            graphics.fillRect(xOffset + legendX, yOffset + spaceHeight, legendWidth, legendHeight);
+            graphics.setColor(getColor(legend.name()));
+            graphics.fillRect(legendX, legendY, legendWidth, legendHeight);
+            if (showLegendLabel)
+                drawLegendLabel(graphics, legend, legendX, legendY, legendWidth, legendHeight);
             legendX += legendWidth + legendInterval;
         }
+    }
+
+    private void drawLegendLabel(Graphics graphics, Legend legend, int legendX, int legendY, int legendWidth, int legendHeight) {
+        Color labelColor = UIManager.getDefaults().getColor("Label.foreground");
+        graphics.setColor(labelColor);
+
+        String label = numberFormat.formatNumber(legend.value());
+        int labelHeight = graphics.getFontMetrics().getHeight();
+        int labelX = legendX + (legendWidth - graphics.getFontMetrics().stringWidth(label)) / 2;
+        int labelY = legendY + legendHeight + labelHeight + legendInterval / 2;
+
+        graphics.drawString(label, labelX, labelY);
     }
 
     @Override

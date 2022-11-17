@@ -22,8 +22,8 @@ public class ChartContentView extends ContentView {
     private JButton pieButton;
     private JButton changeColorSchemeButton;
     private AbstractChartView chartView;
-    private final AbstractChartView pieChartView = new PieChartView();
-    private final AbstractChartView barChartView = new HistogramView();
+    private final PieChartView pieChartView = new PieChartView();
+    private final HistogramView barChartView = new HistogramView();
 
     public ChartContentView(MainFrame mainFrame) {
         chartView = barChartView;
@@ -65,10 +65,12 @@ public class ChartContentView extends ContentView {
         changeColorSchemeButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Color[] colors = {Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
+                Color[] colors = {Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA"), Color.decode("#FF8787")};
                 chartView.setColorScheme(colors);
             }
         });
+
+        barChartView.showGuideline = false;
     }
 
     @Override
@@ -87,6 +89,7 @@ public class ChartContentView extends ContentView {
         legendList.add("fruit", 0.15);
         chartView.setLegends(legendList);
         chartView.setNumberFormat(NumberFormat.DOUBLE_FORMAT);
+        chartView.showLegendLabel = false;
 
         panel.revalidate();
         panel.repaint();
