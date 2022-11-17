@@ -1,4 +1,4 @@
-package com.airportinfo.utils;
+package com.airportinfo.util;
 
 import com.airportinfo.Airport;
 

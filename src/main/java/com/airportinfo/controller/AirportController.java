@@ -1,7 +1,8 @@
-package com.airportinfo;
+package com.airportinfo.controller;
 
-import com.airportinfo.utils.CSVReader;
-import com.airportinfo.utils.DBManager;
+import com.airportinfo.Airport;
+import com.airportinfo.util.CSVReader;
+import com.airportinfo.util.DBManager;
 
 import java.io.IOException;
 import java.sql.SQLException;

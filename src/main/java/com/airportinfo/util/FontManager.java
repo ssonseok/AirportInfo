@@ -1,4 +1,4 @@
-package com.airportinfo.utils;
+package com.airportinfo.util;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;

@@ -2,7 +2,7 @@ package com.airportinfo;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
-import com.airportinfo.utils.EmailManager;
+import com.airportinfo.util.EmailManager;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
@@ -41,12 +41,8 @@ public class EmailTest {
 				EmailManager.send(Email, fileDir);
 			}
 			
-		} catch (AddressException e) {
+		} catch (MessagingException | UnsupportedEncodingException e) {
             e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-        	e.printStackTrace();
-        } 
+        }
 	}
 }

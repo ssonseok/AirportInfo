@@ -1,4 +1,4 @@
-package com.airportinfo.utils;
+package com.airportinfo.util;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

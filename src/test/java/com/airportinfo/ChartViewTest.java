@@ -1,6 +1,6 @@
 package com.airportinfo;
 
-import com.airportinfo.utils.FontManager;
+import com.airportinfo.util.FontManager;
 import com.airportinfo.view.MainFrame;
 
 import javax.swing.*;

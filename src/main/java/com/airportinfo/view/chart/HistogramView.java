@@ -1,6 +1,6 @@
 package com.airportinfo.view.chart;
 
-import com.airportinfo.utils.FontManager;
+import com.airportinfo.util.FontManager;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 

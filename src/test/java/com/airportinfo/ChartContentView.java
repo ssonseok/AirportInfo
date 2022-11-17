@@ -1,6 +1,6 @@
 package com.airportinfo;
 
-import com.airportinfo.utils.Screenshot;
+import com.airportinfo.util.Screenshot;
 import com.airportinfo.view.ContentView;
 import com.airportinfo.view.MainFrame;
 import com.airportinfo.view.chart.*;
