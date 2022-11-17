@@ -9,87 +9,70 @@ import java.util.HashSet;
  * @author ssonseok
  */
 public class UserController {
-	private HashSet<Airport> bookmark = new HashSet<Airport>();
-	private HashMap<Airport, Integer> rating = new HashMap<Airport, Integer>();
-	
-	//즐겨찾기 추가
-	/**
-	 * Add bookmark.
-	 * 
-	 * @param airport
-	 */
-	public void addBookmark(Airport airport){
-		bookmark.add(airport);
-		System.out.println(bookmark.contains(airport));
-	}
-	//즐겨찾기 삭제
-	/**
-	 * Delete bookmark.
-	 * 
-	 * @param airport
-	 */
-	public void delBookmark(Airport airport) {
-		if (bookmark.contains(airport))
-			bookmark.remove(airport);
-		System.out.println(bookmark.contains(airport));
-	}
-	
-	//즐겨찾기 목록
-	/**
-	 * BookmarkList
-	 * 
-	 * @return bookmark
-	 */
-	public HashSet<Airport> getAllBookmark(){
-		return bookmark;
-	}
-	
-	//별점기능
-	/**
-	 * Rating
-	 * 
-	 * @param airport
-	 * @param rate
-	 */
-	public void addRating(Airport airport, int rate) {
-		//별점여부 확인
-		if(rating.containsKey(airport)) {
-			rating.put(airport, (rate+rating.get(airport))/2);
-		}
-		else {
-			rating.put(airport, rate);
-		}
-		
-	}
-	/**
-	 * All rating list.
-	 * 
-	 * @return all airport
-	 */
-	//모든 공항
-	public HashMap<Airport, Integer> getAllRating() {
-		return rating;
-	}
-	//내가 원하는 공항
-	/**
-	 * Select airport rating.
-	 * 
-	 * @param airport
-	 * @return exist - rate
-	 * @return nonexistent - -1
-	 */
-	public int getRating(Airport airport) {
-		
-		if(rating.containsKey(airport)) {
-			int rate = (Integer) rating.get(airport);	
-			return rate;
-		}
-		
-		else {
-			return -1;
-		}
-	
-		
-	}
-	
+    private final HashSet<Airport> bookmark = new HashSet<>();
+    private final HashMap<Airport, Integer> rating = new HashMap<>();
+
+    /**
+     * 즐겨찾기 추가. Add bookmark.
+     *
+     * @param airport Airport to add.
+     */
+    public void addBookmark(Airport airport) {
+        bookmark.add(airport);
+        System.out.println(bookmark.contains(airport));
+    }
+
+    /**
+     * 즐겨찾기 삭제. Delete bookmark.
+     *
+     * @param airport Airport to remove.
+     */
+    public void delBookmark(Airport airport) {
+		bookmark.remove(airport);
+        System.out.println(bookmark.contains(airport));
+    }
+
+    /**
+     * 즐겨찾기 목록 BookmarkList
+     *
+     * @return bookmark
+     */
+    public HashSet<Airport> getAllBookmark() {
+        return bookmark;
+    }
+
+    /**
+     * 별점기능 Rating
+     *
+     * @param airport Airport to rate
+     * @param rate Rate
+     */
+    public void addRating(Airport airport, int rate) {
+        //별점여부 확인
+        if (rating.containsKey(airport)) {
+            rating.put(airport, (rate + rating.get(airport)) / 2);
+        } else {
+            rating.put(airport, rate);
+        }
+
+    }
+
+    /**
+     * 모든 공항 All rating list.
+     *
+     * @return all airport
+     */
+    public HashMap<Airport, Integer> getAllRating() {
+        return rating;
+    }
+
+    /**
+     * 내가 원하는 공항 Select airport rating.
+     *
+     * @param airport Airport to get rating.
+     * @return If exists return rate or return -1
+     */
+    public int getRating(Airport airport) {
+		return rating.getOrDefault(airport, -1);
+    }
 }

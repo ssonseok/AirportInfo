@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author lalaalal
  */
 public abstract class ComponentGroup extends ComponentView {
-    private final ArrayList<ComponentView> componentViews = new ArrayList<>();
+    protected final ArrayList<ComponentView> componentViews = new ArrayList<>();
 
     /**
      * Add child ComponentView.
@@ -17,6 +17,31 @@ public abstract class ComponentGroup extends ComponentView {
      */
     public void addComponentView(ComponentView componentView) {
         componentViews.add(componentView);
+    }
+
+    /**
+     * Remove child ComponentView.
+     *
+     * @param componentView Child ComponentView to remove.
+     */
+    public void removeComponentView(ComponentView componentView) {
+        componentViews.remove(componentView);
+    }
+
+    /**
+     * Number of component views.
+     *
+     * @return Number of component views.
+     */
+    public int getNumComponents() {
+        return componentViews.size();
+    }
+
+    /**
+     * Remove all component views.
+     */
+    public void clear() {
+        componentViews.clear();
     }
 
     /**

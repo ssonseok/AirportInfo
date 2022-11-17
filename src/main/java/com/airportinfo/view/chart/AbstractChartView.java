@@ -4,7 +4,8 @@ import com.airportinfo.view.ComponentView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Abstract class of ChartView.
@@ -15,10 +16,35 @@ import java.util.Objects;
  */
 public abstract class AbstractChartView extends ComponentView {
     public static final Color[] DEFAULT_COLOR_SCHEME = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
-    protected final ChartData legends = new ChartData();
-    protected final ChartPanel chartPanel = new ChartPanel();
-    protected NumberFormat numberFormat = NumberFormat.intFormat;
+    protected final LegendList legends = new LegendList();
+    private final LegendDetailGroupView legendDetailGroupView = new LegendDetailGroupView(this);
+    private final HashMap<String, Integer> legendColor = new HashMap<>();
+    protected NumberFormat numberFormat = NumberFormat.INT_FORMAT;
     private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
+    public boolean showLegendLabel = true;
+
+    /**
+     * @return Chart panel type with JPanel.
+     */
+    protected JPanel createChartPanel() {
+        return new ChartPanel();
+    }
+
+    /**
+     * @return Legend detail panel.
+     */
+    protected JPanel getLegendDetailPanel() {
+        return legendDetailGroupView.getPanel();
+    }
+
+    /**
+     * Set limit of legend detail columns.
+     *
+     * @param limit Value of limit.
+     */
+    public void setLegendDetailColumnLimit(int limit) {
+        legendDetailGroupView.setLegendColumnLimit(limit);
+    }
 
     /**
      * Change color scheme.
@@ -26,8 +52,11 @@ public abstract class AbstractChartView extends ComponentView {
      * @param colorScheme Color scheme to change.
      */
     public void setColorScheme(Color[] colorScheme) {
-        if (colorScheme != null)
+        if (colorScheme != null) {
             this.colorScheme = colorScheme;
+            legendDetailGroupView.updateColor();
+            getPanel().repaint();
+        }
     }
 
     /**
@@ -41,6 +70,43 @@ public abstract class AbstractChartView extends ComponentView {
     }
 
     /**
+     * Get color with legend name.
+     *
+     * @param legendName Legend name to search
+     * @return Color allocated to legend name
+     */
+    public Color getColor(String legendName) {
+        int colorIndex = legendColor.get(legendName);
+        return getColor(colorIndex);
+    }
+
+    /**
+     * Get array of legends.
+     *
+     * @return Array of legends.
+     */
+    public Legend[] getLegends() {
+        return legends.toArray(new Legend[0]);
+    }
+
+    /**
+     * Set legends if different with this chart.
+     *
+     * @param legends New legends
+     */
+    public void setLegends(Iterable<? extends Legend> legends) {
+        if (this.legends.equals(legends))
+            return;
+
+        clear();
+        for (Legend legend : legends)
+            addLegend(legend);
+
+        getPanel().revalidate();
+        getPanel().repaint();
+    }
+
+    /**
      * Change number format.
      *
      * @param numberFormat Number format to change
@@ -50,27 +116,39 @@ public abstract class AbstractChartView extends ComponentView {
     }
 
     /**
-     * Add new Legend with name, value. Need to call updateView() after add legends.
+     * Add new Legend with name, value. Allocate color with name.
+     * Maybe need to revalidate and repaint panel.
+     * DO NOT OVERRIDE, OVERRIDE addLegend(Legend)
      *
      * @param name  Legend name
      * @param value Legend value
      */
     public void addLegend(String name, Number value) {
-        legends.addLegend(name, value);
+        addLegend(new Legend(name, value));
     }
 
     /**
-     * Set legends if different with this chart.
+     * Add new Legend. Allocate color with name.
+     * Maybe need to revalidate and repaint panel.
      *
-     * @param chartData New legends
+     * @param legend Legend
      */
-    public void setLegends(ChartData chartData) {
-        if (Objects.equals(legends, chartData))
-            return;
+    public void addLegend(Legend legend) {
+        legends.add(legend);
 
-        clear();
-        for (Legend legend : chartData)
-            addLegend(legend.name(), legend.value());
+        int colorIndex = legends.size() - 1;
+        legendColor.put(legend.name(), colorIndex);
+
+        legendDetailGroupView.addLegend(legend.name());
+    }
+
+    /**
+     * Number of legends.
+     *
+     * @return Number of legends
+     */
+    public int getNumLegends() {
+        return legends.size();
     }
 
     /**
@@ -78,6 +156,7 @@ public abstract class AbstractChartView extends ComponentView {
      */
     public void clear() {
         legends.clear();
+        legendColor.clear();
     }
 
     /**
@@ -85,7 +164,16 @@ public abstract class AbstractChartView extends ComponentView {
      *
      * @param graphics Graphics from chartPanel
      */
-    public abstract void updateChartView(Graphics graphics);
+    protected abstract void updateChartView(Graphics graphics);
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof AbstractChartView abstractChartView) {
+            return legends.equals(abstractChartView.legends)
+                    && Arrays.equals(colorScheme, abstractChartView.colorScheme);
+        }
+        return false;
+    }
 
     protected class ChartPanel extends JPanel {
         @Override
