@@ -69,7 +69,7 @@ public class HistogramView extends AbstractChartView {
     }
 
     @Override
-    protected void updateChartView(Graphics graphics) {
+    protected void paintChart(Graphics graphics) {
         if (graphics instanceof Graphics2D graphics2D)
             graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 

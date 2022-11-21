@@ -164,7 +164,7 @@ public abstract class AbstractChartView extends ComponentView {
      *
      * @param graphics Graphics from chartPanel
      */
-    protected abstract void updateChartView(Graphics graphics);
+    protected abstract void paintChart(Graphics graphics);
 
     @Override
     public boolean equals(Object obj) {
@@ -179,7 +179,7 @@ public abstract class AbstractChartView extends ComponentView {
         @Override
         protected void paintComponent(Graphics graphics) {
             super.paintComponent(graphics);
-            updateChartView(graphics);
+            paintChart(graphics);
         }
     }
 }
