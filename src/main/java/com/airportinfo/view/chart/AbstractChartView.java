@@ -175,7 +175,7 @@ public abstract class AbstractChartView extends ComponentView {
         return false;
     }
 
-    protected class ChartPanel extends JPanel {
+    private class ChartPanel extends JPanel {
         @Override
         protected void paintComponent(Graphics graphics) {
             super.paintComponent(graphics);
