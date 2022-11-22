@@ -10,7 +10,7 @@ import java.util.HashMap;
 /**
  * Abstract class of ChartView.
  * Provide legend interface and support color scheme, number format.
- * The method updateChartView(Graphics) will draw in chartPanel.
+ * The method paintChart(Graphics) will draw in chartPanel.
  *
  * @author lalaalal
  */
