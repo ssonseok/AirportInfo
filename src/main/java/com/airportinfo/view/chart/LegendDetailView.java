@@ -11,7 +11,7 @@ import java.awt.*;
  *
  * @author lalaalal
  */
-public class LegendDetailView extends ComponentView {
+class LegendDetailView extends ComponentView {
     public static final int LAYOUT_GAP = 5;
     public static final int INDICATOR_THICKNESS = 5;
     private final JPanel panel = new JPanel();

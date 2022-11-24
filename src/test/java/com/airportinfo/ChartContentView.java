@@ -69,8 +69,6 @@ public class ChartContentView extends ContentView {
                 chartView.setColorScheme(colors);
             }
         });
-
-        barChartView.showGuideline = false;
     }
 
     @Override
@@ -89,7 +87,6 @@ public class ChartContentView extends ContentView {
         legendList.add("fruit", 0.15);
         chartView.setLegends(legendList);
         chartView.setNumberFormat(NumberFormat.DOUBLE_FORMAT);
-        chartView.showLegendLabel = false;
 
         panel.revalidate();
         panel.repaint();
