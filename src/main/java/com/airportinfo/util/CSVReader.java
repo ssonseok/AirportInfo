@@ -1,6 +1,7 @@
 package com.airportinfo.util;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -16,10 +17,10 @@ public class CSVReader implements AutoCloseable {
      * Initialize reader with file path.
      *
      * @param path File path
-     * @throws FileNotFoundException If file not found
+     * @throws IOException If file not found
      */
-    public CSVReader(String path) throws FileNotFoundException {
-        reader = new BufferedReader(new FileReader(path));
+    public CSVReader(String path) throws IOException {
+        reader = new BufferedReader(new FileReader(path, StandardCharsets.UTF_8));
     }
 
     /**
