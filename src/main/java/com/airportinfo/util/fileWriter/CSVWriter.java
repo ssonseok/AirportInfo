@@ -49,6 +49,7 @@ public class CSVWriter extends AirportWriter{
     public void download(Airport[] airports, String fName) throws IOException {
         File dataFile = new File(fPath + "/" + fName + ".csv");
         dataFile.createNewFile();
+
         write(airports);
     }
 }
