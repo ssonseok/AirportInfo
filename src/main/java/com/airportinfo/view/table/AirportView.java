@@ -52,7 +52,9 @@ public abstract class AirportView extends ComponentView {
         airports.clear();
         updateView();
     }
-
+    public Airport[] getAirports() {
+        return airports.toArray(new Airport[0]);
+    }
     /**
      * Remove airport from param.
      * Need to call updateView() after remove.

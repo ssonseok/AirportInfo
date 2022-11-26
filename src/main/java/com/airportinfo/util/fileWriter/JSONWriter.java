@@ -1,25 +1,60 @@
 package com.airportinfo.util.fileWriter;
 
+import com.airportinfo.Airport;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class JSONWriter extends FileWriter{
+/**
+ * A writer class to write json files.
+ *
+ * @author JumoKookbob
+ */
+public class JSONWriter extends AirportWriter{
+
     /**
      * constructor method
-     *
-     * @param fPath
+     * @param fPath file path
+     * @throws IOException
      */
-    public JSONWriter() {
-
+    public JSONWriter(String fPath) throws IOException {
+        super(fPath);
     }
 
     @Override
-    public void downloadFile(String fName) throws IOException, SQLException, ClassNotFoundException {
-        File dataFile = new File(path + "/" + fName + ".json");
+    public void write(Airport airport) throws IOException {
+        try{
+            int count = 0;
+            for(String content : airport.toArray()) {
+                if(count < airport.toArray().length - 1)
+                    writer.write(content + ",");
+                else
+                    writer.write(content);
+                count++;
+            }
+        } finally {
+            writer.flush();
+            writer.newLine();
+        }
+    }
+
+    @Override
+    public void write(Airport[] airports) throws IOException {
+        writeHeader();
+        for(Airport airport : airports) {
+            write(airport);
+        }
+    }
+
+    /**
+     * A method to make json file
+     */
+    @Override
+    public void download(Airport[] airports, String fName) throws IOException {
+        File dataFile = new File(fPath + "/" + fName + ".json");
         dataFile.createNewFile();
-        BufferedWriter fileWriter = new BufferedWriter(new java.io.FileWriter(dataFile, true));
-        downloading(fileWriter);
+        write(airports);
     }
 }
