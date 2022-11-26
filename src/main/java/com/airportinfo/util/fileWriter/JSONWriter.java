@@ -25,36 +25,12 @@ public class JSONWriter extends AirportWriter{
 
     @Override
     public void write(Airport airport) throws IOException {
-        try{
-            int count = 0;
-            for(String content : airport.toArray()) {
-                if(count < airport.toArray().length - 1)
-                    writer.write(content + ",");
-                else
-                    writer.write(content);
-                count++;
-            }
-        } finally {
-            writer.flush();
-            writer.newLine();
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void write(Airport[] airports) throws IOException {
-        writeHeader();
-        for(Airport airport : airports) {
-            write(airport);
-        }
+        throw new UnsupportedOperationException();
     }
 
-    /**
-     * A method to make json file
-     */
-    @Override
-    public void download(Airport[] airports, String fName) throws IOException {
-        File dataFile = new File(fPath + "/" + fName + ".json");
-        dataFile.createNewFile();
-        write(airports);
-    }
 }

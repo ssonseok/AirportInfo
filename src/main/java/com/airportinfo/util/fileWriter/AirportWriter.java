@@ -34,22 +34,6 @@ public abstract class AirportWriter implements AutoCloseable{
     }
 
     /**
-     * A method to only use to write header to file
-     * @throws IOException
-     */
-    protected void writeHeader() throws IOException {
-        int count = 0;
-        for(String head : getHeader()) {
-            if(count < getHeader().length - 1)
-                writer.write(head + ",");
-            else
-                writer.write(head);
-            count++;
-        }
-        writer.newLine();
-    }
-
-    /**
      * An abstract method to make file with Airport
      */
     public abstract void write(Airport airport) throws IOException;
@@ -58,11 +42,6 @@ public abstract class AirportWriter implements AutoCloseable{
      * An abstract method to make file with Airport array
      */
     public abstract void write(Airport[] airports) throws IOException;
-
-    /**
-     * An abstract method to make file
-     */
-    public abstract void download(Airport[] airports, String fName) throws IOException;
 
     @Override
     public void close() throws Exception {

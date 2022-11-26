@@ -1,11 +1,10 @@
 package com.airportinfo.view.table;
 
 import com.airportinfo.Airport;
-import com.airportinfo.controller.AirportController;
+import com.airportinfo.view.AirportView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.sql.SQLException;
 
 /**
  * An abstract view class handling airports table.

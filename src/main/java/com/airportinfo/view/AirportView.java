@@ -1,4 +1,4 @@
-package com.airportinfo.view.table;
+package com.airportinfo.view;
 
 import com.airportinfo.Airport;
 import com.airportinfo.view.ComponentView;

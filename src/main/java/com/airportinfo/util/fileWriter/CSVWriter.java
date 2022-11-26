@@ -34,6 +34,21 @@ public class CSVWriter extends AirportWriter{
             writer.newLine();
         }
     }
+    /**
+     * A method to only use to write header to file
+     * @throws IOException
+     */
+    protected void writeHeader() throws IOException {
+        int count = 0;
+        for(String head : getHeader()) {
+            if(count < getHeader().length - 1)
+                writer.write(head + ",");
+            else
+                writer.write(head);
+            count++;
+        }
+        writer.newLine();
+    }
 
     @Override
     public void write(Airport[] airports) throws IOException {
@@ -41,15 +56,5 @@ public class CSVWriter extends AirportWriter{
         for(Airport airport : airports) {
             write(airport);
         }
-    }
-    /**
-     * A method to make csv file
-     */
-    @Override
-    public void download(Airport[] airports, String fName) throws IOException {
-        File dataFile = new File(fPath + "/" + fName + ".csv");
-        dataFile.createNewFile();
-
-        write(airports);
     }
 }
