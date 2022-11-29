@@ -1,23 +1,21 @@
-package com.airportinfo.util.fileWriter;
+package com.airportinfo.util.filewriter;
 
 import com.airportinfo.Airport;
 
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * A writer class to write json files.
  *
  * @author JumoKookbob
  */
-public class JSONWriter extends AirportWriter{
+public class JSONWriter extends AirportWriter {
 
     /**
      * constructor method
+     *
      * @param fPath file path
-     * @throws IOException
+     * @throws IOException If an I/O error occurs
      */
     public JSONWriter(String fPath) throws IOException {
         super(fPath);
@@ -32,5 +30,4 @@ public class JSONWriter extends AirportWriter{
     public void write(Airport[] airports) throws IOException {
         throw new UnsupportedOperationException();
     }
-
 }

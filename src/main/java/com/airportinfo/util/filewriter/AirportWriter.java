@@ -1,4 +1,4 @@
-package com.airportinfo.util.fileWriter;
+package com.airportinfo.util.filewriter;
 
 import com.airportinfo.Airport;
 
@@ -11,14 +11,15 @@ import java.io.IOException;
  *
  * @author JumoKookbob
  */
-public abstract class AirportWriter implements AutoCloseable{
+public abstract class AirportWriter implements AutoCloseable {
     protected BufferedWriter writer;
     protected String fPath;
 
     /**
      * A constructor method
-     * @param path
-     * @throws IOException
+     *
+     * @param path File path
+     * @throws IOException If an I/O error occurs
      */
     public AirportWriter(String path) throws IOException {
         fPath = path;
@@ -28,8 +29,8 @@ public abstract class AirportWriter implements AutoCloseable{
     /**
      * @return array of header
      */
-    protected String[] getHeader(){
-        return new String[] {"EnglishName", "KoreanName", "IATA", "ICAO", "Region",
+    protected String[] getHeader() {
+        return new String[]{"EnglishName", "KoreanName", "IATA", "ICAO", "Region",
                 "EnglishCountryName", "KoreanCountryName", "EnglishCityName"};
     }
 

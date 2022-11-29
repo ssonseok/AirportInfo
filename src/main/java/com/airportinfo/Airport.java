@@ -1,5 +1,8 @@
 package com.airportinfo;
 
+import lombok.Getter;
+
+@Getter
 public class Airport {
     public String englishName;
     public String koreanName;

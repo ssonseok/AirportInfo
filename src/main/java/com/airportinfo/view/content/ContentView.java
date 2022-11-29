@@ -1,4 +1,6 @@
-package com.airportinfo.view;
+package com.airportinfo.view.content;
+
+import com.airportinfo.view.ComponentGroup;
 
 /**
  * ContentView is able to be a ContentPane of MainFrame.

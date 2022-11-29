@@ -1,7 +1,7 @@
-package com.airportinfo;
+package com.airportinfo.view;
 
 import com.airportinfo.util.Screenshot;
-import com.airportinfo.view.ContentView;
+import com.airportinfo.view.content.ContentView;
 import com.airportinfo.view.MainFrame;
 import com.airportinfo.view.chart.*;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -69,8 +69,6 @@ public class ChartContentView extends ContentView {
                 chartView.setColorScheme(colors);
             }
         });
-
-        barChartView.showGuideline = false;
     }
 
     @Override
@@ -89,7 +87,6 @@ public class ChartContentView extends ContentView {
         legendList.add("fruit", 0.15);
         chartView.setLegends(legendList);
         chartView.setNumberFormat(NumberFormat.DOUBLE_FORMAT);
-        chartView.showLegendLabel = false;
 
         panel.revalidate();
         panel.repaint();
