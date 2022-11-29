@@ -77,7 +77,7 @@ public class AirportController {
         }
     }
 
-    public Iterable<Airport> getAirports() {
+    public ArrayList<Airport> getAirports() {
         return airports;
     }
 
