@@ -6,9 +6,8 @@ import com.airportinfo.view.MainFrame;
 import com.airportinfo.view.TestContentView;
 import com.airportinfo.view.TestFrame;
 import com.airportinfo.view.airport.AirportChartView;
-import com.airportinfo.view.airport.RegionStatisticCreator;
+import com.airportinfo.view.airport.AttributeStatisticCreator;
 import com.airportinfo.view.chart.HistogramView;
-import com.airportinfo.view.chart.PieChartView;
 
 import java.awt.*;
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class AirportChartViewTest {
         MainFrame mainFrame = new TestFrame();
         FontManager.loadFont();
         TestContentView contentView = new TestContentView();
-        AirportChartView airportChartView = new AirportChartView(new HistogramView(), new RegionStatisticCreator());
+        AirportChartView airportChartView = new AirportChartView(new HistogramView(), new AttributeStatisticCreator(Airport::getRegion));
         contentView.setPanel(airportChartView.getPanel());
         airportChartView.setAirports(airportController.getAirports());
 
