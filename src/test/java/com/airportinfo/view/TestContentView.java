@@ -1,5 +1,6 @@
 package com.airportinfo.view;
 
+import com.airportinfo.view.content.ContentView;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;

@@ -1,6 +1,7 @@
 package com.airportinfo;
 
 import com.airportinfo.util.FontManager;
+import com.airportinfo.view.ChartContentView;
 import com.airportinfo.view.MainFrame;
 import com.airportinfo.view.TestFrame;
 

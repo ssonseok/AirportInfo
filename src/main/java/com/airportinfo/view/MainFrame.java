@@ -1,5 +1,6 @@
 package com.airportinfo.view;
 
+import com.airportinfo.view.content.ContentView;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.MaterialLiteTheme;
 import mdlaf.themes.MaterialOceanicTheme;
