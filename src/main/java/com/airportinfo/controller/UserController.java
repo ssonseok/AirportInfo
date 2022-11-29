@@ -30,7 +30,7 @@ public class UserController {
      * @param airport Airport to remove.
      */
     public void delBookmark(Airport airport) {
-		bookmark.remove(airport);
+        bookmark.remove(airport);
         System.out.println(bookmark.contains(airport));
     }
 
@@ -47,7 +47,7 @@ public class UserController {
      * 별점기능 Rating
      *
      * @param airport Airport to rate
-     * @param rate Rate
+     * @param rate    Rate
      */
     public void addRating(Airport airport, int rate) {
         //별점여부 확인
@@ -75,6 +75,6 @@ public class UserController {
      * @return If exists return rate or return -1
      */
     public int getRating(Airport airport) {
-		return rating.getOrDefault(airport, -1);
+        return rating.getOrDefault(airport, -1);
     }
 }

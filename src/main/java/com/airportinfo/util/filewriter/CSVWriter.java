@@ -1,18 +1,15 @@
-package com.airportinfo.util.fileWriter;
+package com.airportinfo.util.filewriter;
 
 import com.airportinfo.Airport;
 
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * A writer class to write csv files.
  *
  * @author JumoKookbob
  */
-public class CSVWriter extends AirportWriter{
+public class CSVWriter extends AirportWriter {
 
     public CSVWriter(String fPath) throws IOException {
         super(fPath);
@@ -20,10 +17,10 @@ public class CSVWriter extends AirportWriter{
 
     @Override
     public void write(Airport airport) throws IOException {
-        try{
+        try {
             int count = 0;
-            for(String content : airport.toArray()) {
-                if(count < airport.toArray().length - 1)
+            for (String content : airport.toArray()) {
+                if (count < airport.toArray().length - 1)
                     writer.write(content + ",");
                 else
                     writer.write(content);
@@ -34,14 +31,16 @@ public class CSVWriter extends AirportWriter{
             writer.newLine();
         }
     }
+
     /**
-     * A method to only use to write header to file
-     * @throws IOException
+     * A method to only use to write header to file.
+     *
+     * @throws IOException If an I/O error occurs
      */
     protected void writeHeader() throws IOException {
         int count = 0;
-        for(String head : getHeader()) {
-            if(count < getHeader().length - 1)
+        for (String head : getHeader()) {
+            if (count < getHeader().length - 1)
                 writer.write(head + ",");
             else
                 writer.write(head);
@@ -53,7 +52,7 @@ public class CSVWriter extends AirportWriter{
     @Override
     public void write(Airport[] airports) throws IOException {
         writeHeader();
-        for(Airport airport : airports) {
+        for (Airport airport : airports) {
             write(airport);
         }
     }

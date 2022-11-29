@@ -5,6 +5,7 @@ import com.airportinfo.util.CSVReader;
 import com.airportinfo.util.DBManager;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -15,16 +16,6 @@ import java.util.ArrayList;
  */
 public class AirportController {
     private ArrayList<Airport> airports = new ArrayList<>();
-
-    /**
-     * Initialize airports with loadFromDB().
-     *
-     * @throws SQLException           If a database access error occurs
-     * @throws ClassNotFoundException If mysql driver not found
-     */
-    public AirportController() throws SQLException, ClassNotFoundException {
-        loadFromDB();
-    }
 
     /**
      * Load airports from Database.
@@ -61,16 +52,32 @@ public class AirportController {
      */
     public void loadFromFile(String path) throws IOException {
         try (CSVReader reader = new CSVReader(path)) {
-            airports.clear();
-            String[] items = reader.read();
-            while ((items = reader.read()) != null) {
-                Airport airport = Airport.create(items);
-                airports.add(airport);
-            }
+            readCSVFile(reader);
         }
     }
 
-    public ArrayList<Airport> getAirports() {
+    /**
+     * Load from a CSV file. All airports will be removed.
+     *
+     * @param inputStream CSVFile input stream
+     * @throws IOException Exception when open and read file
+     */
+    public void loadFromFile(InputStream inputStream) throws IOException {
+        try (CSVReader reader = new CSVReader(inputStream)) {
+            readCSVFile(reader);
+        }
+    }
+
+    private void readCSVFile(CSVReader reader) throws IOException {
+        airports.clear();
+        String[] items = reader.read();
+        while ((items = reader.read()) != null) {
+            Airport airport = Airport.create(items);
+            airports.add(airport);
+        }
+    }
+
+    public Iterable<Airport> getAirports() {
         return airports;
     }
 

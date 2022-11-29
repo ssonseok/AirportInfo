@@ -24,6 +24,15 @@ public class CSVReader implements AutoCloseable {
     }
 
     /**
+     * Initialize reader with input stream.
+     *
+     * @param inputStream Input stream
+     */
+    public CSVReader(InputStream inputStream) {
+        reader = new BufferedReader(new InputStreamReader(inputStream));
+    }
+
+    /**
      * Read a line split with ','.
      *
      * @return Array of String split by ','
