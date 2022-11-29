@@ -5,7 +5,7 @@ import com.airportinfo.util.FontManager;
 import com.airportinfo.view.MainFrame;
 import com.airportinfo.view.TestContentView;
 import com.airportinfo.view.TestFrame;
-import com.airportinfo.view.table.AirportTableView;
+import com.airportinfo.view.airport.AirportTableView;
 
 import java.awt.*;
 import java.io.IOException;
