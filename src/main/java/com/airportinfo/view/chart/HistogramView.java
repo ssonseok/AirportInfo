@@ -120,17 +120,17 @@ public class HistogramView extends AbstractChartView {
 
         double unit = getUnit();
         int numUnitLabels = (int) (max / unit);
-        int unitLabelInterval = height / numUnitLabels - 1;
 
         double unitLine = 0;
-        int labelHeight = (int) (graphics.getFontMetrics().getHeight() * 0.25);
-        int unitLabelY = yOffset + height + labelHeight;
-        for (int i = 0; i < numUnitLabels; i++) {
+        int labelYOffset = (int) (graphics.getFontMetrics().getHeight() * 0.25);
+        int unitLabelYStart = yOffset + height + labelYOffset;
+        for (double unitIndex = 0; unitIndex < numUnitLabels; unitIndex++) {
+            double guidelineRate = unitIndex / numUnitLabels;
+            int unitLabelY = unitLabelYStart - (int) (height * guidelineRate + 0.5);
             graphics.drawString(numberFormat.formatNumber(unitLine), xOffset, unitLabelY);
             unitLine += unit;
-            unitLabelY -= unitLabelInterval;
         }
-        graphics.drawString(numberFormat.formatNumber(unitLine), xOffset, unitLabelY);
+        graphics.drawString(numberFormat.formatNumber(unitLine), xOffset, yOffset + labelYOffset);
     }
 
     /**
