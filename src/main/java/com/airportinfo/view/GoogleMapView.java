@@ -1,4 +1,4 @@
-package com.airportinfo.util;
+package com.airportinfo.view;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
@@ -9,13 +9,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.airportinfo.util.GoogleMapAPI;
+
 /**
  * print maps from Google Map API to the screen
  * 
  * @author ShinHeeYoun
  *
  */
-public class GoogleMapFrame extends JFrame {
+public class GoogleMapView extends JFrame {
 	
 	private JTextField textField = new JTextField(30);
 	private JPanel panel = new JPanel();
@@ -26,7 +29,7 @@ public class GoogleMapFrame extends JFrame {
 	
 	// constructor class with nothing
 	// --> print ( textbox + search button + map ) in the screen
-	public GoogleMapFrame() {
+	public GoogleMapView() {
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -37,14 +40,13 @@ public class GoogleMapFrame extends JFrame {
 		panel.add(button);
 		
 		button.addMouseListener(new Event());
-		
 		add(BorderLayout.NORTH, panel);
 		pack();
 	}
 	
 	// constructor class with String value
 	// --> print ( map ) in the screen
-	public GoogleMapFrame(String location) {
+	public GoogleMapView(String location) {
 		googleAPI.downloadMap(location);
 		googleMap = new JLabel(googleAPI.getMap(location));
 		googleAPI.fileDelete(location);
@@ -81,5 +83,16 @@ public class GoogleMapFrame extends JFrame {
 		googleAPI.fileDelete(location);
 		add(BorderLayout.SOUTH, googleMap);
 		pack();
+	}
+	
+	//
+	public void setSize(int num) {
+		googleAPI.setSize(num);
+	}
+	public void setSize(int num, int num2) {
+		googleAPI.setSize(num, num2);
+	}
+	public void setZoom(int num) {
+		googleAPI.setZoom(num);
 	}
 }

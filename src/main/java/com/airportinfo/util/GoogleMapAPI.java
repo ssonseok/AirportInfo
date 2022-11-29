@@ -15,15 +15,16 @@ import javax.swing.ImageIcon;
  *
  */
 public class GoogleMapAPI {
-	private static final int mapSizeX=700;
-	private static final int mapSizeY=700;
+	private static int mapSizeX=700;
+	private static int mapSizeY=700;
+	private static int zoom = 9;
 	private static final String MapAPI ="AIzaSyDNconz87XncSFuaSdNts129M43jXohGkc";
 
 	public void downloadMap(String location) {
 		try {
 			String imageURL = "https://maps.googleapis.com/maps/api/staticmap?center="
 					+ URLEncoder.encode(location, "UTF-8")
-					+ "&zoom=9&size="+mapSizeX+"x"+mapSizeY+"&key="+MapAPI;
+					+ "&zoom="+zoom+"&size="+mapSizeX+"x"+mapSizeY+"&key="+MapAPI;
 			
 			URL url = new URL(imageURL);
 			InputStream is = url.openStream();
@@ -47,5 +48,17 @@ public class GoogleMapAPI {
 	public void fileDelete(String filename) {
 		File f = new File(filename);
 		f.delete();
+	}
+	
+	public void setSize (int num) {
+		mapSizeX=num;
+		mapSizeY=num;
+	}
+	public void setSize (int num, int num2) {
+		mapSizeX=num;
+		mapSizeY=num2;
+	}
+	public void setZoom (int num) {
+		zoom=num;
 	}
 }
