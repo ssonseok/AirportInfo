@@ -1,7 +1,6 @@
 package com.airportinfo.view.airport;
 
 import com.airportinfo.Airport;
-import com.airportinfo.TranslatedAirportData;
 import com.airportinfo.view.ComponentView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -36,7 +35,7 @@ public class AirportDetailView extends ComponentView {
         while (tableModel.getRowCount() > 0)
             tableModel.removeRow(0);
 
-        String[] keys = TranslatedAirportData.ATTRIBUTE_NAMES;
+        String[] keys = Airport.getLocalizedAttributeNames();
         String[] values = airport.toArray();
 
         for (int i = 0; i < keys.length; i++) {

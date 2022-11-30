@@ -1,7 +1,6 @@
 package com.airportinfo.util.filewriter;
 
 import com.airportinfo.Airport;
-import com.airportinfo.TranslatedAirportData;
 
 import java.io.IOException;
 
@@ -26,7 +25,7 @@ class JSONWriter extends AirportWriter {
 
     @Override
     public void write(Airport airport) throws IOException {
-        String[] keys = TranslatedAirportData.ATTRIBUTE_NAMES;
+        String[] keys = Airport.ATTRIBUTE_NAMES;
         String[] values = airport.toArray();
 
         if (!isFirstAirport)

@@ -1,7 +1,6 @@
 package com.airportinfo.view.airport;
 
 import com.airportinfo.Airport;
-import com.airportinfo.TranslatedAirportData;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -16,7 +15,7 @@ import java.awt.*;
  */
 public class AirportTableView extends AirportView {
     private JPanel panel;
-    private final UneditableTableModel tableModel = new UneditableTableModel(TranslatedAirportData.ATTRIBUTE_NAMES, 0);
+    private final UneditableTableModel tableModel = new UneditableTableModel(Airport.getLocalizedAttributeNames(), 0);
     private JTable table;
     private JScrollPane scrollPane;
 

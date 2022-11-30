@@ -1,7 +1,6 @@
 package com.airportinfo.util.filewriter;
 
 import com.airportinfo.Airport;
-import com.airportinfo.TranslatedAirportData;
 
 import java.io.IOException;
 
@@ -42,8 +41,8 @@ class CSVWriter extends AirportWriter {
      */
     protected void writeHeader() throws IOException {
         int count = 0;
-        for (String head : TranslatedAirportData.ATTRIBUTE_NAMES) {
-            if (count < TranslatedAirportData.ATTRIBUTE_NAMES.length - 1)
+        for (String head : Airport.ATTRIBUTE_NAMES) {
+            if (count < Airport.ATTRIBUTE_NAMES.length - 1)
                 writer.write(head + ",");
             else
                 writer.write(head);

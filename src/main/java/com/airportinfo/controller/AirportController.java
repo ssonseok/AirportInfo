@@ -1,9 +1,6 @@
 package com.airportinfo.controller;
 
-import com.airportinfo.Airport;
-import com.airportinfo.KoreanAirportData;
-import com.airportinfo.RawAirport;
-import com.airportinfo.TranslatedAirportData;
+import com.airportinfo.*;
 import com.airportinfo.util.CSVReader;
 import com.airportinfo.util.DBManager;
 
@@ -25,6 +22,7 @@ public class AirportController {
 
     public AirportController() {
         supportedTranslations.add(KoreanAirportData.class);
+        supportedTranslations.add(EnglishAirportData.class);
     }
 
     /**

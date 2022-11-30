@@ -10,8 +10,23 @@ import java.util.Locale;
  * @author lalaalal
  */
 public class Airport {
+    public static final String[] ATTRIBUTE_NAMES = {"Airport Name", "IATA", "ICAO", "Region", "Country", "City"};
+    private static final HashMap<Locale, String[]> localizedAttributeNames = new HashMap<>();
     private final HashMap<Locale, TranslatedAirportData> data = new HashMap<>();
     private final RawAirport airport;
+
+    public static void addLocalizedAttributeNames(Locale locale, String[] attributeNames) {
+        if (attributeNames.length == ATTRIBUTE_NAMES.length)
+            localizedAttributeNames.put(locale, attributeNames);
+    }
+
+    public static String[] getLocalizedAttributeNames() {
+        Locale locale = Locale.getDefault();
+        String[] attributeNames = localizedAttributeNames.get(locale);
+        if (attributeNames == null)
+            return ATTRIBUTE_NAMES;
+        return attributeNames;
+    }
 
     public Airport(RawAirport airport) {
         this.airport = airport;
@@ -64,7 +79,7 @@ public class Airport {
     }
 
     public String[] toArray() {
-        String[] array = new String[TranslatedAirportData.ATTRIBUTE_NAMES.length];
+        String[] array = new String[ATTRIBUTE_NAMES.length];
 
         array[0] = getAirportName();
         array[1] = getIATA();
