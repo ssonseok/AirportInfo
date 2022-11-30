@@ -3,7 +3,7 @@ package com.airportinfo;
 import com.airportinfo.view.GoogleMapView;
 /**
  * Controller handling viewing map function 
- * (src/main/java/com.airportinfo/GoogleMapAPI.java, src/main/java/com.airportinfo/GoogleMapFrame.java)
+ * (src/main/java/com.airportinfo/GoogleMapAPI.java, src/main/java/com.airport.view/GoogleMapView.java)
  * 
  * @author ShinHeeYoun
  *
@@ -16,22 +16,22 @@ public class MapTest {
 		 * GoogleMapFrame frame = new GoogleMapFrame();
 		 */
 		GoogleMapView frame = new GoogleMapView();
-		frame.setSize(1000);	
+			
 		/**
 		 * if you want to see only map 
 		 * (To view airport maps directly without searching)
 		 * 
 		 * String location="--------";
-		 * GoogleMapFrame frame = new GoogleMapFrame(location);
+		 * GoogleMapView frame = new GoogleMapView(location);
 		 */
 		//String location="--------";
-		//GoogleMapFrame frame = new GoogleMapFrame(location);
+		//GoogleMapView frame = new GoogleMapView(location);
 		
 		/**
 		 * change size, zoom
 		 */
 		// frame.setSize(1000);			//xSize=1000, ySize=1000
-		// frame.setSize(1000, 800);	//xSize=1000, ySize=800
+		// frame.setSize(1000, 400);	//xSize=1000, ySize=400
 		// frame.setZoom(20);			//zoom=20
 	}
 }

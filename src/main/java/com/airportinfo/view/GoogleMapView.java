@@ -85,7 +85,7 @@ public class GoogleMapView extends JFrame {
 		pack();
 	}
 	
-	//
+	// Change size and zoom
 	public void setSize(int num) {
 		googleAPI.setSize(num);
 	}
