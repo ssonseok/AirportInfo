@@ -19,6 +19,7 @@ import java.util.ArrayList;
  * @author lalaalal
  */
 public class AirportController {
+    private Airport selectedAirport;
     private ArrayList<Airport> airports = new ArrayList<>();
     private final ArrayList<Class<? extends TranslatedAirportData>> supportedTranslations = new ArrayList<>();
 
@@ -107,6 +108,14 @@ public class AirportController {
         }
 
         return result;
+    }
+
+    public void selectAirport(Airport airport) {
+        selectedAirport = airport;
+    }
+
+    public Airport getSelectedAirport() {
+        return selectedAirport;
     }
 
     private void setTranslatedAirportData() throws NoSuchMethodException {
