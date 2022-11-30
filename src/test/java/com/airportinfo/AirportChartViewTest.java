@@ -9,6 +9,7 @@ import com.airportinfo.view.airport.AttributeStatisticCreator;
 import com.airportinfo.view.chart.HistogramView;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class AirportChartViewTest {
     public static void main(String[] args) throws SQLException, ClassNotFoundException, NoSuchMethodException {
@@ -19,7 +20,7 @@ public class AirportChartViewTest {
         TestContentView contentView = new TestContentView();
         AirportChartView airportChartView = new AirportChartView(new HistogramView(), new AttributeStatisticCreator(Airport::getRegion));
         contentView.setPanel(airportChartView.getPanel());
-        airportChartView.setAirports(airportController.getAirports());
+        airportChartView.setAirports(List.of(airportController.getAirports()));
 
         mainFrame.addContentView("AirportChartView", contentView);
         mainFrame.setContentView("AirportChartView");

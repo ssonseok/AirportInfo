@@ -1,6 +1,7 @@
 package com.airportinfo.util.filewriter;
 
-import com.airportinfo.RawAirport;
+import com.airportinfo.Airport;
+import com.airportinfo.TranslatedAirportData;
 
 import java.io.IOException;
 
@@ -9,17 +10,19 @@ import java.io.IOException;
  *
  * @author JumoKookbob
  */
-public class CSVWriter extends AirportWriter {
+class CSVWriter extends AirportWriter {
 
     public CSVWriter(String fPath) throws IOException {
         super(fPath);
     }
 
     @Override
-    public void write(RawAirport airport) throws IOException {
+    public void write(Airport airport) throws IOException {
         try {
             int count = 0;
             for (String content : airport.toArray()) {
+                if (content.contains(","))
+                    content = "\"" + content + "\"";
                 if (count < airport.toArray().length - 1)
                     writer.write(content + ",");
                 else
@@ -39,8 +42,8 @@ public class CSVWriter extends AirportWriter {
      */
     protected void writeHeader() throws IOException {
         int count = 0;
-        for (String head : getHeader()) {
-            if (count < getHeader().length - 1)
+        for (String head : TranslatedAirportData.ATTRIBUTE_NAMES) {
+            if (count < TranslatedAirportData.ATTRIBUTE_NAMES.length - 1)
                 writer.write(head + ",");
             else
                 writer.write(head);
@@ -50,9 +53,9 @@ public class CSVWriter extends AirportWriter {
     }
 
     @Override
-    public void write(RawAirport[] airports) throws IOException {
+    public void write(Airport[] airports) throws IOException {
         writeHeader();
-        for (RawAirport airport : airports) {
+        for (Airport airport : airports) {
             write(airport);
         }
     }

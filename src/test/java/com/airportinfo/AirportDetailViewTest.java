@@ -17,7 +17,7 @@ public class AirportDetailViewTest {
 
         TestContentView contentView = new TestContentView();
         AirportDetailView airportDetailView = new AirportDetailView();
-        airportDetailView.setAirport(airportController.getAirports().get(0));
+        airportDetailView.setAirport(airportController.getAirports()[0]);
         contentView.setPanel(airportDetailView.getPanel());
 
         mainFrame.addContentView("AirportDetailView", contentView);

@@ -1,6 +1,7 @@
 package com.airportinfo.util.filewriter;
 
-import com.airportinfo.RawAirport;
+import com.airportinfo.Airport;
+import com.airportinfo.TranslatedAirportData;
 
 import java.io.IOException;
 
@@ -9,7 +10,8 @@ import java.io.IOException;
  *
  * @author JumoKookbob
  */
-public class JSONWriter extends AirportWriter {
+class JSONWriter extends AirportWriter {
+    private boolean isFirstAirport = true;
 
     /**
      * constructor method
@@ -19,15 +21,38 @@ public class JSONWriter extends AirportWriter {
      */
     public JSONWriter(String fPath) throws IOException {
         super(fPath);
+        writer.write("[");
     }
 
     @Override
-    public void write(RawAirport airport) throws IOException {
-        throw new UnsupportedOperationException();
+    public void write(Airport airport) throws IOException {
+        String[] keys = TranslatedAirportData.ATTRIBUTE_NAMES;
+        String[] values = airport.toArray();
+
+        if (!isFirstAirport)
+            writer.write(",");
+        else
+            isFirstAirport = false;
+
+        writer.write("{");
+        for (int i = 0; i < keys.length; i++) {
+            String airportString = String.format("\"%s\":\"%s\"", keys[i], values[i]);
+            if (i != keys.length - 1)
+                airportString += ",";
+            writer.write(airportString);
+        }
+        writer.write("}");
     }
 
     @Override
-    public void write(RawAirport[] airports) throws IOException {
-        throw new UnsupportedOperationException();
+    public void write(Airport[] airports) throws IOException {
+        for (Airport airport : airports)
+            write(airport);
+    }
+
+    @Override
+    public void close() throws IOException {
+        writer.write("]");
+        super.close();
     }
 }

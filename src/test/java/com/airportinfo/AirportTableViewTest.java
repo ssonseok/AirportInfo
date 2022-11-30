@@ -7,6 +7,7 @@ import com.airportinfo.view.TestFrame;
 import com.airportinfo.view.airport.AirportTableView;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Locale;
 
 public class AirportTableViewTest {
@@ -18,7 +19,7 @@ public class AirportTableViewTest {
         MainFrame mainFrame = new TestFrame();
         TestContentView contentView = new TestContentView();
         AirportTableView airportTableView = new AirportTableView();
-        airportTableView.setAirports(airportController.getAirports());
+        airportTableView.setAirports(List.of(airportController.getAirports()));
 
         contentView.setPanel(airportTableView.getPanel());
 

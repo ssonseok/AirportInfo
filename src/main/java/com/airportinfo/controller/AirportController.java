@@ -89,8 +89,8 @@ public class AirportController {
         }
     }
 
-    public ArrayList<Airport> getAirports() {
-        return airports;
+    public Airport[] getAirports() {
+        return airports.toArray(new Airport[0]);
     }
 
     /**
