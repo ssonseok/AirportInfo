@@ -6,7 +6,8 @@
       <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-8.0.30.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/activation-1.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/javax.mail-1.6.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/lombok.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/google-cloud-translate-2.6.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/json-20220924.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

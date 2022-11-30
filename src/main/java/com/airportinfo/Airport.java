@@ -1,55 +1,88 @@
 package com.airportinfo;
 
-import lombok.Getter;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Locale;
 
-@Getter
+/**
+ * Airport data support translation.
+ *
+ * @author lalaalal
+ */
 public class Airport {
-    public String englishName;
-    public String koreanName;
-    public String IATA;
-    public String ICAO;
-    public String region;
-    public String englishCountryName;
-    public String koreanCountryName;
-    public String englishCityName;
+    private final HashMap<Locale, TranslatedAirportData> data = new HashMap<>();
+    private final RawAirport airport;
 
-    public static Airport create(String[] items) {
-        Airport airport = new Airport();
-        airport.englishName = items[0];
-        airport.koreanName = items[1];
-        airport.IATA = items[2];
-        airport.ICAO = items[3];
-        airport.region = items[4];
-        airport.englishCountryName = items[5];
-        airport.koreanCountryName = items[6];
-        airport.englishCityName = items[7];
+    public Airport(RawAirport airport) {
+        this.airport = airport;
+    }
 
+    public void addTranslatedAirportData(Class<? extends TranslatedAirportData> type) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        TranslatedAirportData translatedAirportData = type.getDeclaredConstructor(RawAirport.class).newInstance(airport);
+        Locale locale = translatedAirportData.getLocale();
+        data.put(locale, translatedAirportData);
+    }
+
+    public String getAirportName() {
+        TranslatedAirportData translatedAirportData = data.get(Locale.getDefault());
+        if (translatedAirportData == null)
+            return airport.englishName;
+        return translatedAirportData.getAirportName();
+    }
+
+    public String getCountry() {
+        TranslatedAirportData translatedAirportData = data.get(Locale.getDefault());
+        if (translatedAirportData == null)
+            return airport.englishCountryName;
+        return translatedAirportData.getCountry();
+    }
+
+    public String getCity() {
+        TranslatedAirportData translatedAirportData = data.get(Locale.getDefault());
+        if (translatedAirportData == null)
+            return airport.englishCityName;
+        return translatedAirportData.getCity();
+    }
+
+    public String getIATA() {
+        return airport.IATA;
+    }
+
+    public String getICAO() {
+        return airport.ICAO;
+    }
+
+    public String getRegion() {
+        TranslatedAirportData translatedAirportData = data.get(Locale.getDefault());
+        if (translatedAirportData == null)
+            return airport.koreanRegion;
+        return translatedAirportData.getRegion();
+    }
+
+    public RawAirport getRawData() {
         return airport;
     }
 
     public String[] toArray() {
-        String[] items = new String[8];
-        items[0] = englishName;
-        items[1] = koreanName;
-        items[2] = IATA;
-        items[3] = ICAO;
-        items[4] = region;
-        items[5] = englishCountryName;
-        items[6] = koreanCountryName;
-        items[7] = englishCityName;
+        String[] array = new String[TranslatedAirportData.ATTRIBUTE_NAMES.length];
 
-        return items;
+        array[0] = getAirportName();
+        array[1] = getIATA();
+        array[2] = getICAO();
+        array[3] = getRegion();
+        array[4] = getCountry();
+        array[5] = getCity();
+
+        return array;
     }
 
     @Override
     public String toString() {
-        return englishName + ", " +
-                koreanName + ", " +
-                IATA + ", " +
-                ICAO + ", " +
-                region + ", " +
-                englishCountryName + ", " +
-                koreanCountryName + ", " +
-                englishCityName;
+        return getAirportName() + ","
+                + getIATA() + ","
+                + getICAO() + ","
+                + getRegion() + ","
+                + getCountry() + ","
+                + getCity();
     }
 }

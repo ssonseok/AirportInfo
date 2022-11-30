@@ -1,6 +1,6 @@
 package com.airportinfo.util.filewriter;
 
-import com.airportinfo.Airport;
+import com.airportinfo.RawAirport;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -37,12 +37,12 @@ public abstract class AirportWriter implements AutoCloseable {
     /**
      * An abstract method to make file with Airport
      */
-    public abstract void write(Airport airport) throws IOException;
+    public abstract void write(RawAirport airport) throws IOException;
 
     /**
      * An abstract method to make file with Airport array
      */
-    public abstract void write(Airport[] airports) throws IOException;
+    public abstract void write(RawAirport[] airports) throws IOException;
 
     @Override
     public void close() throws Exception {

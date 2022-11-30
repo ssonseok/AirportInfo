@@ -1,6 +1,7 @@
 package com.airportinfo.util;
 
 import com.airportinfo.Airport;
+import com.airportinfo.RawAirport;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class DBManager implements AutoCloseable {
      * @return True if insertion succeed
      * @throws SQLException If a database access error occurs
      */
-    public boolean insertAirport(Airport airport) throws SQLException {
+    public boolean insertAirport(RawAirport airport) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("INSERT INTO airport(EnglishName, KoreanName, IATA, ICAO, Region, EnglishCountryName, KoreanCountryName, EnglishCityName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         String[] items = airport.toArray();
         for (int i = 0; i < items.length; i++)
@@ -65,17 +66,17 @@ public class DBManager implements AutoCloseable {
         ResultSet result = statement.executeQuery();
         ArrayList<Airport> airports = new ArrayList<>();
         while (result.next()) {
-            Airport airport = new Airport();
+            RawAirport airport = new RawAirport();
             airport.englishName = result.getString("EnglishName");
             airport.koreanName = result.getString("KoreanName");
             airport.IATA = result.getString("IATA");
             airport.ICAO = result.getString("ICAO");
-            airport.region = result.getString("Region");
+            airport.koreanRegion = result.getString("Region");
             airport.englishCountryName = result.getString("EnglishCountryName");
             airport.koreanCountryName = result.getString("KoreanCountryName");
             airport.englishCityName = result.getString("EnglishCityName");
 
-            airports.add(airport);
+            airports.add(new Airport(airport));
         }
 
         return airports;

@@ -1,12 +1,12 @@
 package com.airportinfo.view.airport;
 
 import com.airportinfo.Airport;
+import com.airportinfo.TranslatedAirportData;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 /**
@@ -16,15 +16,9 @@ import java.awt.*;
  */
 public class AirportTableView extends AirportView {
     private JPanel panel;
-    private final DefaultTableModel tableModel = new DefaultTableModel(HEADER, 0) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
+    private final UneditableTableModel tableModel = new UneditableTableModel(TranslatedAirportData.ATTRIBUTE_NAMES, 0);
     private JTable table;
     private JScrollPane scrollPane;
-    private static final String[] HEADER = {"EnglishName", "KoreanName", "IATA", "ICAO", "Region", "EnglishCountryName", "KoreanCountryName", "EnglishCityName"};
 
     @Override
     public JPanel getPanel() {

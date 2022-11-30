@@ -1,11 +1,15 @@
 package com.airportinfo.controller;
 
 import com.airportinfo.Airport;
+import com.airportinfo.KoreanAirportData;
+import com.airportinfo.RawAirport;
+import com.airportinfo.TranslatedAirportData;
 import com.airportinfo.util.CSVReader;
 import com.airportinfo.util.DBManager;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -16,6 +20,11 @@ import java.util.ArrayList;
  */
 public class AirportController {
     private ArrayList<Airport> airports = new ArrayList<>();
+    private final ArrayList<Class<? extends TranslatedAirportData>> supportedTranslations = new ArrayList<>();
+
+    public AirportController() {
+        supportedTranslations.add(KoreanAirportData.class);
+    }
 
     /**
      * Load airports from Database.
@@ -23,9 +32,10 @@ public class AirportController {
      * @throws SQLException           If a database access error occurs
      * @throws ClassNotFoundException If mysql driver not found
      */
-    public void loadFromDB() throws SQLException, ClassNotFoundException {
+    public void loadFromDB() throws SQLException, ClassNotFoundException, NoSuchMethodException {
         try (DBManager dbManager = new DBManager()) {
             airports = dbManager.selectAirport();
+            setTranslatedAirportData();
         }
     }
 
@@ -39,7 +49,7 @@ public class AirportController {
         try (DBManager dbManager = new DBManager()) {
             dbManager.clear();
             for (Airport airport : airports) {
-                dbManager.insertAirport(airport);
+                dbManager.insertAirport(airport.getRawData());
             }
         }
     }
@@ -50,9 +60,10 @@ public class AirportController {
      * @param path CSVFile path
      * @throws IOException Exception when open and read file
      */
-    public void loadFromFile(String path) throws IOException {
+    public void loadFromFile(String path) throws IOException, NoSuchMethodException {
         try (CSVReader reader = new CSVReader(path)) {
             readCSVFile(reader);
+            setTranslatedAirportData();
         }
     }
 
@@ -62,9 +73,10 @@ public class AirportController {
      * @param inputStream CSVFile input stream
      * @throws IOException Exception when open and read file
      */
-    public void loadFromFile(InputStream inputStream) throws IOException {
+    public void loadFromFile(InputStream inputStream) throws IOException, NoSuchMethodException {
         try (CSVReader reader = new CSVReader(inputStream)) {
             readCSVFile(reader);
+            setTranslatedAirportData();
         }
     }
 
@@ -72,7 +84,7 @@ public class AirportController {
         airports.clear();
         String[] items = reader.read();
         while ((items = reader.read()) != null) {
-            Airport airport = Airport.create(items);
+            Airport airport = RawAirport.create(items);
             airports.add(airport);
         }
     }
@@ -95,6 +107,18 @@ public class AirportController {
         }
 
         return result;
+    }
+
+    private void setTranslatedAirportData() throws NoSuchMethodException {
+        try {
+            for (Airport airport : airports) {
+                for (Class<? extends TranslatedAirportData> supportedTranslation : supportedTranslations) {
+                    airport.addTranslatedAirportData(supportedTranslation);
+                }
+            }
+        } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
+            System.out.println("Something went wrong while creating TranslatedAirportData");
+        }
     }
 
     /**

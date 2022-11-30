@@ -1,6 +1,6 @@
 package com.airportinfo.util.filewriter;
 
-import com.airportinfo.Airport;
+import com.airportinfo.RawAirport;
 
 import java.io.IOException;
 
@@ -22,12 +22,12 @@ public class JSONWriter extends AirportWriter {
     }
 
     @Override
-    public void write(Airport airport) throws IOException {
+    public void write(RawAirport airport) throws IOException {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void write(Airport[] airports) throws IOException {
+    public void write(RawAirport[] airports) throws IOException {
         throw new UnsupportedOperationException();
     }
 }

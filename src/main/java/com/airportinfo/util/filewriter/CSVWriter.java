@@ -1,6 +1,6 @@
 package com.airportinfo.util.filewriter;
 
-import com.airportinfo.Airport;
+import com.airportinfo.RawAirport;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ public class CSVWriter extends AirportWriter {
     }
 
     @Override
-    public void write(Airport airport) throws IOException {
+    public void write(RawAirport airport) throws IOException {
         try {
             int count = 0;
             for (String content : airport.toArray()) {
@@ -50,9 +50,9 @@ public class CSVWriter extends AirportWriter {
     }
 
     @Override
-    public void write(Airport[] airports) throws IOException {
+    public void write(RawAirport[] airports) throws IOException {
         writeHeader();
-        for (Airport airport : airports) {
+        for (RawAirport airport : airports) {
             write(airport);
         }
     }
