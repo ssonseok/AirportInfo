@@ -2,7 +2,6 @@ package com.airportinfo.view.airport;
 
 import com.airportinfo.view.chart.AbstractChartView;
 import com.airportinfo.view.chart.LegendList;
-import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -83,5 +82,4 @@ public class AirportChartView extends AirportView {
     public JComponent $$$getRootComponent$$$() {
         return panel;
     }
-
 }

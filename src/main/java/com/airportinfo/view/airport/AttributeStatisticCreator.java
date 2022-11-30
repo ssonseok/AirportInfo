@@ -6,6 +6,11 @@ import com.airportinfo.view.chart.LegendList;
 import java.util.HashMap;
 import java.util.function.Function;
 
+/**
+ * AirportStatisticCreator using airport attribute.
+ *
+ * @author lalaalal
+ */
 public class AttributeStatisticCreator implements AirportStatisticCreator {
     private final Function<Airport, String> attributeSelector;
 
