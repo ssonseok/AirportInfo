@@ -1,6 +1,6 @@
 package com.airportinfo.controller;
 
-import com.airportinfo.Airport;
+import com.airportinfo.model.Airport;
 
 import java.util.HashMap;
 import java.util.HashSet;

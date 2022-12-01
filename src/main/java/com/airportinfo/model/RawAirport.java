@@ -1,4 +1,4 @@
-package com.airportinfo;
+package com.airportinfo.model;
 
 /**
  * Having all airport data.
@@ -6,7 +6,7 @@ package com.airportinfo;
  * @author lalaalal
  */
 public class RawAirport {
-    public static final String[] ATTRIBUTE_NAME = {"EnglishName", "KoreanName", "IATA", "ICAO", "KoreanRegion", "EnglishCountryName", "KoreanCountryName", "EnglishCityName"};
+    public static final String[] ATTRIBUTE_NAMES = {"EnglishName", "KoreanName", "IATA", "ICAO", "KoreanRegion", "EnglishCountryName", "KoreanCountryName", "EnglishCityName"};
     public String englishName;
     public String koreanName;
     public String IATA;

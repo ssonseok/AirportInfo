@@ -1,4 +1,4 @@
-package com.airportinfo.view.airport;
+package com.airportinfo.view;
 
 import javax.swing.table.DefaultTableModel;
 

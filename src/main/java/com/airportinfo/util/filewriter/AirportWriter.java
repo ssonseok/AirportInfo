@@ -1,6 +1,6 @@
 package com.airportinfo.util.filewriter;
 
-import com.airportinfo.Airport;
+import com.airportinfo.model.Airport;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

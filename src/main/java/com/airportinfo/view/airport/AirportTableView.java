@@ -1,6 +1,7 @@
 package com.airportinfo.view.airport;
 
-import com.airportinfo.Airport;
+import com.airportinfo.model.Airport;
+import com.airportinfo.view.UneditableTableModel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 

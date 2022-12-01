@@ -1,4 +1,6 @@
-package com.airportinfo;
+package com.airportinfo.model;
+
+import com.airportinfo.util.Translator;
 
 import java.util.Locale;
 
@@ -8,6 +10,8 @@ import java.util.Locale;
  * @author lalaalal
  */
 public class EnglishAirportData extends TranslatedAirportData {
+    private static final PreTranslatedData regionTranslation = loadPreTranslatedData("translation/pre-translated-region-ko-en.data");
+
     public EnglishAirportData(RawAirport airport) {
         super(airport);
     }
@@ -34,6 +38,12 @@ public class EnglishAirportData extends TranslatedAirportData {
 
     @Override
     public String getRegion() {
-        return airport.koreanRegion;
+        String key = airport.koreanRegion;
+        if (regionTranslation.containsKey(key))
+            return regionTranslation.get(key);
+
+        String value = Translator.translate("ko", "en", airport.koreanRegion);
+        regionTranslation.put(key, value);
+        return value;
     }
 }

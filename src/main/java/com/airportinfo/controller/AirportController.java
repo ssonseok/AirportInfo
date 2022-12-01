@@ -1,6 +1,6 @@
 package com.airportinfo.controller;
 
-import com.airportinfo.*;
+import com.airportinfo.model.*;
 import com.airportinfo.util.CSVReader;
 import com.airportinfo.util.DBManager;
 

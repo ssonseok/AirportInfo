@@ -1,7 +1,7 @@
 package com.airportinfo.util;
 
-import com.airportinfo.Airport;
-import com.airportinfo.RawAirport;
+import com.airportinfo.model.Airport;
+import com.airportinfo.model.RawAirport;
 
 import java.sql.*;
 import java.util.ArrayList;

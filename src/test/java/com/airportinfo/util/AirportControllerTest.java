@@ -1,6 +1,6 @@
 package com.airportinfo.util;
 
-import com.airportinfo.Airport;
+import com.airportinfo.model.Airport;
 import com.airportinfo.controller.AirportController;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

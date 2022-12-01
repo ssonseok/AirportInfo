@@ -1,4 +1,4 @@
-package com.airportinfo;
+package com.airportinfo.model;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;

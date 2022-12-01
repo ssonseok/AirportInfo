@@ -1,4 +1,4 @@
-package com.airportinfo;
+package com.airportinfo.model;
 
 import java.util.Locale;
 
@@ -9,6 +9,8 @@ import java.util.Locale;
  */
 public class KoreanAirportData extends TranslatedAirportData {
     public static final String[] ATTRIBUTE_NAMES_KR = {"공항 이름", "IATA", "ICAO", "지역", "국가", "도시"};
+
+    private static final PreTranslatedData cityTranslation = loadPreTranslatedData("translation/pre-translated-city-en-ko.data");
 
     static {
         Airport.addLocalizedAttributeNames(Locale.KOREAN, ATTRIBUTE_NAMES_KR);
@@ -35,6 +37,9 @@ public class KoreanAirportData extends TranslatedAirportData {
 
     @Override
     public String getCity() {
+        String key = airport.englishCityName;
+        if (cityTranslation.containsKey(key))
+            return cityTranslation.get(key);
         return airport.englishCityName;
     }
 

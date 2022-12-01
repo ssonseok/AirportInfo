@@ -157,6 +157,7 @@ public abstract class AbstractChartView extends ComponentView {
     public void clear() {
         legends.clear();
         legendColor.clear();
+        legendDetailGroupView.clear();
     }
 
     /**
