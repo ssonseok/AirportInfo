@@ -1,6 +1,7 @@
 package com.airportinfo;
 
 import com.airportinfo.view.GoogleMapView;
+
 /**
  * Controller handling viewing map function 
  * (src/main/java/com.airportinfo/GoogleMapAPI.java, src/main/java/com.airport.view/GoogleMapView.java)

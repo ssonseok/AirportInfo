@@ -22,7 +22,7 @@ public class GoogleMapView extends JFrame {
 	
 	private JTextField textField = new JTextField(30);
 	private JPanel panel = new JPanel();
-	private JButton button = new JButton("°Ë»ö");
+	private JButton button = new JButton("ê²€ìƒ‰");
 	
 	private GoogleMapAPI googleAPI = new GoogleMapAPI();
 	private JLabel googleMap = new JLabel();
