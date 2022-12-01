@@ -1,11 +1,13 @@
 package com.airportinfo.model;
 
+import java.io.Serializable;
+
 /**
  * Having all airport data.
  *
  * @author lalaalal
  */
-public class RawAirport {
+public class RawAirport implements Serializable {
     public static final String[] ATTRIBUTE_NAMES = {"EnglishName", "KoreanName", "IATA", "ICAO", "KoreanRegion", "EnglishCountryName", "KoreanCountryName", "EnglishCityName"};
     public String englishName;
     public String koreanName;

@@ -1,5 +1,6 @@
 package com.airportinfo.model;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Locale;
@@ -9,7 +10,7 @@ import java.util.Locale;
  *
  * @author lalaalal
  */
-public class Airport {
+public class Airport implements Serializable {
     public static final String[] ATTRIBUTE_NAMES = {"Airport Name", "IATA", "ICAO", "Region", "Country", "City"};
     private static final HashMap<Locale, String[]> localizedAttributeNames = new HashMap<>();
     private final HashMap<Locale, TranslatedAirportData> data = new HashMap<>();

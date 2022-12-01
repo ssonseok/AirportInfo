@@ -5,6 +5,7 @@ import com.airportinfo.util.SerializeManager;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -13,7 +14,7 @@ import java.util.Locale;
  *
  * @author lalaalal
  */
-public abstract class TranslatedAirportData {
+public abstract class TranslatedAirportData implements Serializable {
     protected final RawAirport airport;
 
     protected static PreTranslatedData loadPreTranslatedData(String path) {
