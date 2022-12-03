@@ -10,6 +10,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
@@ -23,7 +24,11 @@ public class Translator {
     private static final String API_URL = "https://openapi.naver.com/v1/papago/n2mt";
 
     public static String getBundleString(String key) {
-        return ResourceBundle.getBundle("string").getString(key);
+        try {
+            return ResourceBundle.getBundle("string").getString(key);
+        } catch (MissingResourceException e) {
+            return key;
+        }
     }
 
     public static String translate(String sourceLang, String targetLang, String text) {

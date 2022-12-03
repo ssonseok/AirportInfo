@@ -3,6 +3,7 @@ package com.airportinfo.view;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
 import com.airportinfo.util.Translator;
+import com.airportinfo.view.menubar.AirportMenuBar;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -24,6 +25,7 @@ public class AirportFrame extends MainFrame {
     private JPanel toolbarPanel;
     private JPanel sidebarPanel;
     private JPanel rootPanel;
+    private final AirportMenuBar menuBar = new AirportMenuBar();
     private final AirportToolbar airportToolBar = new AirportToolbar();
     private final AirportSidebar airportSideBar;
     private final AirportController airportController = new AirportController();
@@ -37,6 +39,7 @@ public class AirportFrame extends MainFrame {
 
         setContentPane(rootPanel);
         initToolbar();
+        setJMenuBar(menuBar);
     }
 
     private void initToolbar() {
@@ -92,6 +95,8 @@ public class AirportFrame extends MainFrame {
             airportToolBar.onThemeChange(theme);
         if (airportSideBar != null)
             airportSideBar.onThemeChange(theme);
+        if (menuBar != null)
+            menuBar.onThemeChange();
     }
 
     @Override
@@ -101,6 +106,8 @@ public class AirportFrame extends MainFrame {
             airportToolBar.onLocaleChange(locale);
         if (airportSideBar != null)
             airportSideBar.onLocaleChange(locale);
+        if (menuBar != null)
+            menuBar.onLocaleChange();
     }
 
     @Override

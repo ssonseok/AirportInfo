@@ -26,10 +26,6 @@ public class AirportToolbar extends ComponentView {
     private final ThemeManager themeManager = ThemeManager.getInstance();
 
     public AirportToolbar() {
-        themeManager.addColor(AppTheme.Lite, "Toolbar.background", Color.decode("#636363"));
-        themeManager.addColor(AppTheme.Lite, "Toolbar.foreground", ThemeManager.getDefaultColor(ThemeManager.LITE_THEME, "Label.background"));
-        themeManager.addColor(AppTheme.Dark, "Toolbar.background", Color.decode("#32424A"));
-        themeManager.addColor(AppTheme.Dark, "Toolbar.foreground", ThemeManager.getDefaultColor(ThemeManager.DARK_THEME, "Label.foreground"));
         $$$setupUI$$$();
         addThemeChangeListener(theme -> {
             panel.setBackground(themeManager.getColor("Toolbar.background"));

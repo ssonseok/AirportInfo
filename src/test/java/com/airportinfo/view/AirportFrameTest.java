@@ -16,7 +16,7 @@ public class AirportFrameTest {
         for (int i = 0; i < 20; i++) {
             userController.addBookmark(airportController.getAirports()[i]);
         }
-        airportFrame.addContentView("test", new TestContentView());
+        airportFrame.addContentView("test", new ChartContentView(airportFrame));
         airportFrame.setContentView("test");
     }
 }

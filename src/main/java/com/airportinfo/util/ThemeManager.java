@@ -55,6 +55,25 @@ public class ThemeManager {
     }
 
     private ThemeManager() {
+        addColor(AppTheme.Lite, "Toolbar.background", Color.decode("#636363"));
+        addColor(AppTheme.Lite, "Toolbar.foreground", ThemeManager.getDefaultColor(ThemeManager.LITE_THEME, "Label.background"));
+        addColor(AppTheme.Dark, "Toolbar.background", Color.decode("#32424A"));
+        addColor(AppTheme.Dark, "Toolbar.foreground", ThemeManager.getDefaultColor(ThemeManager.DARK_THEME, "Label.foreground"));
+
+        addColor(AppTheme.Lite, "MenuBar.background", Color.decode("#525252"));
+        addColor(AppTheme.Lite, "MenuBar.foreground", ThemeManager.getDefaultColor(ThemeManager.LITE_THEME, "Label.background"));
+        addColor(AppTheme.Lite, "MenuItem.hoverBackground", Color.decode("#393939"));
+        addColor(AppTheme.Dark, "MenuBar.background", Color.decode("#2A383F"));
+        addColor(AppTheme.Dark, "MenuBar.foreground", ThemeManager.getDefaultColor(ThemeManager.DARK_THEME, "Label.foreground"));
+        addColor(AppTheme.Dark, "MenuItem.hoverBackground", Color.decode("#263238"));
+
+        addColor(AppTheme.Lite, "Tab.background", Color.decode("#494949"));
+        addColor(AppTheme.Lite, "Tab.foreground", ThemeManager.getDefaultColor(ThemeManager.LITE_THEME, "Label.background"));
+        addColor(AppTheme.Lite, "Tab.selectionBackground", Color.decode("#393939"));
+        addColor(AppTheme.Dark, "Tab.background", Color.decode("#32424A"));
+        addColor(AppTheme.Dark, "Tab.foreground", ThemeManager.getDefaultColor(ThemeManager.DARK_THEME, "Label.foreground"));
+        addColor(AppTheme.Dark, "Tab.selectionBackground", Color.decode("#263238"));
+
 
     }
 

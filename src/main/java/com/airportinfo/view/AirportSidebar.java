@@ -66,13 +66,6 @@ public class AirportSidebar extends ComponentView {
                 loadBookmark();
         }, UserController.BOOKMARK_CHANGE);
 
-        themeManager.addColor(AppTheme.Lite, "Tab.background", Color.decode("#494949"));
-        themeManager.addColor(AppTheme.Lite, "Tab.foreground", ThemeManager.getDefaultColor(ThemeManager.LITE_THEME, "Label.background"));
-        themeManager.addColor(AppTheme.Lite, "Tab.selectionBackground", Color.decode("#393939"));
-        themeManager.addColor(AppTheme.Dark, "Tab.background", Color.decode("#32424A"));
-        themeManager.addColor(AppTheme.Dark, "Tab.foreground", ThemeManager.getDefaultColor(ThemeManager.DARK_THEME, "Label.foreground"));
-        themeManager.addColor(AppTheme.Dark, "Tab.selectionBackground", Color.decode("#263238"));
-
         recentLabel.setForeground(themeManager.getColor("Tab.foreground"));
         bookmarkLabel.setForeground(themeManager.getColor("Tab.foreground"));
 
