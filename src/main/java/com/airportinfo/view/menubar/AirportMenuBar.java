@@ -53,8 +53,8 @@ public class AirportMenuBar extends JMenuBar {
         item.setPreferredSize(new Dimension(200, item.getPreferredSize().height));
         item.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
-                if (action != null)
+            public void mouseReleased(MouseEvent e) {
+                if (action != null && item.contains(e.getPoint()))
                     action.accept(e);
             }
         });

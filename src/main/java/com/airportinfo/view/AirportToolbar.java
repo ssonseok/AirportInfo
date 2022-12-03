@@ -75,8 +75,8 @@ public class AirportToolbar extends ComponentView {
         label.setForeground(themeManager.getColor("Toolbar.foreground"));
         label.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
-                if (action != null)
+            public void mouseReleased(MouseEvent e) {
+                if (action != null && label.contains(e.getPoint()))
                     action.accept(e);
             }
         });
