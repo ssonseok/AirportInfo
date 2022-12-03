@@ -23,7 +23,7 @@
             </constraints>
             <properties/>
             <border type="empty">
-              <size top="20" left="20" bottom="20" right="20"/>
+              <size top="20" left="40" bottom="20" right="40"/>
             </border>
             <children>
               <component id="82ece" class="javax.swing.JLabel" binding="recentLabel">
@@ -43,7 +43,7 @@
             </constraints>
             <properties/>
             <border type="empty">
-              <size top="20" left="20" bottom="20" right="20"/>
+              <size top="20" left="40" bottom="20" right="40"/>
             </border>
             <children>
               <component id="53458" class="javax.swing.JLabel" binding="bookmarkLabel">

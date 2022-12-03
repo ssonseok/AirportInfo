@@ -8,7 +8,10 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.Locale;
 
 /**
  * Main frame of AirportInfo.
@@ -33,8 +36,16 @@ public class AirportFrame extends MainFrame {
         $$$setupUI$$$();
 
         setContentPane(rootPanel);
-        airportToolBar.addLabel("저장");
-        airportToolBar.addLabel("저장");
+        initToolbar();
+    }
+
+    private void initToolbar() {
+        airportToolBar.addLabel(Translator.getBundleString("toggle_theme"), new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                toggleTheme();
+            }
+        });
     }
 
     /**
@@ -59,6 +70,24 @@ public class AirportFrame extends MainFrame {
 
     public UserController getUserController() {
         return userController;
+    }
+
+    @Override
+    public void setTheme(AppTheme theme) {
+        super.setTheme(theme);
+        if (airportToolBar != null)
+            airportToolBar.onThemeChange(theme);
+        if (airportSideBar != null)
+            airportSideBar.onThemeChange(theme);
+    }
+
+    @Override
+    public void changeLocale(Locale locale) {
+        super.changeLocale(locale);
+        if (airportToolBar != null)
+            airportToolBar.onLocaleChange(locale);
+        if (airportSideBar != null)
+            airportSideBar.onLocaleChange(locale);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.airportinfo.controller;
 
+import com.airportinfo.misc.Aspect;
+import com.airportinfo.misc.Subject;
 import com.airportinfo.model.*;
 import com.airportinfo.util.CSVReader;
 import com.airportinfo.util.DBManager;
@@ -15,7 +17,8 @@ import java.util.ArrayList;
  *
  * @author lalaalal
  */
-public class AirportController {
+public class AirportController extends Subject {
+    public static final Aspect SELECTED_AIRPORT_CHANGE = new Aspect("selected_airport_change");
     private Airport selectedAirport;
     private ArrayList<Airport> airports = new ArrayList<>();
     private final ArrayList<Class<? extends TranslatedAirportData>> supportedTranslations = new ArrayList<>();
@@ -110,6 +113,7 @@ public class AirportController {
 
     public void selectAirport(Airport airport) {
         selectedAirport = airport;
+        notice(SELECTED_AIRPORT_CHANGE);
     }
 
     public Airport getSelectedAirport() {
