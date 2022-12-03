@@ -74,10 +74,12 @@ public class ChartContentView extends ContentView {
         setting.attach(() -> {
             barChartView.showLegendLabel = setting.getShowChartLabel();
             pieChartView.showLegendLabel = setting.getShowChartLabel();
+            chartView.getPanel().repaint();
         }, Setting.CHART_CHANGE);
         setting.attach(() -> {
             barChartView.showGuideline = setting.getShowHistogramGuideLine();
             barChartView.setLegendInterval(setting.getHistogramLegendInterval());
+            chartView.getPanel().repaint();
         }, Setting.HISTOGRAM_CHANGE);
     }
 

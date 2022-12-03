@@ -41,6 +41,10 @@ public class AirportFrame extends MainFrame {
         frame.setContentPane(rootPanel);
         initToolbar();
         initMenuBar();
+
+        addComponentView(airportToolBar);
+        addComponentView(airportSideBar);
+        addComponentView(settingDialogView);
     }
 
     @Override
@@ -59,7 +63,7 @@ public class AirportFrame extends MainFrame {
         menuBar.addMenu("file");
         menuBar.addMenuItem("file", "setting", (event) -> {
             SwingUtilities.updateComponentTreeUI(settingDialogView.getPanel());
-            settingDialogView.setVisible(true);
+            settingDialogView.showDialogLocationRelativeTo(frame);
         });
         menuBar.addMenuSeparator("file");
         menuBar.addMenuItem("file", "exit", (event) -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
@@ -95,27 +99,15 @@ public class AirportFrame extends MainFrame {
     @Override
     public void setTheme(AppTheme theme) {
         super.setTheme(theme);
-        if (airportToolBar != null)
-            airportToolBar.onThemeChange(theme);
-        if (airportSideBar != null)
-            airportSideBar.onThemeChange(theme);
         if (menuBar != null)
             menuBar.updateTheme();
-        if (settingDialogView != null)
-            settingDialogView.onThemeChange(theme);
     }
 
     @Override
     public void changeLocale(Locale locale) {
         super.changeLocale(locale);
-        if (airportToolBar != null)
-            airportToolBar.onLocaleChange(locale);
-        if (airportSideBar != null)
-            airportSideBar.onLocaleChange(locale);
         if (menuBar != null)
             menuBar.onLocaleChange();
-        if (settingDialogView != null)
-            settingDialogView.onLocaleChange(locale);
     }
 
     @Override

@@ -27,6 +27,7 @@ public abstract class MainFrame extends ComponentGroup {
         frame.setTitle("Main");
         frame.setSize(DEFAULT_SIZE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
         setTheme(AppTheme.Lite);
         Locale.setDefault(Locale.KOREAN);
     }
@@ -35,6 +36,7 @@ public abstract class MainFrame extends ComponentGroup {
         frame.setTitle(title);
         frame.setSize(DEFAULT_SIZE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
         setTheme(AppTheme.Lite);
         Locale.setDefault(Locale.KOREAN);
     }
@@ -43,6 +45,7 @@ public abstract class MainFrame extends ComponentGroup {
         frame.setTitle(title);
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
         setTheme(AppTheme.Lite);
         Locale.setDefault(Locale.KOREAN);
     }
@@ -97,6 +100,7 @@ public abstract class MainFrame extends ComponentGroup {
             FontManager.loadFont();
             for (ContentView contentView : contentViewHashMap.values())
                 contentView.onThemeChange(theme);
+            onThemeChange(theme);
         } catch (UnsupportedLookAndFeelException e) {
             String title = Translator.getBundleString("error");
             JOptionPane.showMessageDialog(frame, e.getMessage(), title, JOptionPane.ERROR_MESSAGE);
@@ -135,5 +139,6 @@ public abstract class MainFrame extends ComponentGroup {
         Locale.setDefault(locale);
         for (ContentView contentView : contentViewHashMap.values())
             contentView.onLocaleChange(locale);
+        onLocaleChange(locale);
     }
 }

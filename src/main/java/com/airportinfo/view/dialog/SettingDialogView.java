@@ -5,7 +5,6 @@ import com.airportinfo.controller.UserController;
 import com.airportinfo.misc.SpinnerPositiveNumberModel;
 import com.airportinfo.util.ThemeManager;
 import com.airportinfo.util.Translator;
-import com.airportinfo.view.ComponentView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -18,7 +17,7 @@ import java.awt.event.MouseEvent;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;
 
-public class SettingDialogView extends ComponentView {
+public class SettingDialogView extends DialogView {
     private JPanel panel;
     private JTabbedPane tabbedPane;
     private JButton cancelButton;
@@ -30,15 +29,15 @@ public class SettingDialogView extends ComponentView {
     private JButton resetBookmarkButton;
     private JPanel chartGeneralPanel;
     private JPanel histogramPanel;
-    private final JDialog dialog = new JDialog();
+    private JLabel intervalLabel;
     private final Setting setting = Setting.getInstance();
 
     public SettingDialogView(UserController userController) {
-        dialog.setContentPane(panel);
-        dialog.setModal(true);
+        dialog.setContentPane(getPanel());
+        dialog.setTitle(Translator.getBundleString("setting"));
         dialog.setSize(700, 500);
 
-        updateComponents();
+        updateComponentColor();
         intervalSpinner.setModel(new SpinnerPositiveNumberModel());
         loadSetting();
 
@@ -69,12 +68,33 @@ public class SettingDialogView extends ComponentView {
             }
         });
 
-        addThemeChangeListener(theme -> updateComponents());
+        addThemeChangeListener(theme -> updateComponentColor());
+        addLocaleChangeListener(locale -> updateLanguage());
     }
 
-    private void updateComponents() {
+    private void updateComponentColor() {
         Color borderColor = ThemeManager.getDefaultColor("Spinner.background");
         intervalSpinner.setBorder(BorderFactory.createLineBorder(borderColor, 5));
+        updateTitledBorder();
+    }
+
+    private void updateLanguage() {
+        dialog.setTitle(Translator.getBundleString("setting"));
+        tabbedPane.setTitleAt(0, Translator.getBundleString("general"));
+        tabbedPane.setTitleAt(1, Translator.getBundleString("chart_setting"));
+        updateTitledBorder();
+        showChartLabelCheckBox.setText(Translator.getBundleString("show_chart_label"));
+        showGuidelineCheckBox.setText(Translator.getBundleString("show_guideline"));
+        intervalLabel.setText(Translator.getBundleString("histogram_interval"));
+        saveButton.setText(Translator.getBundleString("save"));
+        cancelButton.setText(Translator.getBundleString("cancel"));
+        resetBookmarkButton.setText(Translator.getBundleString("reset_bookmark"));
+        resetHistoryButton.setText(Translator.getBundleString("reset_history"));
+        resetBookmarkButton.setToolTipText(Translator.getBundleString("reset_tooltip"));
+        resetHistoryButton.setToolTipText(Translator.getBundleString("reset_tooltip"));
+    }
+
+    private void updateTitledBorder() {
         String histogramTitle = Translator.getBundleString("histogram_setting");
         String chartGeneralTitle = Translator.getBundleString("general");
         Color lineColor = ThemeManager.getDefaultColor("Label.foreground");
@@ -99,10 +119,6 @@ public class SettingDialogView extends ComponentView {
         setting.setSilentHistogramLegendInterval(interval);
         setting.setSilentShowHistogramGuideLine(showGuidelineCheckBox.isSelected());
         setting.notice();
-    }
-
-    public void setVisible(boolean value) {
-        dialog.setVisible(value);
     }
 
     {
@@ -164,13 +180,13 @@ public class SettingDialogView extends ComponentView {
         final Spacer spacer4 = new Spacer();
         histogramPanel.add(spacer4, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 7, 0, 10), -1, -1));
         histogramPanel.add(panel3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label1 = new JLabel();
-        this.$$$loadLabelText$$$(label1, this.$$$getMessageFromBundle$$$("string", "histogram_interval"));
-        panel3.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        intervalLabel = new JLabel();
+        this.$$$loadLabelText$$$(intervalLabel, this.$$$getMessageFromBundle$$$("string", "histogram_interval"));
+        panel3.add(intervalLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         intervalSpinner = new JSpinner();
-        panel3.add(intervalSpinner, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(intervalSpinner, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel.add(panel4, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
@@ -182,6 +198,7 @@ public class SettingDialogView extends ComponentView {
         saveButton = new JButton();
         this.$$$loadButtonText$$$(saveButton, this.$$$getMessageFromBundle$$$("string", "save"));
         panel4.add(saveButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        intervalLabel.setLabelFor(intervalSpinner);
     }
 
     private static Method $$$cachedGetBundleMethod$$$ = null;

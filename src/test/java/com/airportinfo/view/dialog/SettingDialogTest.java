@@ -15,6 +15,6 @@ public class SettingDialogTest {
         setting.attach(() -> System.out.println("histogram legend interval is now " + setting.getHistogramLegendInterval()), Setting.HISTOGRAM_CHANGE);
         UserController userController = new UserController();
         SettingDialogView settingDialogView = new SettingDialogView(userController);
-        settingDialogView.setVisible(true);
+        settingDialogView.showDialogLocationRelativeTo(testFrame.getPanel());
     }
 }
