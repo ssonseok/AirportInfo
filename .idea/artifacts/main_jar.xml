@@ -2,13 +2,13 @@
   <artifact type="jar" name="main:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/main_jar</output-path>
     <root id="archive" name="main.jar">
+      <element id="module-output" name="main" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/forms_rt.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/material-ui-swing-1.1.2-with-dependencies.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/mysql-connector-java-8.0.30.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/activation-1.1.jar" path-in-jar="/" />
-      <element id="module-output" name="main" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/json-20220924.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/javax.mail-1.6.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/json-20220924.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
