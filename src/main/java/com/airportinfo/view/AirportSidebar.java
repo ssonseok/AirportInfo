@@ -5,6 +5,7 @@ import com.airportinfo.controller.UserController;
 import com.airportinfo.misc.AirportListCellRenderer;
 import com.airportinfo.model.Airport;
 import com.airportinfo.util.ThemeManager;
+import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -65,9 +66,9 @@ public class AirportSidebar extends ComponentView {
                 loadBookmark();
         }, UserController.BOOKMARK_CHANGE);
 
-        themeManager.addColor(AppTheme.Lite, "Tab.background", Color.decode("#A7A7A7"));
+        themeManager.addColor(AppTheme.Lite, "Tab.background", Color.decode("#494949"));
         themeManager.addColor(AppTheme.Lite, "Tab.foreground", ThemeManager.getDefaultColor(ThemeManager.LITE_THEME, "Label.background"));
-        themeManager.addColor(AppTheme.Lite, "Tab.selectionBackground", Color.decode("#989898"));
+        themeManager.addColor(AppTheme.Lite, "Tab.selectionBackground", Color.decode("#393939"));
         themeManager.addColor(AppTheme.Dark, "Tab.background", Color.decode("#32424A"));
         themeManager.addColor(AppTheme.Dark, "Tab.foreground", ThemeManager.getDefaultColor(ThemeManager.DARK_THEME, "Label.foreground"));
         themeManager.addColor(AppTheme.Dark, "Tab.selectionBackground", Color.decode("#263238"));
@@ -75,13 +76,23 @@ public class AirportSidebar extends ComponentView {
         recentLabel.setForeground(themeManager.getColor("Tab.foreground"));
         bookmarkLabel.setForeground(themeManager.getColor("Tab.foreground"));
 
+        addListeners();
+
+        selectTab(currentTab);
+    }
+
+    private void addListeners() {
         addThemeChangeListener(theme -> {
             recentLabel.setForeground(themeManager.getColor("Tab.foreground"));
             bookmarkLabel.setForeground(themeManager.getColor("Tab.foreground"));
             selectTab(currentTab);
         });
 
-        selectTab(currentTab);
+        addLocaleChangeListener(locale -> {
+            recentLabel.setText(Translator.getBundleString("recent_search"));
+            bookmarkLabel.setText(Translator.getBundleString("bookmark"));
+            selectTab(currentTab);
+        });
     }
 
     @Override
@@ -90,9 +101,6 @@ public class AirportSidebar extends ComponentView {
     }
 
     private void loadRecent() {
-        if (currentTab != Tab.Recent)
-            return;
-
         airportListModel.removeAllElements();
         // TODO : Implement after UserController support history.
         if (airportListModel.getSize() == 0)
@@ -100,9 +108,6 @@ public class AirportSidebar extends ComponentView {
     }
 
     private void loadBookmark() {
-        if (currentTab != Tab.Bookmark)
-            return;
-
         airportListModel.removeAllElements();
         airportListModel.addAll(userController.getAllBookmark());
         if (airportListModel.getSize() == 0)
@@ -148,18 +153,18 @@ public class AirportSidebar extends ComponentView {
         panel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), 0, -1));
-        panel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(250, -1), null, null, 0, false));
         recentPanel = new JPanel();
         recentPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(recentPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        recentPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
+        recentPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         recentLabel = new JLabel();
         this.$$$loadLabelText$$$(recentLabel, this.$$$getMessageFromBundle$$$("string", "recent_search"));
         recentPanel.add(recentLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         bookmarkPanel = new JPanel();
         bookmarkPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(bookmarkPanel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        bookmarkPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
+        bookmarkPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         bookmarkLabel = new JLabel();
         this.$$$loadLabelText$$$(bookmarkLabel, this.$$$getMessageFromBundle$$$("string", "bookmark"));
         bookmarkPanel.add(bookmarkLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

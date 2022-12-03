@@ -1,6 +1,7 @@
 package com.airportinfo.view;
 
 import com.airportinfo.util.ThemeManager;
+import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -10,6 +11,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Airport toolbar.
@@ -20,10 +22,11 @@ public class AirportToolbar extends ComponentView {
     private JPanel panel;
     private JPanel toolbarPanel;
     private final ArrayList<JLabel> labels = new ArrayList<>();
+    private final HashMap<String, JLabel> translationLabels = new HashMap<>();
     private final ThemeManager themeManager = ThemeManager.getInstance();
 
     public AirportToolbar() {
-        themeManager.addColor(AppTheme.Lite, "Toolbar.background", Color.decode("#B9B9B9"));
+        themeManager.addColor(AppTheme.Lite, "Toolbar.background", Color.decode("#636363"));
         themeManager.addColor(AppTheme.Lite, "Toolbar.foreground", ThemeManager.getDefaultColor(ThemeManager.LITE_THEME, "Label.background"));
         themeManager.addColor(AppTheme.Dark, "Toolbar.background", Color.decode("#32424A"));
         themeManager.addColor(AppTheme.Dark, "Toolbar.foreground", ThemeManager.getDefaultColor(ThemeManager.DARK_THEME, "Label.foreground"));
@@ -34,6 +37,13 @@ public class AirportToolbar extends ComponentView {
             for (JLabel label : labels)
                 label.setForeground(themeManager.getColor("Toolbar.foreground"));
         });
+        addLocaleChangeListener(locale -> {
+            for (String key : translationLabels.keySet()) {
+                JLabel label = translationLabels.get(key);
+                label.setText(Translator.getBundleString(key));
+            }
+        });
+        onThemeChange(AppTheme.Lite);
     }
 
     @Override
@@ -54,7 +64,6 @@ public class AirportToolbar extends ComponentView {
         labels.add(label);
     }
 
-
     /**
      * Add new clickable label.
      *
@@ -68,6 +77,16 @@ public class AirportToolbar extends ComponentView {
         label.addMouseListener(listener);
         toolbarPanel.add(label);
         labels.add(label);
+    }
+
+    public void addLabelWithTranslation(String key, MouseListener listener) {
+        JLabel label = new JLabel(Translator.getBundleString(key));
+        label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 30));
+        label.setForeground(themeManager.getColor("Toolbar.foreground"));
+        label.addMouseListener(listener);
+        toolbarPanel.add(label);
+        labels.add(label);
+        translationLabels.put(key, label);
     }
 
     private void createUIComponents() {

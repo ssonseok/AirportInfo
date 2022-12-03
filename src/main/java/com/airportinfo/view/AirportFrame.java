@@ -40,10 +40,23 @@ public class AirportFrame extends MainFrame {
     }
 
     private void initToolbar() {
-        airportToolBar.addLabel(Translator.getBundleString("toggle_theme"), new MouseAdapter() {
+        airportToolBar.addLabelWithTranslation("toggle_theme", new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 toggleTheme();
+            }
+        });
+
+        airportToolBar.addLabelWithTranslation("english", new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                changeLocale(Locale.ENGLISH);
+            }
+        });
+        airportToolBar.addLabelWithTranslation("korean", new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                changeLocale(Locale.KOREAN);
             }
         });
     }
