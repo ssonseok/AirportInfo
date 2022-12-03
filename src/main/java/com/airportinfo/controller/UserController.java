@@ -1,5 +1,7 @@
 package com.airportinfo.controller;
 
+import com.airportinfo.misc.Aspect;
+import com.airportinfo.misc.Subject;
 import com.airportinfo.model.Airport;
 
 import java.util.HashMap;
@@ -10,7 +12,8 @@ import java.util.HashSet;
  *
  * @author ssonseok
  */
-public class UserController {
+public class UserController extends Subject {
+    public static final Aspect BOOKMARK_CHANGE = new Aspect("bookmark_change");
     private final HashSet<Airport> bookmark = new HashSet<>();
     private final HashMap<Airport, Integer> rating = new HashMap<>();
 
@@ -21,7 +24,7 @@ public class UserController {
      */
     public void addBookmark(Airport airport) {
         bookmark.add(airport);
-        System.out.println(bookmark.contains(airport));
+        notice(BOOKMARK_CHANGE);
     }
 
     /**
@@ -31,7 +34,7 @@ public class UserController {
      */
     public void delBookmark(Airport airport) {
         bookmark.remove(airport);
-        System.out.println(bookmark.contains(airport));
+        notice(BOOKMARK_CHANGE);
     }
 
     /**

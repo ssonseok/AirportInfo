@@ -2,6 +2,7 @@ package com.airportinfo.view;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * ComponentView is able to get JPanel.
@@ -16,7 +17,7 @@ public abstract class ComponentView {
      * Add default themeChangeListener.
      */
     public ComponentView() {
-        themeChangeListeners.add(() -> SwingUtilities.updateComponentTreeUI(getPanel()));
+        themeChangeListeners.add((theme) -> SwingUtilities.updateComponentTreeUI(getPanel()));
     }
 
     /**
@@ -38,9 +39,9 @@ public abstract class ComponentView {
     /**
      * Do all LocaleChangeListeners.
      */
-    public void onLocaleChange() {
+    public void onLocaleChange(Locale locale) {
         for (LocaleChangeListener localeChangeListener : localeChangeListeners)
-            localeChangeListener.onLocaleChange();
+            localeChangeListener.onLocaleChange(locale);
     }
 
     /**
@@ -55,8 +56,8 @@ public abstract class ComponentView {
     /**
      * Do all ThemeChangeListeners.
      */
-    public void onThemeChange() {
+    public void onThemeChange(AppTheme theme) {
         for (ThemeChangeListener themeChangeListener : themeChangeListeners)
-            themeChangeListener.onThemeChange();
+            themeChangeListener.onThemeChange(theme);
     }
 }
