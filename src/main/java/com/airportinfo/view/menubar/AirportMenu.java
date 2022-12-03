@@ -19,6 +19,7 @@ public class AirportMenu extends JMenu {
     public JPopupMenu getPopupMenu() {
         ThemeManager themeManager = ThemeManager.getInstance();
         JPopupMenu popupMenu = super.getPopupMenu();
+        popupMenu.setBackground(themeManager.getColor("MenuBar.background"));
         popupMenu.setBorder(BorderFactory.createLineBorder(themeManager.getColor("MenuItem.hoverBackground")));
         return popupMenu;
     }

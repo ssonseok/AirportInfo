@@ -1,10 +1,12 @@
 package com.airportinfo.view;
 
+import com.airportinfo.Main;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
 
 public class AirportFrameTest {
     public static void main(String[] args) {
+        Main.setSystemProperties();
         AirportFrame airportFrame = new AirportFrame();
 
         airportFrame.setVisible(true);

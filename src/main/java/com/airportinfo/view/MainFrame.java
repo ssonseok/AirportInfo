@@ -17,31 +17,32 @@ import java.util.Locale;
  *
  * @author lalaalal
  */
-public abstract class MainFrame extends JFrame {
+public abstract class MainFrame extends ComponentGroup {
     private final ThemeManager themeManager = ThemeManager.getInstance();
     private static final Dimension DEFAULT_SIZE = new Dimension(700, 500);
     private final HashMap<String, ContentView> contentViewHashMap = new HashMap<>();
+    protected final JFrame frame = new JFrame();
 
     public MainFrame() {
-        setTitle("Main");
-        setSize(DEFAULT_SIZE);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setTitle("Main");
+        frame.setSize(DEFAULT_SIZE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTheme(AppTheme.Lite);
         Locale.setDefault(Locale.KOREAN);
     }
 
     public MainFrame(String title) {
-        setTitle(title);
-        setSize(DEFAULT_SIZE);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setTitle(title);
+        frame.setSize(DEFAULT_SIZE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTheme(AppTheme.Lite);
         Locale.setDefault(Locale.KOREAN);
     }
 
     public MainFrame(String title, int width, int height) {
-        setTitle(title);
-        setSize(width, height);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setTitle(title);
+        frame.setSize(width, height);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTheme(AppTheme.Lite);
         Locale.setDefault(Locale.KOREAN);
     }
@@ -69,8 +70,8 @@ public abstract class MainFrame extends JFrame {
         contentView.load();
         changeContent(contentView.getPanel());
 
-        revalidate();
-        repaint();
+        frame.revalidate();
+        frame.repaint();
     }
 
     /**
@@ -98,12 +99,21 @@ public abstract class MainFrame extends JFrame {
                 contentView.onThemeChange(theme);
         } catch (UnsupportedLookAndFeelException e) {
             String title = Translator.getBundleString("error");
-            JOptionPane.showMessageDialog(this, e.getMessage(), title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, e.getMessage(), title, JOptionPane.ERROR_MESSAGE);
         } catch (IOException | FontFormatException e) {
             String title = Translator.getBundleString("error");
             String message = Translator.getBundleString("font_load_fail");
-            JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    /**
+     * Wrapper of JFrame.setVisible(boolean).
+     *
+     * @param value Boolean value to set frame visible.
+     */
+    public void setVisible(boolean value) {
+        frame.setVisible(value);
     }
 
     /**

@@ -1,9 +1,9 @@
 package com.airportinfo.view;
 
+import com.airportinfo.Setting;
 import com.airportinfo.util.Screenshot;
-import com.airportinfo.view.content.ContentView;
-import com.airportinfo.view.MainFrame;
 import com.airportinfo.view.chart.*;
+import com.airportinfo.view.content.ContentView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -69,6 +69,16 @@ public class ChartContentView extends ContentView {
                 chartView.setColorScheme(colors);
             }
         });
+
+        Setting setting = Setting.getInstance();
+        setting.attach(() -> {
+            barChartView.showLegendLabel = setting.getShowChartLabel();
+            pieChartView.showLegendLabel = setting.getShowChartLabel();
+        }, Setting.CHART_CHANGE);
+        setting.attach(() -> {
+            barChartView.showGuideline = setting.getShowHistogramGuideLine();
+            barChartView.setLegendInterval(setting.getHistogramLegendInterval());
+        }, Setting.HISTOGRAM_CHANGE);
     }
 
     @Override
