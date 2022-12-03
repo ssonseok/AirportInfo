@@ -14,6 +14,7 @@ import java.util.HashSet;
  */
 public class UserController extends Subject {
     public static final Aspect BOOKMARK_CHANGE = new Aspect("bookmark_change");
+    public static final Aspect HISTORY_CHANGE = new Aspect("history_change");
     private final HashSet<Airport> bookmark = new HashSet<>();
     private final HashMap<Airport, Integer> rating = new HashMap<>();
 
