@@ -22,6 +22,6 @@ public class AirportDetailViewTest {
 
         mainFrame.addContentView("AirportDetailView", contentView);
         mainFrame.setContentView("AirportDetailView");
-        mainFrame.setVisible(true);
+        mainFrame.showFrame();
     }
 }

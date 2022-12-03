@@ -26,6 +26,6 @@ public class AirportTableViewTest {
         mainFrame.addContentView("AirportTableView", contentView);
         mainFrame.setContentView("AirportTableView");
 
-        mainFrame.setVisible(true);
+        mainFrame.showFrame();
     }
 }

@@ -2,6 +2,11 @@ package com.airportinfo.misc;
 
 import javax.swing.*;
 
+/**
+ * SpinnerModel allow number minimal 0.
+ *
+ * @author lalaalal
+ */
 public class SpinnerPositiveNumberModel extends SpinnerNumberModel {
     @Override
     public void setValue(Object value) {

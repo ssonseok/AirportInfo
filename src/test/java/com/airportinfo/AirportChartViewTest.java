@@ -31,6 +31,6 @@ public class AirportChartViewTest {
         mainFrame.addContentView("AirportChartView", contentView);
         mainFrame.setContentView("AirportChartView");
 
-        mainFrame.setVisible(true);
+        mainFrame.showFrame();
     }
 }

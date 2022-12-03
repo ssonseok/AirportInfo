@@ -17,6 +17,11 @@ import java.awt.event.MouseEvent;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;
 
+/**
+ * Setting dialog view.
+ *
+ * @author lalaalal
+ */
 public class SettingDialogView extends DialogView {
     private JPanel panel;
     private JTabbedPane tabbedPane;

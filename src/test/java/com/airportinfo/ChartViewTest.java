@@ -11,6 +11,6 @@ public class ChartViewTest {
         mainFrame.addContentView("ChartContentView", new ChartContentView(mainFrame));
         mainFrame.setContentView("ChartContentView");
 
-        mainFrame.setVisible(true);
+        mainFrame.showFrame();
     }
 }

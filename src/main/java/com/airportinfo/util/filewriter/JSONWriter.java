@@ -8,6 +8,7 @@ import java.io.IOException;
  * A writer class to write json files.
  *
  * @author JumoKookbob
+ * @author lalaalal
  */
 class JSONWriter extends AirportWriter {
     private boolean isFirstAirport = true;

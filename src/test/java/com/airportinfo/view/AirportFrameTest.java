@@ -9,7 +9,7 @@ public class AirportFrameTest {
         Main.setSystemProperties();
         AirportFrame airportFrame = new AirportFrame();
 
-        airportFrame.setVisible(true);
+        airportFrame.showFrame();
         airportFrame.load();
 
         AirportController airportController = airportFrame.getAirportController();

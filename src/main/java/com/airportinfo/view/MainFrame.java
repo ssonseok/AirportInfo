@@ -27,7 +27,6 @@ public abstract class MainFrame extends ComponentGroup {
         frame.setTitle("Main");
         frame.setSize(DEFAULT_SIZE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
         setTheme(AppTheme.Lite);
         Locale.setDefault(Locale.KOREAN);
     }
@@ -36,7 +35,6 @@ public abstract class MainFrame extends ComponentGroup {
         frame.setTitle(title);
         frame.setSize(DEFAULT_SIZE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
         setTheme(AppTheme.Lite);
         Locale.setDefault(Locale.KOREAN);
     }
@@ -45,7 +43,6 @@ public abstract class MainFrame extends ComponentGroup {
         frame.setTitle(title);
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
         setTheme(AppTheme.Lite);
         Locale.setDefault(Locale.KOREAN);
     }
@@ -112,12 +109,11 @@ public abstract class MainFrame extends ComponentGroup {
     }
 
     /**
-     * Wrapper of JFrame.setVisible(boolean).
-     *
-     * @param value Boolean value to set frame visible.
+     * Show frame center of screen.
      */
-    public void setVisible(boolean value) {
-        frame.setVisible(value);
+    public void showFrame() {
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     /**

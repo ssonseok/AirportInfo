@@ -7,6 +7,11 @@ import com.airportinfo.util.Translator;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * List cell renderer.
+ *
+ * @author lalaalal
+ */
 public class AirportListCellRenderer extends JLabel implements ListCellRenderer<Airport> {
     public AirportListCellRenderer() {
         setOpaque(true);
