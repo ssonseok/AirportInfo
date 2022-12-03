@@ -6,11 +6,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import javax.swing.ImageIcon;
 /**
  * Get the map picture of location(Variable) from the Google API URL.
  * (used by GoogleMapFrame.java)
- * 
+ *
  * @author ShinHeeYoun
  *
  */
@@ -23,9 +24,9 @@ public class GoogleMapAPI {
 	public void downloadMap(String location) {
 		try {
 			String imageURL = "https://maps.googleapis.com/maps/api/staticmap?center="
-					+ URLEncoder.encode(location, "UTF-8")
+					+ URLEncoder.encode(location, StandardCharsets.UTF_8)
 					+ "&zoom="+zoom+"&size="+mapSizeX+"x"+mapSizeY+"&key="+MapAPI;
-			
+
 			URL url = new URL(imageURL);
 			InputStream is = url.openStream();
 			OutputStream os = new FileOutputStream(location);
@@ -40,16 +41,16 @@ public class GoogleMapAPI {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ImageIcon getMap(String location) {
 		return new ImageIcon((new ImageIcon(location)).getImage().getScaledInstance(mapSizeX, mapSizeY, java.awt.Image.SCALE_SMOOTH));
 	}
-	
+
 	public void fileDelete(String filename) {
 		File f = new File(filename);
 		f.delete();
 	}
-	
+
 	public void setSize (int num) {
 		mapSizeX=num;
 		mapSizeY=num;

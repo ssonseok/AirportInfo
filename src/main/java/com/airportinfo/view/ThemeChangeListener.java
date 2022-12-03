@@ -9,5 +9,5 @@ public interface ThemeChangeListener {
     /**
      * Update when theme changes.
      */
-    void onThemeChange();
+    void onThemeChange(AppTheme theme);
 }

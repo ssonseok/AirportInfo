@@ -20,11 +20,11 @@ import com.airportinfo.util.GoogleMapAPI;
  */
 public class GoogleMapView extends JFrame {
 	
-	private JTextField textField = new JTextField(30);
-	private JPanel panel = new JPanel();
-	private JButton button = new JButton("검색");
+	private final JTextField textField = new JTextField(30);
+	private final JPanel panel = new JPanel();
+	private final JButton button = new JButton("검색");
 	
-	private GoogleMapAPI googleAPI = new GoogleMapAPI();
+	private final GoogleMapAPI googleAPI = new GoogleMapAPI();
 	private JLabel googleMap = new JLabel();
 	
 	// constructor class with nothing

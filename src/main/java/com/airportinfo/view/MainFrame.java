@@ -1,12 +1,13 @@
 package com.airportinfo.view;
 
+import com.airportinfo.util.FontManager;
+import com.airportinfo.util.ThemeManager;
+import com.airportinfo.util.Translator;
 import com.airportinfo.view.content.ContentView;
-import mdlaf.MaterialLookAndFeel;
-import mdlaf.themes.MaterialLiteTheme;
-import mdlaf.themes.MaterialOceanicTheme;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -17,9 +18,7 @@ import java.util.Locale;
  * @author lalaalal
  */
 public abstract class MainFrame extends JFrame {
-    private static final LookAndFeel LITE_THEME = new MaterialLookAndFeel(new MaterialLiteTheme());
-    private static final LookAndFeel DARK_THEME = new MaterialLookAndFeel(new MaterialOceanicTheme());
-    private AppTheme theme = AppTheme.Lite;
+    private final ThemeManager themeManager = ThemeManager.getInstance();
     private static final Dimension DEFAULT_SIZE = new Dimension(700, 500);
     private final HashMap<String, ContentView> contentViewHashMap = new HashMap<>();
 
@@ -28,6 +27,7 @@ public abstract class MainFrame extends JFrame {
         setSize(DEFAULT_SIZE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTheme(AppTheme.Lite);
+        Locale.setDefault(Locale.KOREAN);
     }
 
     public MainFrame(String title) {
@@ -35,6 +35,7 @@ public abstract class MainFrame extends JFrame {
         setSize(DEFAULT_SIZE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTheme(AppTheme.Lite);
+        Locale.setDefault(Locale.KOREAN);
     }
 
     public MainFrame(String title, int width, int height) {
@@ -42,6 +43,7 @@ public abstract class MainFrame extends JFrame {
         setSize(width, height);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTheme(AppTheme.Lite);
+        Locale.setDefault(Locale.KOREAN);
     }
 
     /**
@@ -86,15 +88,21 @@ public abstract class MainFrame extends JFrame {
      */
     public void setTheme(AppTheme theme) {
         try {
-            this.theme = theme;
+            themeManager.currentTheme = theme;
             if (theme == AppTheme.Lite)
-                UIManager.setLookAndFeel(LITE_THEME);
+                UIManager.setLookAndFeel(ThemeManager.LITE_THEME);
             else
-                UIManager.setLookAndFeel(DARK_THEME);
+                UIManager.setLookAndFeel(ThemeManager.DARK_THEME);
+            FontManager.loadFont();
             for (ContentView contentView : contentViewHashMap.values())
-                contentView.onThemeChange();
+                contentView.onThemeChange(theme);
         } catch (UnsupportedLookAndFeelException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            String title = Translator.getBundleString("error");
+            JOptionPane.showMessageDialog(this, e.getMessage(), title, JOptionPane.ERROR_MESSAGE);
+        } catch (IOException | FontFormatException e) {
+            String title = Translator.getBundleString("error");
+            String message = Translator.getBundleString("font_load_fail");
+            JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -102,7 +110,7 @@ public abstract class MainFrame extends JFrame {
      * Toggle theme between lite and dark.
      */
     public void toggleTheme() {
-        if (theme == AppTheme.Lite)
+        if (themeManager.currentTheme == AppTheme.Lite)
             setTheme(AppTheme.Dark);
         else
             setTheme(AppTheme.Lite);
@@ -116,6 +124,6 @@ public abstract class MainFrame extends JFrame {
     public void changeLocale(Locale locale) {
         Locale.setDefault(locale);
         for (ContentView contentView : contentViewHashMap.values())
-            contentView.onLocaleChange();
+            contentView.onLocaleChange(locale);
     }
 }

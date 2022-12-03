@@ -1,6 +1,7 @@
 package com.airportinfo.view;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * ComponentView container.
@@ -48,19 +49,19 @@ public abstract class ComponentGroup extends ComponentView {
      * Do own and children's onLocaleChange.
      */
     @Override
-    public void onLocaleChange() {
-        super.onLocaleChange();
+    public void onLocaleChange(Locale locale) {
+        super.onLocaleChange(locale);
         for (ComponentView componentView : componentViews)
-            componentView.onLocaleChange();
+            componentView.onLocaleChange(locale);
     }
 
     /**
      * Do own and children's onThemeChange.
      */
     @Override
-    public void onThemeChange() {
-        super.onThemeChange();
+    public void onThemeChange(AppTheme theme) {
+        super.onThemeChange(theme);
         for (ComponentView componentView : componentViews)
-            componentView.onThemeChange();
+            componentView.onThemeChange(theme);
     }
 }
