@@ -1,6 +1,5 @@
 package com.airportinfo.view.menubar;
 
-import com.airportinfo.util.FontManager;
 import com.airportinfo.util.ThemeManager;
 import com.airportinfo.util.Translator;
 
@@ -20,13 +19,7 @@ public class AirportMenuBar extends JMenuBar {
     private final ThemeManager themeManager = ThemeManager.getInstance();
 
     public AirportMenuBar() {
-        setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-        addMenu("file");
-        addMenuItem("file", "save", null);
-        // TODO : Fill menus.
-
-        onThemeChange();
+        setBorder(BorderFactory.createEmptyBorder());
     }
 
     /**
@@ -36,9 +29,9 @@ public class AirportMenuBar extends JMenuBar {
      */
     public void addMenu(String key) {
         JMenu menu = new AirportMenu(Translator.getBundleString(key));
-        menu.setFont(FontManager.getFont(11));
         menus.put(key, menu);
         add(menu);
+        updateTheme();
     }
 
     /**
@@ -50,15 +43,17 @@ public class AirportMenuBar extends JMenuBar {
      */
     public void addMenuItem(String menuKey, String itemKey, MouseListener listener) {
         JMenu menu = menus.get(menuKey);
+        if (menu == null)
+            throw new IllegalArgumentException("Menu key (" + menuKey + ") doesn't exist.");
         JMenuItem item = new JMenuItem(Translator.getBundleString(itemKey));
         item.setPreferredSize(new Dimension(200, item.getPreferredSize().height));
-        item.setFont(FontManager.getFont(11));
         item.addMouseListener(listener);
         menu.add(item);
         items.put(itemKey, item);
+        updateTheme();
     }
 
-    public void onThemeChange() {
+    public void updateTheme() {
         UIManager.put("Menu.selectionBackground", themeManager.getColor("MenuItem.hoverBackground"));
         UIManager.put("Menu.selectionForeground", themeManager.getColor("MenuBar.foreground"));
         UIManager.put("MenuItem.selectionBackground", themeManager.getColor("MenuItem.hoverBackground"));

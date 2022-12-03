@@ -12,6 +12,7 @@ import javax.swing.*;
 public class AirportMenu extends JMenu {
     public AirportMenu(String text) {
         super(text);
+        setBorder(BorderFactory.createEmptyBorder(7, 15, 7, 15));
     }
 
     @Override

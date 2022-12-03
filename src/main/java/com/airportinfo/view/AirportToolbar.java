@@ -50,36 +50,29 @@ public class AirportToolbar extends ComponentView {
     /**
      * Add new label.
      *
-     * @param text Label text
+     * @param key Label text or translation key
      */
-    public void addLabel(String text) {
-        JLabel label = new JLabel(text);
+    public void addLabel(String key) {
+        JLabel label = new JLabel(key);
         label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 30));
         label.setForeground(themeManager.getColor("Toolbar.foreground"));
+        label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         toolbarPanel.add(label);
         labels.add(label);
     }
 
     /**
-     * Add new clickable label.
+     * Add label with mouse listener.
      *
-     * @param text     Label text
-     * @param listener Mouse listener
+     * @param key Label text or translation key
+     * @param listener Mouse listener for label
      */
-    public void addLabel(String text, MouseListener listener) {
-        JLabel label = new JLabel(text);
-        label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 30));
-        label.setForeground(themeManager.getColor("Toolbar.foreground"));
-        label.addMouseListener(listener);
-        toolbarPanel.add(label);
-        labels.add(label);
-    }
-
-    public void addLabelWithTranslation(String key, MouseListener listener) {
+    public void addLabel(String key, MouseListener listener) {
         JLabel label = new JLabel(Translator.getBundleString(key));
         label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 30));
         label.setForeground(themeManager.getColor("Toolbar.foreground"));
         label.addMouseListener(listener);
+        label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         toolbarPanel.add(label);
         labels.add(label);
         translationLabels.put(key, label);

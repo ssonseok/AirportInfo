@@ -39,29 +39,37 @@ public class AirportFrame extends MainFrame {
 
         setContentPane(rootPanel);
         initToolbar();
-        setJMenuBar(menuBar);
+        initMenuBar();
     }
 
     private void initToolbar() {
-        airportToolBar.addLabelWithTranslation("toggle_theme", new MouseAdapter() {
+        airportToolBar.addLabel("toggle_theme", new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 toggleTheme();
             }
         });
-
-        airportToolBar.addLabelWithTranslation("english", new MouseAdapter() {
+        airportToolBar.addLabel("english", new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 changeLocale(Locale.ENGLISH);
             }
         });
-        airportToolBar.addLabelWithTranslation("korean", new MouseAdapter() {
+        airportToolBar.addLabel("korean", new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 changeLocale(Locale.KOREAN);
             }
         });
+        // TODO : Fill toolbar.
+    }
+
+    private void initMenuBar() {
+        menuBar.addMenu("file");
+        menuBar.addMenuItem("file", "save", null);
+        // TODO : Fill menus.
+
+        setJMenuBar(menuBar);
     }
 
     /**
@@ -96,7 +104,7 @@ public class AirportFrame extends MainFrame {
         if (airportSideBar != null)
             airportSideBar.onThemeChange(theme);
         if (menuBar != null)
-            menuBar.onThemeChange();
+            menuBar.updateTheme();
     }
 
     @Override
