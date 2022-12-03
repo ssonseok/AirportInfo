@@ -24,6 +24,7 @@ public class AirportMenuBar extends JMenuBar {
 
         addMenu("file");
         addMenuItem("file", "save", null);
+        // TODO : Fill menus.
 
         onThemeChange();
     }
@@ -40,6 +41,13 @@ public class AirportMenuBar extends JMenuBar {
         add(menu);
     }
 
+    /**
+     * Add menu item with translation key.
+     *
+     * @param menuKey  Key of menu to insert into
+     * @param itemKey  Key of menu item to insert
+     * @param listener Mouse listener of menu item
+     */
     public void addMenuItem(String menuKey, String itemKey, MouseListener listener) {
         JMenu menu = menus.get(menuKey);
         JMenuItem item = new JMenuItem(Translator.getBundleString(itemKey));
