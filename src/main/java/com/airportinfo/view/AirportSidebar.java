@@ -98,6 +98,7 @@ public class AirportSidebar extends ComponentView {
         // TODO : Implement after UserController support history.
         if (airportListModel.getSize() == 0)
             airportListModel.addElement(null);
+        recentLabel.revalidate();
     }
 
     private void loadBookmark() {
@@ -105,6 +106,7 @@ public class AirportSidebar extends ComponentView {
         airportListModel.addAll(userController.getAllBookmark());
         if (airportListModel.getSize() == 0)
             airportListModel.addElement(null);
+        bookmarkPanel.revalidate();
     }
 
     public void selectTab(Tab tab) {
