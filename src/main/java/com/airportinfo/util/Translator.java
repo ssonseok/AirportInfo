@@ -23,6 +23,12 @@ public class Translator {
     private static final String CLIENT_SECRET = "eHbXOXutnl";
     private static final String API_URL = "https://openapi.naver.com/v1/papago/n2mt";
 
+    /**
+     * Get translated string from resource bundle.
+     *
+     * @param key Key of translated string
+     * @return Value matching key, key if not exists
+     */
     public static String getBundleString(String key) {
         try {
             return ResourceBundle.getBundle("string").getString(key);
@@ -31,6 +37,14 @@ public class Translator {
         }
     }
 
+    /**
+     * Translate text using Papago api.
+     *
+     * @param sourceLang Source language
+     * @param targetLang Target language
+     * @param text       Text to translate
+     * @return Translated text
+     */
     public static String translate(String sourceLang, String targetLang, String text) {
 
         String encodedText = URLEncoder.encode(text, StandardCharsets.UTF_8);

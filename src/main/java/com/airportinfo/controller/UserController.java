@@ -39,6 +39,14 @@ public class UserController extends Subject {
     }
 
     /**
+     * Delete all bookmarks.
+     */
+    public void delAllBookmark() {
+        bookmark.clear();
+        notice(BOOKMARK_CHANGE);
+    }
+
+    /**
      * 즐겨찾기 목록 BookmarkList
      *
      * @return bookmark

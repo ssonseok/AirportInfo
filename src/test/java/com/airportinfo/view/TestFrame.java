@@ -12,13 +12,23 @@ public class TestFrame extends MainFrame {
         try {
             FontManager.loadFont();
         } catch (FontFormatException | IOException e) {
-            JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, e.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
 
     @Override
+    public JPanel getPanel() {
+        return null;
+    }
+
+    @Override
     protected void changeContent(JPanel content) {
-        setContentPane(content);
+        frame.setContentPane(content);
+    }
+
+    @Override
+    public void load() {
+
     }
 }

@@ -17,7 +17,11 @@ public abstract class ComponentView {
      * Add default themeChangeListener.
      */
     public ComponentView() {
-        themeChangeListeners.add((theme) -> SwingUtilities.updateComponentTreeUI(getPanel()));
+        themeChangeListeners.add((theme) -> {
+            JPanel panel = getPanel();
+            if (panel != null)
+                SwingUtilities.updateComponentTreeUI(panel);
+        });
     }
 
     /**

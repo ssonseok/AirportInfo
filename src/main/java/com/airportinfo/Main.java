@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         setSystemProperties();
         AirportFrame airportFrame = new AirportFrame();
-        airportFrame.setVisible(true);
+        airportFrame.showFrame();
         airportFrame.load();
     }
 }

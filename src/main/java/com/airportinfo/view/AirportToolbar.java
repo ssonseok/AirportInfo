@@ -9,9 +9,11 @@ import com.intellij.uiDesigner.core.Spacer;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.Consumer;
 
 /**
  * Airport toolbar.
@@ -62,16 +64,22 @@ public class AirportToolbar extends ComponentView {
     }
 
     /**
-     * Add label with mouse listener.
+     * Add label with mouse action.
      *
-     * @param key Label text or translation key
-     * @param listener Mouse listener for label
+     * @param key    Label text or translation key
+     * @param action Mouse action for label
      */
-    public void addLabel(String key, MouseListener listener) {
+    public void addLabel(String key, Consumer<MouseEvent> action) {
         JLabel label = new JLabel(Translator.getBundleString(key));
         label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 30));
         label.setForeground(themeManager.getColor("Toolbar.foreground"));
-        label.addMouseListener(listener);
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (action != null && label.contains(e.getPoint()))
+                    action.accept(e);
+            }
+        });
         label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         toolbarPanel.add(label);
         labels.add(label);

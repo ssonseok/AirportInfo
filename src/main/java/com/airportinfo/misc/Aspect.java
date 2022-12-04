@@ -2,6 +2,13 @@ package com.airportinfo.misc;
 
 import java.util.Objects;
 
+/**
+ * Aspect for subject. Aspect can have parent aspect.
+ * Aspect.GENERAL_ASPECT is root of all aspects.
+ * In other word, all aspects are kind of general aspect.
+ *
+ * @author lalaalal
+ */
 public final class Aspect {
     public static final Aspect GENERAL_ASPECT = new Aspect(null, "general");
 

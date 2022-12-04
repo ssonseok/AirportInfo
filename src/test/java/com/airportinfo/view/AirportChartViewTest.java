@@ -1,10 +1,7 @@
-package com.airportinfo;
+package com.airportinfo.view;
 
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.model.Airport;
-import com.airportinfo.view.MainFrame;
-import com.airportinfo.view.TestContentView;
-import com.airportinfo.view.TestFrame;
 import com.airportinfo.view.airport.AirportChartView;
 import com.airportinfo.view.airport.AttributeStatisticCreator;
 import com.airportinfo.view.chart.HistogramView;
@@ -25,12 +22,12 @@ public class AirportChartViewTest {
         histogramView.setLegendInterval(0);
         histogramView.setLegendDetailColumnLimit(4);
         AirportChartView airportChartView = new AirportChartView(histogramView, new AttributeStatisticCreator(Airport::getRegion));
-        contentView.setPanel(airportChartView.getPanel());
+        contentView.setPanel(airportChartView);
         airportChartView.setAirports(List.of(airportController.getAirports()));
 
         mainFrame.addContentView("AirportChartView", contentView);
         mainFrame.setContentView("AirportChartView");
 
-        mainFrame.setVisible(true);
+        mainFrame.showFrame();
     }
 }

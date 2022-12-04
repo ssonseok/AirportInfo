@@ -3,14 +3,14 @@ package com.airportinfo.view;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
 import com.airportinfo.util.Translator;
+import com.airportinfo.view.dialog.SettingDialogView;
 import com.airportinfo.view.menubar.AirportMenuBar;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -30,6 +30,7 @@ public class AirportFrame extends MainFrame {
     private final AirportSidebar airportSideBar;
     private final AirportController airportController = new AirportController();
     private final UserController userController = new UserController();
+    private final SettingDialogView settingDialogView = new SettingDialogView(userController);
 
     public AirportFrame() {
         super(Translator.getBundleString("application_name"), 1280, 720);
@@ -37,54 +38,51 @@ public class AirportFrame extends MainFrame {
         airportSideBar = new AirportSidebar(this);
         $$$setupUI$$$();
 
-        setContentPane(rootPanel);
+        frame.setContentPane(rootPanel);
         initToolbar();
         initMenuBar();
+
+        addComponentView(airportToolBar);
+        addComponentView(airportSideBar);
+        addComponentView(settingDialogView);
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return rootPanel;
     }
 
     private void initToolbar() {
-        airportToolBar.addLabel("toggle_theme", new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                toggleTheme();
-            }
-        });
-        airportToolBar.addLabel("english", new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                changeLocale(Locale.ENGLISH);
-            }
-        });
-        airportToolBar.addLabel("korean", new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                changeLocale(Locale.KOREAN);
-            }
-        });
+        airportToolBar.addLabel("toggle_theme", (event) -> toggleTheme());
+        airportToolBar.addLabel("english", (event) -> changeLocale(Locale.ENGLISH));
+        airportToolBar.addLabel("korean", (event) -> changeLocale(Locale.KOREAN));
         // TODO : Fill toolbar.
     }
 
     private void initMenuBar() {
         menuBar.addMenu("file");
-        menuBar.addMenuItem("file", "save", null);
+        menuBar.addMenuItem("file", "setting", (event) -> settingDialogView.showDialogLocationRelativeTo(frame));
+        menuBar.addMenuSeparator("file");
+        menuBar.addMenuItem("file", "exit", (event) -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
         // TODO : Fill menus.
 
-        setJMenuBar(menuBar);
+        frame.setJMenuBar(menuBar);
     }
 
     /**
-     * Call after setVisible(true).
+     * Call after showFrame().
      */
+    @Override
     public void load() {
         String title = Translator.getBundleString("error");
         try {
             airportController.loadFromDB();
         } catch (SQLException e) {
             String message = Translator.getBundleString("cannot_load");
-            JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
         } catch (ClassNotFoundException | NoSuchMethodException e) {
             String message = Translator.getBundleString("contact_developer");
-            JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -99,10 +97,6 @@ public class AirportFrame extends MainFrame {
     @Override
     public void setTheme(AppTheme theme) {
         super.setTheme(theme);
-        if (airportToolBar != null)
-            airportToolBar.onThemeChange(theme);
-        if (airportSideBar != null)
-            airportSideBar.onThemeChange(theme);
         if (menuBar != null)
             menuBar.updateTheme();
     }
@@ -110,10 +104,6 @@ public class AirportFrame extends MainFrame {
     @Override
     public void changeLocale(Locale locale) {
         super.changeLocale(locale);
-        if (airportToolBar != null)
-            airportToolBar.onLocaleChange(locale);
-        if (airportSideBar != null)
-            airportSideBar.onLocaleChange(locale);
         if (menuBar != null)
             menuBar.onLocaleChange();
     }

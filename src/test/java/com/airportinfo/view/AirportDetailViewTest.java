@@ -1,9 +1,6 @@
-package com.airportinfo;
+package com.airportinfo.view;
 
 import com.airportinfo.controller.AirportController;
-import com.airportinfo.view.MainFrame;
-import com.airportinfo.view.TestContentView;
-import com.airportinfo.view.TestFrame;
 import com.airportinfo.view.airport.AirportDetailView;
 
 import java.sql.SQLException;
@@ -18,10 +15,10 @@ public class AirportDetailViewTest {
         TestContentView contentView = new TestContentView();
         AirportDetailView airportDetailView = new AirportDetailView();
         airportDetailView.setAirport(airportController.getAirports()[0]);
-        contentView.setPanel(airportDetailView.getPanel());
+        contentView.setPanel(airportDetailView);
 
         mainFrame.addContentView("AirportDetailView", contentView);
         mainFrame.setContentView("AirportDetailView");
-        mainFrame.setVisible(true);
+        mainFrame.showFrame();
     }
 }
