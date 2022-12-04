@@ -25,7 +25,7 @@ public class AirportChartViewTest {
         histogramView.setLegendInterval(0);
         histogramView.setLegendDetailColumnLimit(4);
         AirportChartView airportChartView = new AirportChartView(histogramView, new AttributeStatisticCreator(Airport::getRegion));
-        contentView.setPanel(airportChartView.getPanel());
+        contentView.setPanel(airportChartView);
         airportChartView.setAirports(List.of(airportController.getAirports()));
 
         mainFrame.addContentView("AirportChartView", contentView);

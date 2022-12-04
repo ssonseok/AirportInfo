@@ -61,10 +61,7 @@ public class AirportFrame extends MainFrame {
 
     private void initMenuBar() {
         menuBar.addMenu("file");
-        menuBar.addMenuItem("file", "setting", (event) -> {
-            SwingUtilities.updateComponentTreeUI(settingDialogView.getPanel());
-            settingDialogView.showDialogLocationRelativeTo(frame);
-        });
+        menuBar.addMenuItem("file", "setting", (event) -> settingDialogView.showDialogLocationRelativeTo(frame));
         menuBar.addMenuSeparator("file");
         menuBar.addMenuItem("file", "exit", (event) -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
         // TODO : Fill menus.
@@ -73,8 +70,9 @@ public class AirportFrame extends MainFrame {
     }
 
     /**
-     * Call after setVisible(true).
+     * Call after showFrame().
      */
+    @Override
     public void load() {
         String title = Translator.getBundleString("error");
         try {

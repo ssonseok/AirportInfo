@@ -26,4 +26,9 @@ public class TestFrame extends MainFrame {
     protected void changeContent(JPanel content) {
         frame.setContentPane(content);
     }
+
+    @Override
+    public void load() {
+
+    }
 }

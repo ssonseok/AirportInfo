@@ -17,7 +17,7 @@ import java.util.Locale;
  *
  * @author lalaalal
  */
-public abstract class MainFrame extends ComponentGroup {
+public abstract class MainFrame extends ContentView {
     private final ThemeManager themeManager = ThemeManager.getInstance();
     private static final Dimension DEFAULT_SIZE = new Dimension(700, 500);
     private final HashMap<String, ContentView> contentViewHashMap = new HashMap<>();
