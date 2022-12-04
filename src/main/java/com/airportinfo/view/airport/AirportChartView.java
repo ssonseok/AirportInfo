@@ -20,6 +20,9 @@ public class AirportChartView extends AirportView {
         this.statisticCreator = statisticCreator;
 
         setChartView(chartView);
+        addLocaleChangeListener(locale -> updateView());
+        addLocaleChangeListener(chartView::onLocaleChange);
+        addThemeChangeListener(chartView::onThemeChange);
     }
 
     @Override

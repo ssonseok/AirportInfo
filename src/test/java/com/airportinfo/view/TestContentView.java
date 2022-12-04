@@ -24,7 +24,7 @@ public class TestContentView extends ContentView {
 
     }
 
-    public void setPanel(ComponentView componentView) {
+    public void setComponent(ComponentView componentView) {
         this.panel.removeAll();
         clear();
         this.panel.add(componentView.getPanel(), BorderLayout.CENTER);

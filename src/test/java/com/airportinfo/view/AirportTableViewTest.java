@@ -15,7 +15,7 @@ public class AirportTableViewTest {
         mainFrame.showFrame();
         TestContentView contentView = new TestContentView();
         AirportTableView airportTableView = new AirportTableView();
-        contentView.setPanel(airportTableView);
+        contentView.setComponent(airportTableView);
 
         mainFrame.addContentView("AirportTableView", contentView);
         mainFrame.setContentView("AirportTableView");

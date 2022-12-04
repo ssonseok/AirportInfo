@@ -16,13 +16,11 @@ public class AirportChartViewTest {
         AirportController airportController = new AirportController();
         airportController.loadFromDB();
 
-        MainFrame mainFrame = new TestFrame();
+        MainFrame mainFrame = new AirportFrame();
         TestContentView contentView = new TestContentView();
         HistogramView histogramView = new HistogramView();
-        histogramView.setLegendInterval(0);
-        histogramView.setLegendDetailColumnLimit(4);
         AirportChartView airportChartView = new AirportChartView(histogramView, new AttributeStatisticCreator(Airport::getRegion));
-        contentView.setPanel(airportChartView);
+        contentView.setComponent(airportChartView);
         airportChartView.setAirports(List.of(airportController.getAirports()));
 
         mainFrame.addContentView("AirportChartView", contentView);

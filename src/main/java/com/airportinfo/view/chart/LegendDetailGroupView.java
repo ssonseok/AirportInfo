@@ -13,13 +13,11 @@ import java.awt.*;
  */
 class LegendDetailGroupView extends ComponentGroup {
     private final JPanel panel = new JPanel();
-    private final GridLayout layout = new GridLayout(0, 1);
     private AbstractChartView chartView;
-    private int legendColumnLimit = Integer.MAX_VALUE;
 
     public LegendDetailGroupView(AbstractChartView chartView) {
         this.chartView = chartView;
-        panel.setLayout(layout);
+        panel.setLayout(new FlowLayout());
     }
 
     @Override
@@ -35,8 +33,6 @@ class LegendDetailGroupView extends ComponentGroup {
     public void addLegend(String name) {
         Color color = chartView.getColor(name);
         LegendDetailView legendDetailView = new LegendDetailView(name, color);
-        if (chartView.getNumLegends() <= legendColumnLimit)
-            layout.setColumns(chartView.getNumLegends());
         panel.add(legendDetailView.getPanel());
         addComponentView(legendDetailView);
     }
@@ -45,16 +41,6 @@ class LegendDetailGroupView extends ComponentGroup {
     public void clear() {
         super.clear();
         panel.removeAll();
-        layout.setColumns(1);
-    }
-
-    /**
-     * Set limit of legend detail columns.
-     *
-     * @param limit Value of limit.
-     */
-    public void setLegendColumnLimit(int limit) {
-        legendColumnLimit = limit;
     }
 
     /**
