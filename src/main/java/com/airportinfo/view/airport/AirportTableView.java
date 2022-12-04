@@ -49,9 +49,9 @@ public class AirportTableView extends AirportView {
      * @return Selected airport
      */
     public Airport getSelectedAirport() {
-        TableColumn tableColumn = table.getColumn("IATA");
         int row = table.getSelectedRow();
-        int column = tableColumn.getModelIndex();
+        int modelIndex = table.getColumn("IATA").getModelIndex();
+        int column = table.convertColumnIndexToView(modelIndex);
         Optional<Airport> optional = airports.stream().filter(airport -> airport.getIATA() == table.getValueAt(row, column)).findFirst();
         return optional.orElse(null);
     }
@@ -63,9 +63,9 @@ public class AirportTableView extends AirportView {
      */
     public ArrayList<Airport> getSelectedAirports() {
         ArrayList<Airport> result = new ArrayList<>();
-        TableColumn tableColumn = table.getColumn("IATA");
         int[] rows = table.getSelectedRows();
-        int column = tableColumn.getModelIndex();
+        int modelIndex = table.getColumn("IATA").getModelIndex();
+        int column = table.convertColumnIndexToView(modelIndex);
         for (int row : rows) {
             Optional<Airport> optional = airports.stream().filter(airport -> airport.getIATA() == table.getValueAt(row, column)).findFirst();
             optional.ifPresent(result::add);
