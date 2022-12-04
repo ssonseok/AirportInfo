@@ -1,10 +1,7 @@
-package com.airportinfo;
+package com.airportinfo.view;
 
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.model.Airport;
-import com.airportinfo.view.AirportFrame;
-import com.airportinfo.view.MainFrame;
-import com.airportinfo.view.TestContentView;
 import com.airportinfo.view.airport.AirportTableView;
 
 import java.sql.SQLException;
@@ -26,7 +23,7 @@ public class AirportTableViewTest {
         airportTableView.setAirports(List.of(airportController.getAirports()));
         airportTableView.addMouseClickAction((mouseEvent) -> {
             if (mouseEvent.getClickCount() == 2) {
-                Airport selected = airportTableView.getSelectAirport();
+                Airport selected = airportTableView.getSelectedAirport();
                 System.out.println(selected);
             }
         });

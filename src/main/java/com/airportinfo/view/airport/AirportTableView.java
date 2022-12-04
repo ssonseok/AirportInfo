@@ -13,6 +13,7 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -20,6 +21,7 @@ import java.util.function.Consumer;
  * A view class handling airports table.
  *
  * @author JumoKookbob
+ * @author lalaalal
  */
 public class AirportTableView extends AirportView {
     private JPanel panel;
@@ -41,12 +43,34 @@ public class AirportTableView extends AirportView {
         });
     }
 
-    public Airport getSelectAirport() {
+    /**
+     * Get selected airport from table.
+     *
+     * @return Selected airport
+     */
+    public Airport getSelectedAirport() {
         TableColumn tableColumn = table.getColumn("IATA");
         int row = table.getSelectedRow();
         int column = tableColumn.getModelIndex();
         Optional<Airport> optional = airports.stream().filter(airport -> airport.getIATA() == table.getValueAt(row, column)).findFirst();
         return optional.orElse(null);
+    }
+
+    /**
+     * Get all selected airports from table.
+     *
+     * @return Selected airports
+     */
+    public ArrayList<Airport> getSelectedAirports() {
+        ArrayList<Airport> result = new ArrayList<>();
+        TableColumn tableColumn = table.getColumn("IATA");
+        int[] rows = table.getSelectedRows();
+        int column = tableColumn.getModelIndex();
+        for (int row : rows) {
+            Optional<Airport> optional = airports.stream().filter(airport -> airport.getIATA() == table.getValueAt(row, column)).findFirst();
+            optional.ifPresent(result::add);
+        }
+        return result;
     }
 
     private void updateTable() {

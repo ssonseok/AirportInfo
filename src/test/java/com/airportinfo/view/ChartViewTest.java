@@ -1,8 +1,6 @@
-package com.airportinfo;
+package com.airportinfo.view;
 
-import com.airportinfo.view.ChartContentView;
-import com.airportinfo.view.MainFrame;
-import com.airportinfo.view.TestFrame;
+import com.airportinfo.Main;
 
 public class ChartViewTest {
     public static void main(String[] args) {

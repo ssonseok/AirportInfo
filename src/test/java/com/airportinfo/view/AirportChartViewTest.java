@@ -1,10 +1,7 @@
-package com.airportinfo;
+package com.airportinfo.view;
 
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.model.Airport;
-import com.airportinfo.view.MainFrame;
-import com.airportinfo.view.TestContentView;
-import com.airportinfo.view.TestFrame;
 import com.airportinfo.view.airport.AirportChartView;
 import com.airportinfo.view.airport.AttributeStatisticCreator;
 import com.airportinfo.view.chart.HistogramView;

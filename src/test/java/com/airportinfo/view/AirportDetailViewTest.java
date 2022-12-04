@@ -1,9 +1,6 @@
-package com.airportinfo;
+package com.airportinfo.view;
 
 import com.airportinfo.controller.AirportController;
-import com.airportinfo.view.MainFrame;
-import com.airportinfo.view.TestContentView;
-import com.airportinfo.view.TestFrame;
 import com.airportinfo.view.airport.AirportDetailView;
 
 import java.sql.SQLException;
