@@ -1,7 +1,18 @@
 package com.airportinfo.controller;
 
 import com.airportinfo.model.Airport;
+import com.airportinfo.util.SerializeManager;
 
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -10,8 +21,9 @@ import java.util.HashSet;
  *
  * @author ssonseok
  */
-public class UserController {
-    private final HashSet<Airport> bookmark = new HashSet<>();
+public class UserController  {
+    private HashSet<Airport> bookmark = new HashSet<>();
+    private HashSet<Airport> recent = new HashSet<>();
     private final HashMap<Airport, Integer> rating = new HashMap<>();
 
     /**
@@ -76,5 +88,33 @@ public class UserController {
      */
     public int getRating(Airport airport) {
         return rating.getOrDefault(airport, -1);
+    }
+    
+    public void saveBookMark() throws IOException {
+    	FileOutputStream fos = new FileOutputStream("bookmark.ser");
+    	ObjectOutputStream oos = new ObjectOutputStream(fos);
+    	oos.writeObject(bookmark);
+    	oos.close();
+    }
+    
+    public void loadBookMark() throws IOException, ClassNotFoundException {
+    	FileInputStream fis = new FileInputStream("bookmark.ser");
+    	ObjectInputStream ois = new ObjectInputStream(fis);
+    	bookmark = (HashSet<Airport>) ois.readObject();
+    	ois.close();
+    }
+    
+    public void saveRecent() throws IOException {
+    	FileOutputStream fos = new FileOutputStream("recent.ser");
+    	ObjectOutputStream oos = new ObjectOutputStream(fos);
+    	oos.writeObject(recent);
+    	oos.close();
+    }
+    
+    public void loadRecent() throws IOException, ClassNotFoundException {
+    	FileInputStream fis = new FileInputStream("recent.ser");
+    	ObjectInputStream ois = new ObjectInputStream(fis);
+    	bookmark = (HashSet<Airport>)ois.readObject();
+    	ois.close();
     }
 }
