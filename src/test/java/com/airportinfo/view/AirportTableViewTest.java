@@ -1,21 +1,22 @@
 package com.airportinfo.view;
 
 import com.airportinfo.controller.AirportController;
+import com.airportinfo.controller.UserController;
 import com.airportinfo.model.Airport;
 import com.airportinfo.view.airport.AirportTableView;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class AirportTableViewTest {
-    public static void main(String[] args) throws SQLException, ClassNotFoundException, NoSuchMethodException {
-        AirportController airportController = new AirportController();
-        airportController.loadFromDB();
-        MainFrame mainFrame = new AirportFrame();
+    public static void main(String[] args) {
+        AirportFrame mainFrame = new AirportFrame();
         mainFrame.showFrame();
+        mainFrame.load();
+        AirportController airportController = mainFrame.getAirportController();
+        UserController userController = mainFrame.getUserController();
         TestContentView contentView = new TestContentView();
         AirportTableView airportTableView = new AirportTableView();
-        contentView.setPanel(airportTableView);
+        contentView.setComponent(airportTableView);
 
         mainFrame.addContentView("AirportTableView", contentView);
         mainFrame.setContentView("AirportTableView");
@@ -24,6 +25,7 @@ public class AirportTableViewTest {
         airportTableView.addMouseClickAction((mouseEvent) -> {
             if (mouseEvent.getClickCount() == 2) {
                 Airport selected = airportTableView.getSelectedAirport();
+                userController.addBookmark(selected);
                 System.out.println(selected);
             }
         });

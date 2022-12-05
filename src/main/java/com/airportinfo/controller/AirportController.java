@@ -2,13 +2,15 @@ package com.airportinfo.controller;
 
 import com.airportinfo.misc.Aspect;
 import com.airportinfo.misc.Subject;
-import com.airportinfo.model.*;
+import com.airportinfo.model.Airport;
+import com.airportinfo.model.EnglishAirportData;
+import com.airportinfo.model.KoreanAirportData;
+import com.airportinfo.model.RawAirport;
 import com.airportinfo.util.CSVReader;
 import com.airportinfo.util.DBManager;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -21,11 +23,10 @@ public class AirportController extends Subject {
     public static final Aspect SELECTED_AIRPORT_CHANGE = new Aspect("selected_airport_change");
     private Airport selectedAirport;
     private ArrayList<Airport> airports = new ArrayList<>();
-    private final ArrayList<Class<? extends TranslatedAirportData>> supportedTranslations = new ArrayList<>();
 
     public AirportController() {
-        supportedTranslations.add(KoreanAirportData.class);
-        supportedTranslations.add(EnglishAirportData.class);
+        Airport.addTranslation(KoreanAirportData.class);
+        Airport.addTranslation(EnglishAirportData.class);
     }
 
     /**
@@ -37,7 +38,6 @@ public class AirportController extends Subject {
     public void loadFromDB() throws SQLException, ClassNotFoundException, NoSuchMethodException {
         try (DBManager dbManager = new DBManager()) {
             airports = dbManager.selectAirport();
-            setTranslatedAirportData();
         }
     }
 
@@ -62,10 +62,9 @@ public class AirportController extends Subject {
      * @param path CSVFile path
      * @throws IOException Exception when open and read file
      */
-    public void loadFromFile(String path) throws IOException, NoSuchMethodException {
+    public void loadFromFile(String path) throws IOException {
         try (CSVReader reader = new CSVReader(path)) {
             readCSVFile(reader);
-            setTranslatedAirportData();
         }
     }
 
@@ -75,10 +74,9 @@ public class AirportController extends Subject {
      * @param inputStream CSVFile input stream
      * @throws IOException Exception when open and read file
      */
-    public void loadFromFile(InputStream inputStream) throws IOException, NoSuchMethodException {
+    public void loadFromFile(InputStream inputStream) throws IOException {
         try (CSVReader reader = new CSVReader(inputStream)) {
             readCSVFile(reader);
-            setTranslatedAirportData();
         }
     }
 
@@ -118,18 +116,6 @@ public class AirportController extends Subject {
 
     public Airport getSelectedAirport() {
         return selectedAirport;
-    }
-
-    private void setTranslatedAirportData() throws NoSuchMethodException {
-        try {
-            for (Airport airport : airports) {
-                for (Class<? extends TranslatedAirportData> supportedTranslation : supportedTranslations) {
-                    airport.addTranslatedAirportData(supportedTranslation);
-                }
-            }
-        } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            System.out.println("Something went wrong while creating TranslatedAirportData");
-        }
     }
 
     /**

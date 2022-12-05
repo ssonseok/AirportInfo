@@ -16,12 +16,29 @@ import java.util.HashMap;
  */
 public abstract class AbstractChartView extends ComponentView {
     public static final Color[] DEFAULT_COLOR_SCHEME = {Color.decode("#FF8787"), Color.decode("#F8C4B4"), Color.decode("#E5EBB2"), Color.decode("#BCE29E"), Color.decode("#B8E8FC"), Color.decode("#B1AFFF"), Color.decode("#C8FFD4"), Color.decode("#DFD3C3"), Color.decode("#F8EDE3"), Color.decode("#AEBDCA")};
+    protected static final String DEFAULT_TITLE = "default_chart_title";
     protected final LegendList legends = new LegendList();
     private final LegendDetailGroupView legendDetailGroupView = new LegendDetailGroupView(this);
     private final HashMap<String, Integer> legendColor = new HashMap<>();
     protected NumberFormat numberFormat = NumberFormat.INT_FORMAT;
     private Color[] colorScheme = DEFAULT_COLOR_SCHEME;
     public boolean showLegendLabel = true;
+    protected String title;
+
+    /**
+     * Initialize chart with title.
+     *
+     * @param title Key of translation or literally
+     */
+    public AbstractChartView(String title) {
+        this.title = title;
+        addLocaleChangeListener(locale -> updateTitle());
+    }
+
+    /**
+     * Update
+     */
+    protected abstract void updateTitle();
 
     /**
      * @return Chart panel type with JPanel.
@@ -35,15 +52,6 @@ public abstract class AbstractChartView extends ComponentView {
      */
     protected JPanel getLegendDetailPanel() {
         return legendDetailGroupView.getPanel();
-    }
-
-    /**
-     * Set limit of legend detail columns.
-     *
-     * @param limit Value of limit.
-     */
-    public void setLegendDetailColumnLimit(int limit) {
-        legendDetailGroupView.setLegendColumnLimit(limit);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.airportinfo.model;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 
 /**
@@ -12,8 +13,25 @@ import java.util.Locale;
 public class Airport {
     public static final String[] ATTRIBUTE_NAMES = {"Airport Name", "IATA", "ICAO", "Region", "Country", "City"};
     private static final HashMap<Locale, String[]> localizedAttributeNames = new HashMap<>();
-    private final HashMap<Locale, TranslatedAirportData> data = new HashMap<>();
+    private static final HashSet<Class<? extends TranslatedAirportData>> supportedTranslation = new HashSet<>();
+    private final HashMap<Locale, TranslatedAirportData> translatedData = new HashMap<>();
     private final RawAirport airport;
+
+    /**
+     * Add translation support. Added translations will be generated during initialize Airport.
+     * Only valid TranslatedAirportData will be added.
+     *
+     * @param type Class of TranslatedAirportData to support
+     */
+    public static void addTranslation(Class<? extends TranslatedAirportData> type) {
+        try {
+            type.getDeclaredConstructor(RawAirport.class).newInstance((RawAirport) null);
+            supportedTranslation.add(type);
+        } catch (InvocationTargetException | InstantiationException
+                 | IllegalAccessException | NoSuchMethodException ignored) {
+
+        }
+    }
 
     public static void addLocalizedAttributeNames(Locale locale, String[] attributeNames) {
         if (attributeNames.length == ATTRIBUTE_NAMES.length)
@@ -30,30 +48,36 @@ public class Airport {
 
     public Airport(RawAirport airport) {
         this.airport = airport;
+        for (Class<? extends TranslatedAirportData> type : supportedTranslation)
+            addTranslatedAirportData(type);
     }
 
-    public void addTranslatedAirportData(Class<? extends TranslatedAirportData> type) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        TranslatedAirportData translatedAirportData = type.getDeclaredConstructor(RawAirport.class).newInstance(airport);
-        Locale locale = translatedAirportData.getLocale();
-        data.put(locale, translatedAirportData);
+    private void addTranslatedAirportData(Class<? extends TranslatedAirportData> type) {
+        try {
+            TranslatedAirportData translatedAirportData = type.getDeclaredConstructor(RawAirport.class).newInstance(airport);
+            Locale locale = translatedAirportData.getLocale();
+            translatedData.put(locale, translatedAirportData);
+        } catch (Exception ignored) {
+
+        }
     }
 
     public String getAirportName() {
-        TranslatedAirportData translatedAirportData = data.get(Locale.getDefault());
+        TranslatedAirportData translatedAirportData = translatedData.get(Locale.getDefault());
         if (translatedAirportData == null)
             return airport.englishName;
         return translatedAirportData.getAirportName();
     }
 
     public String getCountry() {
-        TranslatedAirportData translatedAirportData = data.get(Locale.getDefault());
+        TranslatedAirportData translatedAirportData = translatedData.get(Locale.getDefault());
         if (translatedAirportData == null)
             return airport.englishCountryName;
         return translatedAirportData.getCountry();
     }
 
     public String getCity() {
-        TranslatedAirportData translatedAirportData = data.get(Locale.getDefault());
+        TranslatedAirportData translatedAirportData = translatedData.get(Locale.getDefault());
         if (translatedAirportData == null)
             return airport.englishCityName;
         return translatedAirportData.getCity();
@@ -68,7 +92,7 @@ public class Airport {
     }
 
     public String getRegion() {
-        TranslatedAirportData translatedAirportData = data.get(Locale.getDefault());
+        TranslatedAirportData translatedAirportData = translatedData.get(Locale.getDefault());
         if (translatedAirportData == null)
             return airport.koreanRegion;
         return translatedAirportData.getRegion();

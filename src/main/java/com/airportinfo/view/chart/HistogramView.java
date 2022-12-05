@@ -1,6 +1,7 @@
 package com.airportinfo.view.chart;
 
 import com.airportinfo.util.FontManager;
+import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -28,13 +29,19 @@ public class HistogramView extends AbstractChartView {
     public boolean showGuideline = true;
 
     public HistogramView() {
-
+        super(DEFAULT_TITLE);
         $$$setupUI$$$();
     }
 
     public HistogramView(String title) {
+        super(title);
         $$$setupUI$$$();
-        titleLabel.setText(title);
+        updateTitle();
+    }
+
+    @Override
+    public void updateTitle() {
+        titleLabel.setText(Translator.getBundleString(title));
     }
 
     @Override
