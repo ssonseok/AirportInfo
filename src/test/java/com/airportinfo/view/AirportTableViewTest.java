@@ -3,6 +3,7 @@ package com.airportinfo.view;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
 import com.airportinfo.model.Airport;
+import com.airportinfo.util.WikiCrawler;
 import com.airportinfo.view.airport.AirportTableView;
 
 import java.util.List;
@@ -26,7 +27,8 @@ public class AirportTableViewTest {
             if (mouseEvent.getClickCount() == 2) {
                 Airport selected = airportTableView.getSelectedAirport();
                 userController.addBookmark(selected);
-                System.out.println(selected);
+                String info = WikiCrawler.searchLocalizedInfo(selected);
+                System.out.println(info);
             }
         });
     }
