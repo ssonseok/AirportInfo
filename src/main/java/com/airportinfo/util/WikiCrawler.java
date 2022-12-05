@@ -1,5 +1,6 @@
 package com.airportinfo.util;
 
+import com.airportinfo.Setting;
 import com.airportinfo.model.Airport;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
@@ -43,10 +44,14 @@ public class WikiCrawler {
         }
     }
 
-    public static String searchEnglishInfo(Airport airport) {
+    private static String searchEnglishInfo(Airport airport) {
         try {
+            Locale currentLocale = Locale.getDefault();
             String airportSearchTerm = makeAirportSearchTerm(airport.getRawData().englishName);
-            return searchInfo(EN_WIKI_URL + airportSearchTerm, airport);
+            String englishInformation = searchInfo(EN_WIKI_URL + airportSearchTerm, airport);
+            if (!currentLocale.equals(Locale.ENGLISH) && Setting.getInstance().isLocalizeEnglishOnly())
+                return Translator.translate(Locale.ENGLISH, currentLocale, englishInformation);
+            return englishInformation;
         } catch (RuntimeException | HttpStatusException e) {
             return Translator.getBundleString("not_found");
         } catch (IOException e) {

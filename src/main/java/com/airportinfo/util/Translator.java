@@ -8,10 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Translate using Papago.
@@ -46,7 +43,6 @@ public class Translator {
      * @return Translated text
      */
     public static String translate(String sourceLang, String targetLang, String text) {
-
         String encodedText = URLEncoder.encode(text, StandardCharsets.UTF_8);
 
         Map<String, String> requestHeaders = new HashMap<>();
@@ -55,6 +51,18 @@ public class Translator {
 
         String jsonBody = post(requestHeaders, sourceLang, targetLang, encodedText);
         return parseTranslatedText(jsonBody);
+    }
+
+    /**
+     * Translate text using Papago api.
+     *
+     * @param source Source locale
+     * @param target Target locale
+     * @param text   Text to translate
+     * @return Translated text
+     */
+    public static String translate(Locale source, Locale target, String text) {
+        return translate(source.toString(), target.toString(), text);
     }
 
     private static String parseTranslatedText(String body) {

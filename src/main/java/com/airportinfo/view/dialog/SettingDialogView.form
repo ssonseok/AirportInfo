@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="723" height="400"/>
     </constraints>
     <properties/>
     <border type="empty">
@@ -19,7 +19,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="12223" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="12223" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title-resource-bundle="string" title-key="general"/>
@@ -29,34 +29,52 @@
               <size top="10" left="0" bottom="10" right="0"/>
             </border>
             <children>
-              <component id="e1aeb" class="javax.swing.JButton" binding="resetHistoryButton" default-binding="true">
+              <grid id="570d" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties>
-                  <text resource-bundle="string" key="reset_history"/>
-                  <toolTipText resource-bundle="string" key="reset_tooltip"/>
-                </properties>
-              </component>
-              <vspacer id="56506">
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="8d19" class="javax.swing.JButton" binding="resetHistoryButton" default-binding="true">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="string" key="reset_history"/>
+                      <toolTipText resource-bundle="string" key="reset_tooltip"/>
+                    </properties>
+                  </component>
+                  <component id="60097" class="javax.swing.JButton" binding="resetBookmarkButton" default-binding="true">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="string" key="reset_bookmark"/>
+                      <toolTipText resource-bundle="string" key="reset_tooltip"/>
+                    </properties>
+                  </component>
+                  <hspacer id="c8ddb">
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </hspacer>
+                </children>
+              </grid>
+              <vspacer id="bb510">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
-              <component id="52378" class="javax.swing.JButton" binding="resetBookmarkButton" default-binding="true">
+              <component id="c83a0" class="javax.swing.JCheckBox" binding="localizeEnglishOnlyCheckBox">
                 <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="string" key="reset_bookmark"/>
-                  <toolTipText resource-bundle="string" key="reset_tooltip"/>
+                  <text resource-bundle="string" key="localize_english_only"/>
                 </properties>
               </component>
-              <hspacer id="8e9b0">
-                <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </hspacer>
             </children>
           </grid>
           <grid id="a7261" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
