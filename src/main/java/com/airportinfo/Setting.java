@@ -12,12 +12,15 @@ import com.airportinfo.view.chart.HistogramView;
 public class Setting extends Subject {
     public static final Aspect CHART_CHANGE = new Aspect("chart_change");
     public static final Aspect HISTOGRAM_CHANGE = new Aspect(CHART_CHANGE, "histogram_change");
+    public static final Aspect LOCALIZATION_CHANGE = new Aspect("localization_change");
 
     private static Setting instance;
 
     private boolean showChartLabel = true;
     private int histogramLegendInterval = HistogramView.DEFAULT_LEGEND_INTERVAL;
     private boolean showHistogramGuideLine = true;
+
+    private boolean localizeEnglishOnly = false;
 
     public static Setting getInstance() {
         if (instance == null)
@@ -27,7 +30,7 @@ public class Setting extends Subject {
 
     private Setting() { }
 
-    public boolean getShowChartLabel() {
+    public boolean isShowChartLabel() {
         return showChartLabel;
     }
 
@@ -73,7 +76,7 @@ public class Setting extends Subject {
         this.histogramLegendInterval = histogramLegendInterval;
     }
 
-    public boolean getShowHistogramGuideLine() {
+    public boolean isShowHistogramGuideLine() {
         return showHistogramGuideLine;
     }
 
@@ -94,5 +97,18 @@ public class Setting extends Subject {
      */
     public void setSilentShowHistogramGuideLine(boolean showHistogramGuideLine) {
         this.showHistogramGuideLine = showHistogramGuideLine;
+    }
+
+    public boolean isLocalizeEnglishOnly() {
+        return localizeEnglishOnly;
+    }
+
+    public void setLocalizeEnglishOnly(boolean localizeEnglishOnly) {
+        this.localizeEnglishOnly = localizeEnglishOnly;
+        notice(LOCALIZATION_CHANGE);
+    }
+
+    public void setSilentLocalizeEnglishOnly(boolean localizeEnglishOnly) {
+        this.localizeEnglishOnly = localizeEnglishOnly;
     }
 }
