@@ -12,7 +12,7 @@ public class AirportDetailViewTest {
 
         MainFrame mainFrame = new TestFrame();
 
-        TestContentView contentView = new TestContentView();
+        TestContentView contentView = new TestContentView(mainFrame);
         AirportDetailView airportDetailView = new AirportDetailView();
         airportDetailView.setAirport(airportController.getAirports()[0]);
         contentView.setComponent(airportDetailView);

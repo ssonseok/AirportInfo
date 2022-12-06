@@ -1,6 +1,7 @@
 package com.airportinfo.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Having all airport data.
@@ -56,5 +57,37 @@ public class RawAirport implements Serializable {
                 englishCountryName + ", " +
                 koreanCountryName + ", " +
                 englishCityName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RawAirport that = (RawAirport) o;
+
+        if (!Objects.equals(englishName, that.englishName)) return false;
+        if (!Objects.equals(koreanName, that.koreanName)) return false;
+        if (!Objects.equals(IATA, that.IATA)) return false;
+        if (!Objects.equals(ICAO, that.ICAO)) return false;
+        if (!Objects.equals(koreanRegion, that.koreanRegion)) return false;
+        if (!Objects.equals(englishCountryName, that.englishCountryName))
+            return false;
+        if (!Objects.equals(koreanCountryName, that.koreanCountryName))
+            return false;
+        return Objects.equals(englishCityName, that.englishCityName);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = englishName != null ? englishName.hashCode() : 0;
+        result = 31 * result + (koreanName != null ? koreanName.hashCode() : 0);
+        result = 31 * result + (IATA != null ? IATA.hashCode() : 0);
+        result = 31 * result + (ICAO != null ? ICAO.hashCode() : 0);
+        result = 31 * result + (koreanRegion != null ? koreanRegion.hashCode() : 0);
+        result = 31 * result + (englishCountryName != null ? englishCountryName.hashCode() : 0);
+        result = 31 * result + (koreanCountryName != null ? koreanCountryName.hashCode() : 0);
+        result = 31 * result + (englishCityName != null ? englishCityName.hashCode() : 0);
+        return result;
     }
 }

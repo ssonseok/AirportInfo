@@ -74,7 +74,10 @@ public class ThemeManager {
         addColor(AppTheme.Dark, "Tab.foreground", ThemeManager.getDefaultColor(ThemeManager.DARK_THEME, "Label.foreground"));
         addColor(AppTheme.Dark, "Tab.selectionBackground", Color.decode("#212C32"));
 
-
+        addColor(AppTheme.Lite, "Separator.background", ThemeManager.getDefaultColor(ThemeManager.LITE_THEME, "Label.background"));
+        addColor(AppTheme.Lite, "Separator.foreground", Color.decode("#A3A3A3"));
+        addColor(AppTheme.Dark, "Separator.background", ThemeManager.getDefaultColor(ThemeManager.DARK_THEME, "Label.background"));
+        addColor(AppTheme.Dark, "Separator.foreground", Color.decode("#546f7c"));
     }
 
     /**

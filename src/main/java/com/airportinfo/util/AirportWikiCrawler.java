@@ -8,7 +8,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -21,6 +25,7 @@ public class AirportWikiCrawler {
     private static final String EN_WIKI_URL = "https://en.wikipedia.org/wiki/";
     private static final HashMap<String, DocumentCacheData> documentCache = new HashMap<>();
     private static final HashMap<String, String> translationCache = new HashMap<>();
+    private static final HashMap<String, BufferedImage> imageCache = new HashMap<>();
     private final Document document;
     private final Airport airport;
     private final boolean englishOnly;
@@ -105,8 +110,8 @@ public class AirportWikiCrawler {
         throw new RuntimeException("not_found");
     }
 
-    public String[] getImages(int numImages) {
-        String[] result = new String[numImages];
+    public String[] getImageURLs(int numImages) {
+        ArrayList<String> result = new ArrayList<>();
         Elements elements = document.select("img");
         int count = 0;
         for (Element element : elements) {
@@ -116,11 +121,30 @@ public class AirportWikiCrawler {
             String sourceURL = element.attr("src").replaceFirst("^/+", "https://");
             if (sourceURL.contains("static"))
                 continue;
-            result[count] = sourceURL;
+            result.add(sourceURL);
             count += 1;
         }
 
-        return result;
+        return result.toArray(new String[0]);
+    }
+
+    public BufferedImage[] getBufferedImages(int numImages) throws IOException {
+        String[] imageURLs = getImageURLs(numImages);
+        BufferedImage[] bufferedImages = new BufferedImage[imageURLs.length];
+        int index = 0;
+        for (String imageURL : imageURLs) {
+            if (imageCache.containsKey(imageURL)) {
+                bufferedImages[index] = imageCache.get(imageURL);
+            } else {
+                URL url = new URL(imageURL);
+                BufferedImage bufferedImage = ImageIO.read(url);
+                bufferedImages[index] = bufferedImage;
+                imageCache.put(imageURL, bufferedImage);
+            }
+            index += 1;
+        }
+
+        return bufferedImages;
     }
 
     /**

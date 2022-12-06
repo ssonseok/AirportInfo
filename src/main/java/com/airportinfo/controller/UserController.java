@@ -4,11 +4,7 @@ import com.airportinfo.misc.Aspect;
 import com.airportinfo.misc.Subject;
 import com.airportinfo.model.Airport;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -64,7 +60,8 @@ public class UserController extends Subject {
     }
 
     public void addRecent(Airport airport) {
-        history.add(airport);
+        history.remove(airport);
+        history.add(0, airport);
         notice(HISTORY_CHANGE);
     }
 

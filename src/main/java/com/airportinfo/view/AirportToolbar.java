@@ -41,7 +41,6 @@ public class AirportToolbar extends ComponentView {
                 label.setText(Translator.getBundleString(key));
             }
         });
-        onThemeChange(AppTheme.Lite);
     }
 
     @Override

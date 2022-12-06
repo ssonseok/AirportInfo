@@ -16,7 +16,7 @@ public class Airport implements Serializable {
     private static final HashMap<Locale, String[]> localizedAttributeNames = new HashMap<>();
     private static final HashSet<Class<? extends TranslatedAirportData>> supportedTranslation = new HashSet<>();
     private final HashMap<Locale, TranslatedAirportData> translatedData = new HashMap<>();
-    private final RawAirport airport;
+    private final RawAirport rawAirport;
 
     /**
      * Add translation support. Added translations will be generated during initialize Airport.
@@ -47,15 +47,15 @@ public class Airport implements Serializable {
         return attributeNames;
     }
 
-    public Airport(RawAirport airport) {
-        this.airport = airport;
+    public Airport(RawAirport rawAirport) {
+        this.rawAirport = rawAirport;
         for (Class<? extends TranslatedAirportData> type : supportedTranslation)
             addTranslatedAirportData(type);
     }
 
     private void addTranslatedAirportData(Class<? extends TranslatedAirportData> type) {
         try {
-            TranslatedAirportData translatedAirportData = type.getDeclaredConstructor(RawAirport.class).newInstance(airport);
+            TranslatedAirportData translatedAirportData = type.getDeclaredConstructor(RawAirport.class).newInstance(rawAirport);
             Locale locale = translatedAirportData.getLocale();
             translatedData.put(locale, translatedAirportData);
         } catch (Exception ignored) {
@@ -66,41 +66,41 @@ public class Airport implements Serializable {
     public String getAirportName() {
         TranslatedAirportData translatedAirportData = translatedData.get(Locale.getDefault());
         if (translatedAirportData == null)
-            return airport.englishName;
+            return rawAirport.englishName;
         return translatedAirportData.getAirportName();
     }
 
     public String getCountry() {
         TranslatedAirportData translatedAirportData = translatedData.get(Locale.getDefault());
         if (translatedAirportData == null)
-            return airport.englishCountryName;
+            return rawAirport.englishCountryName;
         return translatedAirportData.getCountry();
     }
 
     public String getCity() {
         TranslatedAirportData translatedAirportData = translatedData.get(Locale.getDefault());
         if (translatedAirportData == null)
-            return airport.englishCityName;
+            return rawAirport.englishCityName;
         return translatedAirportData.getCity();
     }
 
     public String getIATA() {
-        return airport.IATA;
+        return rawAirport.IATA;
     }
 
     public String getICAO() {
-        return airport.ICAO;
+        return rawAirport.ICAO;
     }
 
     public String getRegion() {
         TranslatedAirportData translatedAirportData = translatedData.get(Locale.getDefault());
         if (translatedAirportData == null)
-            return airport.koreanRegion;
+            return rawAirport.koreanRegion;
         return translatedAirportData.getRegion();
     }
 
     public RawAirport getRawData() {
-        return airport;
+        return rawAirport;
     }
 
     public String[] toArray() {
@@ -124,5 +124,12 @@ public class Airport implements Serializable {
                 + getRegion() + ","
                 + getCountry() + ","
                 + getCity();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Airport airport)
+            return getRawData().equals(airport.rawAirport);
+        return false;
     }
 }

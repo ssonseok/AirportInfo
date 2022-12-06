@@ -19,7 +19,7 @@ public class AirportTableViewTest {
         mainFrame.load();
         AirportController airportController = mainFrame.getAirportController();
         UserController userController = mainFrame.getUserController();
-        TestContentView contentView = new TestContentView();
+        TestContentView contentView = new TestContentView(mainFrame);
         AirportTableView airportTableView = new AirportTableView();
         contentView.setComponent(airportTableView);
 
@@ -40,7 +40,7 @@ public class AirportTableViewTest {
         try {
             AirportWikiCrawler crawler = new AirportWikiCrawler(airport);
             String info = crawler.getInformation();
-            String[] images = crawler.getImages(3);
+            String[] images = crawler.getImageURLs(3);
             System.out.println(info);
             System.out.println(Arrays.toString(images));
         } catch (HttpStatusException e) {

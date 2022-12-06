@@ -10,7 +10,6 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,6 +23,7 @@ import java.util.Locale;
  */
 public class AirportFrame extends MainFrame {
     public static final String AIRPORT_DETAIL_VIEW = "airport_detail_view";
+    public static final String AIRPORT_SEARCH_VIEW = "airport_search_view";
     private JPanel contentPanel;
     private JPanel toolbarPanel;
     private JPanel sidebarPanel;
@@ -77,6 +77,7 @@ public class AirportFrame extends MainFrame {
      */
     @Override
     public void load() {
+        SwingUtilities.invokeLater(() -> setTheme(AppTheme.Lite));
         frame.setTitle(Translator.getBundleString("application_name"));
         String title = Translator.getBundleString("error");
         try {
