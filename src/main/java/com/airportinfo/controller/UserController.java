@@ -136,34 +136,4 @@ public class UserController extends Subject {
             notice();
         }
     }
-    
-    public void saveBookMark() throws IOException {
-    	FileOutputStream fos = new FileOutputStream("bookmark.ser");
-    	ObjectOutputStream oos = new ObjectOutputStream(fos);
-    	oos.writeObject(bookmark);
-    	oos.close();
-    }
-
-    @SuppressWarnings("unchecked")
-    public void loadBookMark() throws IOException, ClassNotFoundException {
-    	FileInputStream fis = new FileInputStream("bookmark.ser");
-    	ObjectInputStream ois = new ObjectInputStream(fis);
-    	bookmark = (HashSet<Airport>) ois.readObject();
-    	ois.close();
-    }
-    
-    public void saveRecent() throws IOException {
-    	FileOutputStream fos = new FileOutputStream("recent.ser");
-    	ObjectOutputStream oos = new ObjectOutputStream(fos);
-    	oos.writeObject(history);
-    	oos.close();
-    }
-
-    @SuppressWarnings("unchecked")
-    public void loadRecent() throws IOException, ClassNotFoundException {
-    	FileInputStream fis = new FileInputStream("recent.ser");
-    	ObjectInputStream ois = new ObjectInputStream(fis);
-    	history = (ArrayList<Airport>) ois.readObject();
-    	ois.close();
-    }
 }
