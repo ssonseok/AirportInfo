@@ -3,9 +3,13 @@ package com.airportinfo.view;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
 import com.airportinfo.model.Airport;
-import com.airportinfo.util.WikiCrawler;
+import com.airportinfo.util.AirportWikiCrawler;
+import com.airportinfo.util.Translator;
 import com.airportinfo.view.airport.AirportTableView;
+import org.jsoup.HttpStatusException;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class AirportTableViewTest {
@@ -27,9 +31,22 @@ public class AirportTableViewTest {
             if (mouseEvent.getClickCount() == 2) {
                 Airport selected = airportTableView.getSelectedAirport();
                 userController.addBookmark(selected);
-                String info = WikiCrawler.searchLocalizedInfo(selected);
-                System.out.println(info);
+                crawlAirportInfo(selected);
             }
         });
+    }
+
+    private static void crawlAirportInfo(Airport airport) {
+        try {
+            AirportWikiCrawler crawler = new AirportWikiCrawler(airport);
+            String info = crawler.getInformation();
+            String[] images = crawler.getImages(3);
+            System.out.println(info);
+            System.out.println(Arrays.toString(images));
+        } catch (HttpStatusException e) {
+            System.out.println(Translator.getBundleString("not_found"));
+        } catch (IOException e) {
+            System.out.println(Translator.getBundleString("connection_failed"));
+        }
     }
 }
