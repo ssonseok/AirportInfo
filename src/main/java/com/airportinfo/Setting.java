@@ -20,7 +20,7 @@ public class Setting extends Subject {
     private int histogramLegendInterval = HistogramView.DEFAULT_LEGEND_INTERVAL;
     private boolean showHistogramGuideLine = true;
 
-    private boolean localizeEnglishOnly = false;
+    private boolean localizeEnglish = false;
 
     public static Setting getInstance() {
         if (instance == null)
@@ -99,16 +99,16 @@ public class Setting extends Subject {
         this.showHistogramGuideLine = showHistogramGuideLine;
     }
 
-    public boolean isLocalizeEnglishOnly() {
-        return localizeEnglishOnly;
+    public boolean isLocalizeEnglish() {
+        return localizeEnglish;
     }
 
-    public void setLocalizeEnglishOnly(boolean localizeEnglishOnly) {
-        this.localizeEnglishOnly = localizeEnglishOnly;
+    public void setLocalizeEnglish(boolean localizeEnglish) {
+        this.localizeEnglish = localizeEnglish;
         notice(LOCALIZATION_CHANGE);
     }
 
-    public void setSilentLocalizeEnglishOnly(boolean localizeEnglishOnly) {
-        this.localizeEnglishOnly = localizeEnglishOnly;
+    public void setSilentLocalizeEnglishOnly(boolean localizeEnglish) {
+        this.localizeEnglish = localizeEnglish;
     }
 }

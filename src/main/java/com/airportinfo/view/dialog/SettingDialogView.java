@@ -35,7 +35,7 @@ public class SettingDialogView extends DialogView {
     private JPanel chartGeneralPanel;
     private JPanel histogramPanel;
     private JLabel intervalLabel;
-    private JCheckBox localizeEnglishOnlyCheckBox;
+    private JCheckBox localizeEnglishCheckBox;
     private final Setting setting = Setting.getInstance();
 
     public SettingDialogView(UserController userController) {
@@ -98,7 +98,7 @@ public class SettingDialogView extends DialogView {
         resetHistoryButton.setText(Translator.getBundleString("reset_history"));
         resetBookmarkButton.setToolTipText(Translator.getBundleString("reset_tooltip"));
         resetHistoryButton.setToolTipText(Translator.getBundleString("reset_tooltip"));
-        localizeEnglishOnlyCheckBox.setText(Translator.getBundleString("localize_english_only"));
+        localizeEnglishCheckBox.setText(Translator.getBundleString("localize_english_only"));
     }
 
     private void updateTitledBorder() {
@@ -110,6 +110,12 @@ public class SettingDialogView extends DialogView {
     }
 
     @Override
+    public void showDialogLocationRelativeTo(Component component) {
+        super.showDialogLocationRelativeTo(component);
+        loadSetting();
+    }
+
+    @Override
     public JPanel getPanel() {
         return panel;
     }
@@ -118,6 +124,7 @@ public class SettingDialogView extends DialogView {
         showChartLabelCheckBox.setSelected(setting.isShowChartLabel());
         intervalSpinner.setValue(setting.getHistogramLegendInterval());
         showGuidelineCheckBox.setSelected(setting.isShowHistogramGuideLine());
+        localizeEnglishCheckBox.setSelected(setting.isLocalizeEnglish());
     }
 
     private void saveSetting() {
@@ -125,7 +132,7 @@ public class SettingDialogView extends DialogView {
         int interval = (int) intervalSpinner.getValue();
         setting.setSilentHistogramLegendInterval(interval);
         setting.setSilentShowHistogramGuideLine(showGuidelineCheckBox.isSelected());
-        setting.setSilentLocalizeEnglishOnly(localizeEnglishOnlyCheckBox.isSelected());
+        setting.setSilentLocalizeEnglishOnly(localizeEnglishCheckBox.isSelected());
         setting.notice();
     }
 
@@ -168,9 +175,9 @@ public class SettingDialogView extends DialogView {
         panel2.add(spacer1, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
         panel1.add(spacer2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        localizeEnglishOnlyCheckBox = new JCheckBox();
-        this.$$$loadButtonText$$$(localizeEnglishOnlyCheckBox, this.$$$getMessageFromBundle$$$("string", "localize_english_only"));
-        panel1.add(localizeEnglishOnlyCheckBox, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        localizeEnglishCheckBox = new JCheckBox();
+        this.$$$loadButtonText$$$(localizeEnglishCheckBox, this.$$$getMessageFromBundle$$$("string", "localize_english_only"));
+        panel1.add(localizeEnglishCheckBox, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         tabbedPane.addTab(this.$$$getMessageFromBundle$$$("string", "chart_setting"), panel3);
