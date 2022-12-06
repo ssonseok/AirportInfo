@@ -97,7 +97,9 @@ public class AirportWikiCrawler {
         Elements elements = document.select("#mw-content-text > div.mw-parser-output > p");
         for (Element element : elements) {
             String airportInfo = element.text().replaceAll("\\[[0-9]+]", "");
-            if (airportInfo.contains(airport.getIATA()))
+            if (airportInfo.contains(airport.getIATA())
+                    || airportInfo.contains(airport.getAirportName())
+                    || airportInfo.contains(airport.getRawData().englishName))
                 return airportInfo;
         }
         throw new RuntimeException("not_found");
@@ -111,7 +113,10 @@ public class AirportWikiCrawler {
             if (count >= numImages)
                 break;
 
-            result[count] = "https:" + element.attr("src");
+            String sourceURL = element.attr("src").replaceFirst("^/+", "https://");
+            if (sourceURL.contains("static"))
+                continue;
+            result[count] = sourceURL;
             count += 1;
         }
 
