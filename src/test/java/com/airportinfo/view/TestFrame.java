@@ -18,6 +18,11 @@ public class TestFrame extends MainFrame {
     }
 
     @Override
+    protected void destroy() {
+
+    }
+
+    @Override
     public JPanel getPanel() {
         return null;
     }

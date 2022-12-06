@@ -10,7 +10,10 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -77,12 +80,26 @@ public class AirportFrame extends MainFrame {
         frame.setTitle(Translator.getBundleString("application_name"));
         String title = Translator.getBundleString("error");
         try {
+            userController.load();
             airportController.loadFromDB();
-        } catch (SQLException e) {
+        } catch (FileNotFoundException ignored) {
+
+        } catch (SQLException | IOException e) {
             String message = Translator.getBundleString("cannot_load");
             JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
         } catch (ClassNotFoundException | NoSuchMethodException e) {
             String message = Translator.getBundleString("contact_developer");
+            JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @Override
+    protected void destroy() {
+        try {
+            userController.save();
+        } catch (IOException e) {
+            String title = Translator.getBundleString("error");
+            String message = Translator.getBundleString("save_error");
             JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
         }
     }

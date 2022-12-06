@@ -30,7 +30,7 @@ public class AirportTableViewTest {
         airportTableView.addMouseClickAction((mouseEvent) -> {
             if (mouseEvent.getClickCount() == 2) {
                 Airport selected = airportTableView.getSelectedAirport();
-                userController.addBookmark(selected);
+                userController.addRecent(selected);
                 crawlAirportInfo(selected);
             }
         });

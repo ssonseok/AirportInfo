@@ -3,18 +3,13 @@ package com.airportinfo.controller;
 import com.airportinfo.misc.Aspect;
 import com.airportinfo.misc.Subject;
 import com.airportinfo.model.Airport;
-import com.airportinfo.util.SerializeManager;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Base64;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -26,8 +21,10 @@ import java.util.HashSet;
 public class UserController extends Subject {
     public static final Aspect BOOKMARK_CHANGE = new Aspect("bookmark_change");
     public static final Aspect HISTORY_CHANGE = new Aspect("history_change");
-    private final HashSet<Airport> bookmark = new HashSet<>();
-    private final HashMap<Airport, Integer> rating = new HashMap<>();
+    private static final String SAVE_PATH = "user.data";
+    private HashSet<Airport> bookmark = new HashSet<>();
+    private ArrayList<Airport> history = new ArrayList<>();
+    private HashMap<Airport, Integer> rating = new HashMap<>();
 
     /**
      * 즐겨찾기 추가. Add bookmark.
@@ -66,6 +63,25 @@ public class UserController extends Subject {
         return bookmark;
     }
 
+    public void addRecent(Airport airport) {
+        history.add(airport);
+        notice(HISTORY_CHANGE);
+    }
+
+    public void delRecent(Airport airport) {
+        history.remove(airport);
+        notice(HISTORY_CHANGE);
+    }
+
+    public void delAllRecent() {
+        history.clear();
+        notice(HISTORY_CHANGE);
+    }
+
+    public ArrayList<Airport> getAllRecent() {
+        return history;
+    }
+
     /**
      * 별점기능 Rating
      *
@@ -100,6 +116,26 @@ public class UserController extends Subject {
     public int getRating(Airport airport) {
         return rating.getOrDefault(airport, -1);
     }
+
+    public void save() throws IOException {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(SAVE_PATH);
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+            objectOutputStream.writeObject(bookmark);
+            objectOutputStream.writeObject(history);
+            objectOutputStream.writeObject(rating);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void load() throws IOException, ClassNotFoundException {
+        try (FileInputStream fileInputStream = new FileInputStream(SAVE_PATH);
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+            bookmark = (HashSet<Airport>) objectInputStream.readObject();
+            history = (ArrayList<Airport>) objectInputStream.readObject();
+            rating = (HashMap<Airport, Integer>) objectInputStream.readObject();
+            notice();
+        }
+    }
     
     public void saveBookMark() throws IOException {
     	FileOutputStream fos = new FileOutputStream("bookmark.ser");
@@ -107,7 +143,8 @@ public class UserController extends Subject {
     	oos.writeObject(bookmark);
     	oos.close();
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void loadBookMark() throws IOException, ClassNotFoundException {
     	FileInputStream fis = new FileInputStream("bookmark.ser");
     	ObjectInputStream ois = new ObjectInputStream(fis);
@@ -118,14 +155,15 @@ public class UserController extends Subject {
     public void saveRecent() throws IOException {
     	FileOutputStream fos = new FileOutputStream("recent.ser");
     	ObjectOutputStream oos = new ObjectOutputStream(fos);
-    	oos.writeObject(recent);
+    	oos.writeObject(history);
     	oos.close();
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void loadRecent() throws IOException, ClassNotFoundException {
     	FileInputStream fis = new FileInputStream("recent.ser");
     	ObjectInputStream ois = new ObjectInputStream(fis);
-    	bookmark = (HashSet<Airport>)ois.readObject();
+    	history = (ArrayList<Airport>) ois.readObject();
     	ois.close();
     }
 }

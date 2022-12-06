@@ -7,6 +7,8 @@ import com.airportinfo.view.content.ContentView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
@@ -29,6 +31,7 @@ public abstract class MainFrame extends ContentView {
         frame.setTitle("Main");
         frame.setSize(DEFAULT_SIZE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowCloseListener());
     }
 
     public MainFrame(String title) {
@@ -37,7 +40,7 @@ public abstract class MainFrame extends ContentView {
         frame.setTitle(title);
         frame.setSize(DEFAULT_SIZE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        frame.addWindowListener(new WindowCloseListener());
     }
 
     public MainFrame(String title, int width, int height) {
@@ -46,7 +49,10 @@ public abstract class MainFrame extends ContentView {
         frame.setTitle(title);
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowCloseListener());
     }
+
+    protected abstract void destroy();
 
     /**
      * Add a new contentView with name.
@@ -137,5 +143,12 @@ public abstract class MainFrame extends ContentView {
         for (ContentView contentView : contentViewHashMap.values())
             contentView.onLocaleChange(locale);
         onLocaleChange(locale);
+    }
+
+    private class WindowCloseListener extends WindowAdapter {
+        @Override
+        public void windowClosing(WindowEvent e) {
+            destroy();
+        }
     }
 }

@@ -65,6 +65,10 @@ public class AirportSidebar extends ComponentView {
             if (currentTab == Tab.Bookmark)
                 loadBookmark();
         }, UserController.BOOKMARK_CHANGE);
+        userController.attach(() -> {
+            if (currentTab == Tab.Recent)
+                loadRecent();
+        }, UserController.HISTORY_CHANGE);
 
         recentLabel.setForeground(themeManager.getColor("Tab.foreground"));
         bookmarkLabel.setForeground(themeManager.getColor("Tab.foreground"));
@@ -95,7 +99,7 @@ public class AirportSidebar extends ComponentView {
 
     private void loadRecent() {
         airportListModel.removeAllElements();
-        // TODO : Implement after UserController support history.
+        airportListModel.addAll(userController.getAllRecent());
         if (airportListModel.getSize() == 0)
             airportListModel.addElement(null);
         recentLabel.revalidate();

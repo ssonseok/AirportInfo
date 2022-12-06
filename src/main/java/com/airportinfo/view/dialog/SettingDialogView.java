@@ -56,7 +56,7 @@ public class SettingDialogView extends DialogView {
         resetHistoryButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO : Implement after UserController support history.
+                userController.delAllRecent();
             }
         });
 
