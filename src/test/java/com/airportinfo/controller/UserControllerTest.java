@@ -20,14 +20,14 @@ public class UserControllerTest {
 		ra.englishCountryName = "engCountryName";
 		ra.koreanCountryName = "korCountryName";
 		ra.englishCityName = "engCityName";
-		Airport ap = new Airport(ra);
-		uc.addBookmark(ap);
-		System.out.println(uc.getAllBookmark());
-		uc.saveBookMark();
-		uc.delBookmark(ap);
-		System.out.println(uc.getAllBookmark());
-		uc.loadBookMark();
-		System.out.println(uc.getAllBookmark());
+//		Airport ap = new Airport(ra);
+//		uc.addBookmark(ap);
+//		System.out.println(uc.getAllBookmark());
+//		uc.saveBookMark();
+//		uc.delBookmark(ap);
+//		System.out.println(uc.getAllBookmark());
+//		uc.loadBookMark();
+//		System.out.println(uc.getAllBookmark());
 		
 		/*
 		 airport.englishName = items[0];

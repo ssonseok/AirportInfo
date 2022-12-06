@@ -65,7 +65,7 @@ public class ThemeManager {
         addColor(AppTheme.Lite, "MenuItem.hoverBackground", Color.decode("#393939"));
         addColor(AppTheme.Dark, "MenuBar.background", Color.decode("#2A383F"));
         addColor(AppTheme.Dark, "MenuBar.foreground", ThemeManager.getDefaultColor(ThemeManager.DARK_THEME, "Label.foreground"));
-        addColor(AppTheme.Dark, "MenuItem.hoverBackground", Color.decode("#263238"));
+        addColor(AppTheme.Dark, "MenuItem.hoverBackground", Color.decode("#212C32"));
 
         addColor(AppTheme.Lite, "Tab.background", Color.decode("#494949"));
         addColor(AppTheme.Lite, "Tab.foreground", ThemeManager.getDefaultColor(ThemeManager.LITE_THEME, "Label.background"));
