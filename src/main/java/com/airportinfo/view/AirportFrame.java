@@ -74,6 +74,7 @@ public class AirportFrame extends MainFrame {
      */
     @Override
     public void load() {
+        frame.setTitle(Translator.getBundleString("application_name"));
         String title = Translator.getBundleString("error");
         try {
             airportController.loadFromDB();
@@ -106,6 +107,7 @@ public class AirportFrame extends MainFrame {
         super.changeLocale(locale);
         if (menuBar != null)
             menuBar.onLocaleChange();
+        frame.setTitle(Translator.getBundleString("application_name"));
     }
 
     @Override

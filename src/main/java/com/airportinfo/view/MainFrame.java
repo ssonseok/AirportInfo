@@ -24,27 +24,28 @@ public abstract class MainFrame extends ContentView {
     protected final JFrame frame = new JFrame();
 
     public MainFrame() {
+        Locale.setDefault(Locale.KOREAN);
+        setTheme(AppTheme.Lite);
         frame.setTitle("Main");
         frame.setSize(DEFAULT_SIZE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTheme(AppTheme.Lite);
-        Locale.setDefault(Locale.KOREAN);
     }
 
     public MainFrame(String title) {
+        Locale.setDefault(Locale.KOREAN);
+        setTheme(AppTheme.Lite);
         frame.setTitle(title);
         frame.setSize(DEFAULT_SIZE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTheme(AppTheme.Lite);
-        Locale.setDefault(Locale.KOREAN);
+
     }
 
     public MainFrame(String title, int width, int height) {
+        Locale.setDefault(Locale.KOREAN);
+        setTheme(AppTheme.Lite);
         frame.setTitle(title);
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTheme(AppTheme.Lite);
-        Locale.setDefault(Locale.KOREAN);
     }
 
     /**

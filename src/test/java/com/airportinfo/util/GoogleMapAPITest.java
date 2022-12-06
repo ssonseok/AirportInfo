@@ -14,11 +14,14 @@ public class GoogleMapAPITest {
         testFrame.load();
         TestContentView testContentView = new TestContentView();
         TestComponentView testComponentView = new TestComponentView();
-        ImageIcon imageIcon = new ImageIcon(GoogleMapAPI.getMapImage("인천 국제공항", 500, 500, 12));
-        JLabel label = new JLabel(imageIcon);
+        JLabel label = new JLabel("Loading");
         testComponentView.getPanel().add(label);
         testContentView.setComponent(testComponentView);
         testFrame.addContentView("test", testContentView);
         testFrame.setContentView("test");
+
+        ImageIcon imageIcon = new ImageIcon(GoogleMapAPI.getMapImage("인천 국제공항", 500, 500, 12));
+        label.setIcon(imageIcon);
+        label.setText("");
     }
 }
