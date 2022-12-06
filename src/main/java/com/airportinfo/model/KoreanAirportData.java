@@ -10,7 +10,7 @@ import java.util.Locale;
 public class KoreanAirportData extends TranslatedAirportData {
     public static final String[] ATTRIBUTE_NAMES_KR = {"공항 이름", "IATA", "ICAO", "지역", "국가", "도시"};
 
-    private static final PreTranslatedData cityTranslation = loadPreTranslatedData("translation/pre-translated-city-en-ko.data");
+    private static final PreTranslatedData CITY_TRANSLATION = loadPreTranslatedData("translation/pre-translated-city-en-ko.data");
 
     static {
         Airport.addLocalizedAttributeNames(Locale.KOREAN, ATTRIBUTE_NAMES_KR);
@@ -38,8 +38,8 @@ public class KoreanAirportData extends TranslatedAirportData {
     @Override
     public String getCity() {
         String key = airport.englishCityName;
-        if (cityTranslation.containsKey(key))
-            return cityTranslation.get(key);
+        if (CITY_TRANSLATION.containsKey(key))
+            return CITY_TRANSLATION.get(key);
         return airport.englishCityName;
     }
 

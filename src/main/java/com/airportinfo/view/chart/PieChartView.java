@@ -1,6 +1,7 @@
 package com.airportinfo.view.chart;
 
 import com.airportinfo.util.FontManager;
+import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -15,21 +16,30 @@ import java.util.ResourceBundle;
  * @author lalaalal
  */
 public class PieChartView extends AbstractChartView {
-    public static final int DEFAULT_LEGEND_DETAIL_COLUMN_LIMIT = 4;
     private JPanel panel;
     private JLabel titleLabel;
     private JPanel pieChartPanel;
     private JPanel legendDetailPanel;
 
     public PieChartView() {
+        super(DEFAULT_TITLE);
         $$$setupUI$$$();
-        setLegendDetailColumnLimit(DEFAULT_LEGEND_DETAIL_COLUMN_LIMIT);
     }
 
+    /**
+     * Initialize chart with title.
+     *
+     * @param title Key of translation or literally
+     */
     public PieChartView(String title) {
+        super(title);
         $$$setupUI$$$();
-        setLegendDetailColumnLimit(DEFAULT_LEGEND_DETAIL_COLUMN_LIMIT);
-        titleLabel.setText(title);
+        updateTitle();
+    }
+
+    @Override
+    public void updateTitle() {
+        titleLabel.setText(Translator.getBundleString(title));
     }
 
     @Override

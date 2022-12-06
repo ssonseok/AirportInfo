@@ -10,7 +10,7 @@ import java.util.Locale;
  * @author lalaalal
  */
 public class EnglishAirportData extends TranslatedAirportData {
-    private static final PreTranslatedData regionTranslation = loadPreTranslatedData("translation/pre-translated-region-ko-en.data");
+    private static final PreTranslatedData REGION_TRANSLATION = loadPreTranslatedData("translation/pre-translated-region-ko-en.data");
 
     public EnglishAirportData(RawAirport airport) {
         super(airport);
@@ -39,11 +39,11 @@ public class EnglishAirportData extends TranslatedAirportData {
     @Override
     public String getRegion() {
         String key = airport.koreanRegion;
-        if (regionTranslation.containsKey(key))
-            return regionTranslation.get(key);
+        if (REGION_TRANSLATION.containsKey(key))
+            return REGION_TRANSLATION.get(key);
 
         String value = Translator.translate("ko", "en", airport.koreanRegion);
-        regionTranslation.put(key, value);
+        REGION_TRANSLATION.put(key, value);
         return value;
     }
 }

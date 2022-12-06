@@ -24,9 +24,11 @@ public class TestContentView extends ContentView {
 
     }
 
-    public void setPanel(JPanel panel) {
+    public void setComponent(ComponentView componentView) {
         this.panel.removeAll();
-        this.panel.add(panel, BorderLayout.CENTER);
+        clear();
+        this.panel.add(componentView.getPanel(), BorderLayout.CENTER);
+        addComponentView(componentView);
     }
 
     {

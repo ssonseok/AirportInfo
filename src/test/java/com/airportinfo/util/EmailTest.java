@@ -1,6 +1,5 @@
-package com.airportinfo;
+package com.airportinfo.util;
 
-import com.airportinfo.util.EmailManager;
 import org.junit.jupiter.api.Test;
 
 import javax.mail.MessagingException;

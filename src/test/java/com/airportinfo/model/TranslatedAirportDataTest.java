@@ -17,7 +17,7 @@ public class TranslatedAirportDataTest {
     public void testKorean() throws SQLException, ClassNotFoundException, NoSuchMethodException, IOException {
         String dataFileName = "pre-translated-city-en-ko.data";
 
-        Locale.setDefault(Locale.KOREAN);
+        Locale.setDefault(Locale.ENGLISH);
         AirportController airportController = new AirportController();
         airportController.loadFromDB();
 
@@ -32,7 +32,7 @@ public class TranslatedAirportDataTest {
     public void testEnglish() throws SQLException, ClassNotFoundException, NoSuchMethodException, IOException {
         String dataFileName = "pre-translated-region-ko-en.data";
 
-        Locale.setDefault(Locale.ENGLISH);
+        Locale.setDefault(Locale.KOREAN);
         AirportController airportController = new AirportController();
         airportController.loadFromDB();
 
@@ -46,7 +46,7 @@ public class TranslatedAirportDataTest {
     private void translate(TranslatedAirportData.PreTranslatedData preTranslatedData, Airport[] airports, Function<Airport, String> selector, String sourceLang, String targetLang) {
         int count = 0;
         for (Airport airport : airports) {
-            if (count >= 10)
+            if (count >= 200)
                 break;
 
             String original = selector.apply(airport);

@@ -1,5 +1,7 @@
 package com.airportinfo.view;
 
+import java.util.Locale;
+
 /**
  * Do some action when locale changes.
  *
@@ -9,5 +11,5 @@ public interface LocaleChangeListener {
     /**
      * Update text when locale changes.
      */
-    void onLocaleChange();
+    void onLocaleChange(Locale locale);
 }

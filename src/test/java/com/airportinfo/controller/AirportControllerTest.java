@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.Locale;
 
 class AirportControllerTest {
-    public static final InputStream AIRPORTS_CSV_INPUT_STREAM = AirportControllerTest.class.getResourceAsStream("airports.csv");
+    public static final InputStream AIRPORTS_CSV_INPUT_STREAM = AirportControllerTest.class.getClassLoader().getResourceAsStream("airports.csv");
 
     @Test
-    public void testLoadFromFile() throws IOException, NoSuchMethodException {
+    public void testLoadFromFile() throws IOException {
         AirportController airportController = new AirportController();
         InputStream is = getClass().getClassLoader().getResourceAsStream("airports.csv");
         airportController.loadFromFile(is);
@@ -24,7 +24,7 @@ class AirportControllerTest {
 
     @Test
     @Disabled
-    public void testUpdateDB() throws SQLException, ClassNotFoundException, IOException, NoSuchMethodException {
+    public void testUpdateDB() throws SQLException, ClassNotFoundException, IOException {
         AirportController airportController = new AirportController();
         airportController.loadFromFile(AIRPORTS_CSV_INPUT_STREAM);
         for (Airport airport : airportController.getAirports()) {
