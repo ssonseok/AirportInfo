@@ -95,6 +95,7 @@ public class AirportDetailContentView extends ContentView {
         airportNameLabel.setText(selected.getAirportName());
         imagesHeaderLabel.setText(Translator.getBundleString("images"));
         addBookMarkButton.setText(Translator.getBundleString("add_bookmark"));
+        removeBookMarkButton.setText(Translator.getBundleString("remove_bookmark"));
         imagesPanel.removeAll();
         Thread loadingThread = new Thread(this::loadAirportInformation);
         loadingThread.start();
