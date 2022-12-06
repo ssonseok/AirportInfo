@@ -154,6 +154,8 @@ public abstract class MainFrame extends ComponentGroup {
      * @param locale Locale to change
      */
     public void changeLocale(Locale locale) {
+        if (Locale.getDefault().equals(locale))
+            return;
         Locale.setDefault(locale);
         for (ContentView contentView : contentViewHashMap.values())
             contentView.onLocaleChange(locale);

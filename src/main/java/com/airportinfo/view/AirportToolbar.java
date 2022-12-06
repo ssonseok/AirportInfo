@@ -7,6 +7,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -22,7 +23,8 @@ import java.util.function.Consumer;
  */
 public class AirportToolbar extends ComponentView {
     private JPanel panel;
-    private JPanel toolbarPanel;
+    private JPanel leftPanel;
+    private JPanel rightPanel;
     private final ArrayList<JLabel> labels = new ArrayList<>();
     private final HashMap<String, JLabel> translationLabels = new HashMap<>();
     private final ThemeManager themeManager = ThemeManager.getInstance();
@@ -31,7 +33,8 @@ public class AirportToolbar extends ComponentView {
         $$$setupUI$$$();
         addThemeChangeListener(theme -> {
             panel.setBackground(themeManager.getColor("Toolbar.background"));
-            toolbarPanel.setBackground(themeManager.getColor("Toolbar.background"));
+            leftPanel.setBackground(themeManager.getColor("Toolbar.background"));
+            rightPanel.setBackground(themeManager.getColor("Toolbar.background"));
             for (JLabel label : labels)
                 label.setForeground(themeManager.getColor("Toolbar.foreground"));
         });
@@ -48,29 +51,9 @@ public class AirportToolbar extends ComponentView {
         return panel;
     }
 
-    /**
-     * Add new label.
-     *
-     * @param key Label text or translation key
-     */
-    public void addLabel(String key) {
-        JLabel label = new JLabel(key);
-        label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 30));
-        label.setForeground(themeManager.getColor("Toolbar.foreground"));
-        label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        toolbarPanel.add(label);
-        labels.add(label);
-    }
-
-    /**
-     * Add label with mouse action.
-     *
-     * @param key    Label text or translation key
-     * @param action Mouse action for label
-     */
-    public void addLabel(String key, Consumer<MouseEvent> action) {
+    private void addLabel(JPanel panel, Border border, String key, Consumer<MouseEvent> action) {
         JLabel label = new JLabel(Translator.getBundleString(key));
-        label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 30));
+        label.setBorder(border);
         label.setForeground(themeManager.getColor("Toolbar.foreground"));
         label.addMouseListener(new MouseAdapter() {
             @Override
@@ -80,14 +63,53 @@ public class AirportToolbar extends ComponentView {
             }
         });
         label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        toolbarPanel.add(label);
+        panel.add(label);
         labels.add(label);
         translationLabels.put(key, label);
     }
 
+    /**
+     * Add new label.
+     *
+     * @param key Label text or translation key
+     */
+    @Deprecated
+    public void addLabel(String key) {
+        JLabel label = new JLabel(key);
+        label.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+        label.setForeground(themeManager.getColor("Toolbar.foreground"));
+        label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        leftPanel.add(label);
+        labels.add(label);
+    }
+
+    /**
+     * Add label to left with mouse action.
+     *
+     * @param key    Label text or translation key
+     * @param action Mouse action for label
+     */
+    public void addLabel(String key, Consumer<MouseEvent> action) {
+        Border leftBorder = BorderFactory.createEmptyBorder(0, 10, 0, 30);
+        addLabel(leftPanel, leftBorder, key, action);
+    }
+
+    /**
+     * Add label to right with mouse action.
+     *
+     * @param key    Label text or translation key
+     * @param action Mouse action for label
+     */
+    public void addLabelRight(String key, Consumer<MouseEvent> action) {
+        Border rightBorder = BorderFactory.createEmptyBorder(0, 30, 0, 10);
+        addLabel(rightPanel, rightBorder, key, action);
+    }
+
     private void createUIComponents() {
-        toolbarPanel = new JPanel();
-        toolbarPanel.setLayout(new FlowLayout());
+        leftPanel = new JPanel();
+        leftPanel.setLayout(new FlowLayout());
+        rightPanel = new JPanel();
+        rightPanel.setLayout(new FlowLayout());
     }
 
     /**
@@ -100,14 +122,17 @@ public class AirportToolbar extends ComponentView {
     private void $$$setupUI$$$() {
         createUIComponents();
         panel = new JPanel();
-        panel.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel.setBackground(new Color(-4605511));
         panel.setForeground(new Color(-4605511));
-        toolbarPanel.setBackground(new Color(-4605511));
-        panel.add(toolbarPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        toolbarPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
+        leftPanel.setBackground(new Color(-4605511));
+        panel.add(leftPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        leftPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         final Spacer spacer1 = new Spacer();
         panel.add(spacer1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        rightPanel.setBackground(new Color(-4605511));
+        panel.add(rightPanel, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        rightPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
     }
 
     /**

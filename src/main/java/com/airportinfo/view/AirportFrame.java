@@ -56,9 +56,10 @@ public class AirportFrame extends MainFrame {
     }
 
     private void initToolbar() {
-        airportToolBar.addLabel("toggle_theme", (event) -> toggleTheme());
-        airportToolBar.addLabel("english", (event) -> changeLocale(Locale.ENGLISH));
-        airportToolBar.addLabel("korean", (event) -> changeLocale(Locale.KOREAN));
+        airportToolBar.addLabel("search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
+        airportToolBar.addLabelRight("toggle_theme", (event) -> toggleTheme());
+        airportToolBar.addLabelRight("english", (event) -> changeLocale(Locale.ENGLISH));
+        airportToolBar.addLabelRight("korean", (event) -> changeLocale(Locale.KOREAN));
         // TODO : Fill toolbar.
     }
 
