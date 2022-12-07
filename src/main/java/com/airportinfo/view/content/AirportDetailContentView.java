@@ -3,6 +3,7 @@ package com.airportinfo.view.content;
 import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
+import com.airportinfo.misc.FontCompatibleTextPane;
 import com.airportinfo.model.Airport;
 import com.airportinfo.util.*;
 import com.airportinfo.view.AirportFrame;
@@ -32,13 +33,14 @@ public class AirportDetailContentView extends ContentView implements Storable {
     private JLabel imagesHeaderLabel;
     private JPanel imagesPanel;
     private JPanel mapPanel;
-    private JTextPane airportInfoTextPane;
+    private JTextPane airportInfoText;
     private JPanel airportDetailPanel;
     private JSeparator separator;
     private JScrollPane scrollPane;
     private JButton addBookMarkButton;
     private JButton removeBookMarkButton;
     private JPanel screenshotPanel;
+    private final JLabel loadingLabel = new JLabel();
     private final AirportDetailView airportDetailView = new AirportDetailView();
     private final AirportController airportController;
     private Airport selected;
@@ -55,9 +57,11 @@ public class AirportDetailContentView extends ContentView implements Storable {
         imagesHeaderLabel.setFont(FontManager.getFont(FontManager.HEADER_FONT_SIZE).deriveFont(Font.BOLD));
         imagesHeaderLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        loadingLabel.setText(Translator.getBundleString("loading"));
+
 
         addThemeChangeListener((theme) -> {
-            airportInfoTextPane.setBackground(ThemeManager.getDefaultColor("Label.background"));
+            airportInfoText.setBackground(ThemeManager.getDefaultColor("Label.background"));
             separator.setBackground(themeManager.getColor("Separator.background"));
             separator.setForeground(themeManager.getColor("Separator.foreground"));
             if (theme == AppTheme.Lite)
@@ -91,8 +95,6 @@ public class AirportDetailContentView extends ContentView implements Storable {
         if (!isDisplaying())
             return;
         selected = airportController.getSelectedAirport();
-        if (selected == null)
-            selected = airportController.getAirports()[0];
 
         airportDetailView.setAirport(selected);
         setLabelsLoading();
@@ -100,9 +102,13 @@ public class AirportDetailContentView extends ContentView implements Storable {
         imagesHeaderLabel.setText(Translator.getBundleString("images"));
         addBookMarkButton.setText(Translator.getBundleString("add_bookmark"));
         removeBookMarkButton.setText(Translator.getBundleString("remove_bookmark"));
-        imagesPanel.removeAll();
         Thread loadingThread = new Thread(this::loadAirportInformation);
         loadingThread.start();
+    }
+
+    @Override
+    public void actionBeforeUIUpdate(AppTheme theme) {
+        UIManager.put("TextPane.selectionBackground", ThemeManager.getDefaultColor(ThemeManager.LITE_THEME, "List.selectionBackground"));
     }
 
     @Override
@@ -144,10 +150,8 @@ public class AirportDetailContentView extends ContentView implements Storable {
             mapLabel.setText("");
             mapLabel.setIcon(mapImageIcon);
         } catch (IOException e) {
-            String title = Translator.getBundleString("error");
             String message = Translator.getBundleString("cannot_load_map");
             mapLabel.setText(message);
-            JOptionPane.showMessageDialog(panel, message, title, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -155,36 +159,41 @@ public class AirportDetailContentView extends ContentView implements Storable {
         try {
             AirportWikiCrawler crawler = new AirportWikiCrawler(selected);
             String airportInfo = " " + crawler.getInformation();
-            airportInfoTextPane.setText(airportInfo);
+            airportInfoText.setText(airportInfo);
 
-            for (BufferedImage image : crawler.getBufferedImages(3)) {
+            imagesPanel.removeAll();
+            BufferedImage[] images = crawler.getBufferedImages(3);
+            for (BufferedImage image : images) {
                 ImageIcon airportImageIcon = new ImageIcon(image);
                 JLabel airportImageLabel = new JLabel(airportImageIcon);
                 imagesPanel.add(airportImageLabel);
             }
-
-            loadMap();
+            panel.revalidate();
         } catch (HttpStatusException e) {
             String notFound = Translator.getBundleString("not_found");
-            airportInfoTextPane.setText(notFound);
+            airportInfoText.setText(notFound);
+            loadingLabel.setText(notFound);
             mapLabel.setText(notFound);
         } catch (IOException e) {
-            String title = Translator.getBundleString("error");
             String message = Translator.getBundleString("cannot_load_wiki");
-            airportInfoTextPane.setText(message);
-            JOptionPane.showMessageDialog(panel, message, title, JOptionPane.ERROR_MESSAGE);
+            airportInfoText.setText(message);
         }
+        SwingUtilities.invokeLater(this::loadMap);
     }
 
     private void setLabelsLoading() {
         String loadingText = Translator.getBundleString("loading");
-        airportInfoTextPane.setText(loadingText);
+        airportInfoText.setText(loadingText);
         mapLabel.setText(loadingText);
         mapLabel.setIcon(null);
+        loadingLabel.setText(loadingText);
+        imagesPanel.removeAll();
+        imagesPanel.add(loadingLabel);
     }
 
     private void createUIComponents() {
         airportDetailPanel = airportDetailView.getPanel();
+        airportInfoText = new FontCompatibleTextPane();
     }
 
     /**
@@ -201,7 +210,7 @@ public class AirportDetailContentView extends ContentView implements Storable {
         scrollPane = new JScrollPane();
         scrollPane.setHorizontalScrollBarPolicy(31);
         scrollPane.setVerticalScrollBarPolicy(20);
-        panel.add(scrollPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel.add(scrollPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         screenshotPanel = new JPanel();
         screenshotPanel.setLayout(new GridLayoutManager(4, 1, new Insets(30, 30, 30, 30), -1, 20));
         scrollPane.setViewportView(screenshotPanel);
@@ -209,15 +218,12 @@ public class AirportDetailContentView extends ContentView implements Storable {
         panel1.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), 30, -1, true, false));
         screenshotPanel.add(panel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, 10));
+        panel2.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, 10));
         panel1.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        airportInfoTextPane = new JTextPane();
-        airportInfoTextPane.setEditable(false);
-        airportInfoTextPane.setEnabled(true);
-        panel2.add(airportInfoTextPane, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
-        panel2.add(airportDetailPanel, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
+        panel2.add(airportDetailPanel, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
-        panel2.add(spacer1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel2.add(spacer1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel2.add(airportInfoText, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         mapPanel = new JPanel();
         mapPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(mapPanel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -234,7 +240,7 @@ public class AirportDetailContentView extends ContentView implements Storable {
         imagesPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
         panel3.add(imagesPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         separator = new JSeparator();
-        screenshotPanel.add(separator, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        screenshotPanel.add(separator, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), 10, -1));
         screenshotPanel.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));

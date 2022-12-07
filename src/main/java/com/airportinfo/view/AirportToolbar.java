@@ -52,9 +52,8 @@ public class AirportToolbar extends ComponentView {
     }
 
     @Override
-    public void onThemeChange(AppTheme theme) {
+    public void actionBeforeUIUpdate(AppTheme theme) {
         UIManager.put("Label.disabledForeground", themeManager.getColor("Custom.disabledForeground"));
-        super.onThemeChange(theme);
     }
 
     private JLabel addLabel(JPanel panel, Border border, String key, Consumer<MouseEvent> action) {

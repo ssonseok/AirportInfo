@@ -101,7 +101,7 @@ public class AirportWikiCrawler {
     private String findAirportInformation() {
         Elements elements = document.select("#mw-content-text > div.mw-parser-output > p");
         for (Element element : elements) {
-            String airportInfo = element.text().replaceAll("\\[[0-9]+]", "");
+            String airportInfo = element.text().replaceAll("\\[[0-9a-zA-Z ]*]", "");
             if (airportInfo.contains(airport.getIATA())
                     || airportInfo.contains(airport.getAirportName())
                     || airportInfo.contains(airport.getRawData().englishName))

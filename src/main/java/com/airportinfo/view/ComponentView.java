@@ -14,17 +14,6 @@ public abstract class ComponentView {
     private final ArrayList<ThemeChangeListener> themeChangeListeners = new ArrayList<>();
 
     /**
-     * Add default themeChangeListener.
-     */
-    public ComponentView() {
-        themeChangeListeners.add((theme) -> {
-            JPanel panel = getPanel();
-            if (panel != null)
-                SwingUtilities.updateComponentTreeUI(panel);
-        });
-    }
-
-    /**
      * Get root panel of component.
      *
      * @return Root panel
@@ -57,10 +46,18 @@ public abstract class ComponentView {
         themeChangeListeners.add(themeChangeListener);
     }
 
+    protected void actionBeforeUIUpdate(AppTheme theme) {
+
+    }
+
     /**
      * Do all ThemeChangeListeners.
      */
     public void onThemeChange(AppTheme theme) {
+        actionBeforeUIUpdate(theme);
+        JPanel panel = getPanel();
+        if (panel != null)
+            SwingUtilities.updateComponentTreeUI(panel);
         for (ThemeChangeListener themeChangeListener : themeChangeListeners)
             themeChangeListener.onThemeChange(theme);
     }

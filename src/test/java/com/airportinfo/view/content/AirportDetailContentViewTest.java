@@ -1,5 +1,6 @@
 package com.airportinfo.view.content;
 
+import com.airportinfo.Main;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
 import com.airportinfo.model.Airport;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class AirportDetailContentViewTest {
     public static void main(String[] args) {
+        Main.setSystemProperties();
         AirportFrame airportFrame = new AirportFrame();
         airportFrame.showFrame();
         airportFrame.load();

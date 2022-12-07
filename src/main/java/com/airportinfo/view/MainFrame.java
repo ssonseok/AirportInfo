@@ -69,6 +69,7 @@ public abstract class MainFrame extends ComponentGroup {
     public void addContentView(String name, ContentView contentView) {
         contentViewHashMap.put(name, contentView);
         contentView.onThemeChange(themeManager.currentTheme);
+        contentView.onLocaleChange(Locale.getDefault());
     }
 
     /**
