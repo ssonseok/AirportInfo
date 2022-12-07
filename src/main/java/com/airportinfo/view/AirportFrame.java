@@ -57,20 +57,33 @@ public class AirportFrame extends MainFrame {
 
     private void initToolbar() {
         airportToolBar.addLabel("search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
+        JLabel saveLabel = airportToolBar.addLabel("save", (event) -> storeContent());
         airportToolBar.addLabelRight("toggle_theme", (event) -> toggleTheme());
         airportToolBar.addLabelRight("english", (event) -> changeLocale(Locale.ENGLISH));
         airportToolBar.addLabelRight("korean", (event) -> changeLocale(Locale.KOREAN));
         // TODO : Fill toolbar.
+
+        addContentChangeListener((selected) -> saveLabel.setEnabled(selected instanceof Storable));
     }
 
     private void initMenuBar() {
         menuBar.addMenu("file");
+        JMenuItem saveMenuItem = menuBar.addMenuItem("file", "save", (event) -> storeContent());
         menuBar.addMenuItem("file", "setting", (event) -> settingDialogView.showDialogLocationRelativeTo(frame));
         menuBar.addMenuSeparator("file");
         menuBar.addMenuItem("file", "exit", (event) -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
+        menuBar.addMenu("view");
+        menuBar.addMenuItem("view", "search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
         // TODO : Fill menus.
 
         frame.setJMenuBar(menuBar);
+
+        addContentChangeListener((selected) -> saveMenuItem.setEnabled(selected instanceof Storable));
+    }
+
+    private void storeContent() {
+        if (currentContentView instanceof Storable storable)
+            storable.store();
     }
 
     /**

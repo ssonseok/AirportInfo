@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
@@ -24,8 +25,9 @@ public abstract class MainFrame extends ComponentGroup {
     private final ThemeManager themeManager = ThemeManager.getInstance();
     private static final Dimension DEFAULT_SIZE = new Dimension(700, 500);
     private final HashMap<String, ContentView> contentViewHashMap = new HashMap<>();
+    private final ArrayList<ContentChangeListener> contentChangeListeners = new ArrayList<>();
     protected final JFrame frame = new JFrame();
-    private ContentView currentContentView = null;
+    protected ContentView currentContentView = null;
 
     public MainFrame() {
         Locale.setDefault(Locale.KOREAN);
@@ -81,9 +83,19 @@ public abstract class MainFrame extends ComponentGroup {
 
         currentContentView.load();
         changeContent(currentContentView.getPanel());
+        for (ContentChangeListener contentChangeListener : contentChangeListeners)
+            contentChangeListener.onContentChange(currentContentView);
 
         frame.revalidate();
         frame.repaint();
+    }
+
+    public void addContentChangeListener(ContentChangeListener listener) {
+        contentChangeListeners.add(listener);
+    }
+
+    public void removeContentChangeListener(ContentChangeListener listener) {
+        contentChangeListeners.remove(listener);
     }
 
     /**

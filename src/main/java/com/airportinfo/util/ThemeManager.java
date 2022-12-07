@@ -55,6 +55,9 @@ public class ThemeManager {
     }
 
     private ThemeManager() {
+        addColor(AppTheme.Lite, "Custom.disabledForeground", Color.decode("#b8b8b8"));
+        addColor(AppTheme.Dark, "Custom.disabledForeground", ThemeManager.getDefaultColor(DARK_THEME, "Label.disabledForeground"));
+
         addColor(AppTheme.Lite, "Toolbar.background", Color.decode("#636363"));
         addColor(AppTheme.Lite, "Toolbar.foreground", ThemeManager.getDefaultColor(ThemeManager.LITE_THEME, "Label.background"));
         addColor(AppTheme.Dark, "Toolbar.background", Color.decode("#32424A"));

@@ -51,7 +51,13 @@ public class AirportToolbar extends ComponentView {
         return panel;
     }
 
-    private void addLabel(JPanel panel, Border border, String key, Consumer<MouseEvent> action) {
+    @Override
+    public void onThemeChange(AppTheme theme) {
+        UIManager.put("Label.disabledForeground", themeManager.getColor("Custom.disabledForeground"));
+        super.onThemeChange(theme);
+    }
+
+    private JLabel addLabel(JPanel panel, Border border, String key, Consumer<MouseEvent> action) {
         JLabel label = new JLabel(Translator.getBundleString(key));
         label.setBorder(border);
         label.setForeground(themeManager.getColor("Toolbar.foreground"));
@@ -66,6 +72,8 @@ public class AirportToolbar extends ComponentView {
         panel.add(label);
         labels.add(label);
         translationLabels.put(key, label);
+
+        return label;
     }
 
     /**
@@ -88,10 +96,11 @@ public class AirportToolbar extends ComponentView {
      *
      * @param key    Label text or translation key
      * @param action Mouse action for label
+     * @return Created Label
      */
-    public void addLabel(String key, Consumer<MouseEvent> action) {
+    public JLabel addLabel(String key, Consumer<MouseEvent> action) {
         Border leftBorder = BorderFactory.createEmptyBorder(0, 10, 0, 30);
-        addLabel(leftPanel, leftBorder, key, action);
+        return addLabel(leftPanel, leftBorder, key, action);
     }
 
     /**
@@ -99,10 +108,11 @@ public class AirportToolbar extends ComponentView {
      *
      * @param key    Label text or translation key
      * @param action Mouse action for label
+     * @return Created Label
      */
-    public void addLabelRight(String key, Consumer<MouseEvent> action) {
+    public JLabel addLabelRight(String key, Consumer<MouseEvent> action) {
         Border rightBorder = BorderFactory.createEmptyBorder(0, 30, 0, 10);
-        addLabel(rightPanel, rightBorder, key, action);
+        return addLabel(rightPanel, rightBorder, key, action);
     }
 
     private void createUIComponents() {

@@ -44,8 +44,9 @@ public class AirportMenuBar extends JMenuBar {
      * @param menuKey Key of menu to insert into
      * @param itemKey Key of menu item to insert
      * @param action  Action for mouse listener of menu item
+     * @return Created JMenuItem
      */
-    public void addMenuItem(String menuKey, String itemKey, Consumer<MouseEvent> action) {
+    public JMenuItem addMenuItem(String menuKey, String itemKey, Consumer<MouseEvent> action) {
         JMenu menu = menus.get(menuKey);
         if (menu == null)
             throw new IllegalArgumentException("Menu key (" + menuKey + ") doesn't exist.");
@@ -61,6 +62,8 @@ public class AirportMenuBar extends JMenuBar {
         menu.add(item);
         items.put(itemKey, item);
         updateTheme();
+
+        return item;
     }
 
     /**
@@ -85,6 +88,7 @@ public class AirportMenuBar extends JMenuBar {
         UIManager.put("MenuItem.selectionBackground", themeManager.getColor("MenuItem.hoverBackground"));
         UIManager.put("MenuItem.selectionForeground", themeManager.getColor("MenuBar.foreground"));
         UIManager.put("MenuItem.shadow", themeManager.getColor("MenuBar.background"));
+        UIManager.put("MenuItem.disabledForeground", themeManager.getColor("Custom.disabledForeground"));
         SwingUtilities.updateComponentTreeUI(this);
         setBackground(themeManager.getColor("MenuBar.background"));
 
