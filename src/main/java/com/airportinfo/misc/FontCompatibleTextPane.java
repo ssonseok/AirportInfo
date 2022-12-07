@@ -7,6 +7,11 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
 
+/**
+ * Show text with compatible font.
+ *
+ * @author lalaalal
+ */
 public class FontCompatibleTextPane extends JTextPane {
     private final SimpleAttributeSet sansAttribute = new SimpleAttributeSet();
 

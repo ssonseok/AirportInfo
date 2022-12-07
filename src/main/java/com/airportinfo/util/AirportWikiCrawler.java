@@ -35,6 +35,10 @@ public class AirportWikiCrawler {
         return EN_WIKI_URL.replace("en.wikipedia", locale + ".wikipedia");
     }
 
+    private static String makeAirportSearchTerm(String name) {
+        return name.trim().replace(' ', '_');
+    }
+
     private static DocumentCacheData createDocument(Airport airport) throws IOException {
         try {
             String airportSearchTerm = makeAirportSearchTerm(airport.getAirportName());
@@ -110,9 +114,15 @@ public class AirportWikiCrawler {
         throw new RuntimeException("not_found");
     }
 
+    /**
+     * Get array of URL string.
+     *
+     * @param numImages Number of maximum images.
+     * @return Array of URL
+     */
     public String[] getImageURLs(int numImages) {
         ArrayList<String> result = new ArrayList<>();
-        Elements elements = document.select("img");
+        Elements elements = document.select(".mw-parser-output img");
         int count = 0;
         for (Element element : elements) {
             if (count >= numImages)
@@ -128,6 +138,13 @@ public class AirportWikiCrawler {
         return result.toArray(new String[0]);
     }
 
+    /**
+     * Get array of BufferedImage.
+     *
+     * @param numImages Number of maximum images
+     * @return Array of images
+     * @throws IOException If an I/O error occurs
+     */
     public BufferedImage[] getBufferedImages(int numImages) throws IOException {
         String[] imageURLs = getImageURLs(numImages);
         BufferedImage[] bufferedImages = new BufferedImage[imageURLs.length];
@@ -146,58 +163,7 @@ public class AirportWikiCrawler {
 
         return bufferedImages;
     }
-
-    /**
-     * Search about following airport.
-     *
-     * @param airport Target
-     * @return Information about given airport
-     */
-    @Deprecated
-    public static String searchLocalizedInfo(Airport airport) {
-        try {
-            String airportSearchTerm = makeAirportSearchTerm(airport.getAirportName());
-            String url = getLocalizedWikiURL() + airportSearchTerm;
-            return searchInfo(url, airport);
-        } catch (RuntimeException | HttpStatusException e) {
-            if (Locale.getDefault().equals(Locale.ENGLISH))
-                return Translator.getBundleString("not_found");
-            return searchEnglishInfo(airport);
-        } catch (IOException e) {
-            return Translator.getBundleString("connection_failed");
-        }
-    }
-
-    private static String searchEnglishInfo(Airport airport) {
-        try {
-            Locale currentLocale = Locale.getDefault();
-            String airportSearchTerm = makeAirportSearchTerm(airport.getRawData().englishName);
-            String englishInformation = searchInfo(EN_WIKI_URL + airportSearchTerm, airport);
-            if (!currentLocale.equals(Locale.ENGLISH) && Setting.getInstance().isLocalizeEnglish())
-                return Translator.translate(Locale.ENGLISH, currentLocale, englishInformation);
-            return englishInformation;
-        } catch (RuntimeException | HttpStatusException e) {
-            return Translator.getBundleString("not_found");
-        } catch (IOException e) {
-            return Translator.getBundleString("connection_failed");
-        }
-    }
-
-    private static String makeAirportSearchTerm(String name) {
-        return name.trim().replace(' ', '_');
-    }
-
-    private static String searchInfo(String url, Airport airport) throws IOException {
-        Document document = Jsoup.connect(url).get();
-        Elements elements = document.select("#mw-content-text > div.mw-parser-output > p");
-        for (Element element : elements) {
-            String airportInfo = element.text().replaceAll("\\[[0-9]+]", "");
-            if (airportInfo.contains(airport.getIATA()))
-                return airportInfo;
-        }
-        throw new RuntimeException("not_found");
-    }
-
+    
     private record DocumentCacheData(Locale locale, Document document) {
     }
 }

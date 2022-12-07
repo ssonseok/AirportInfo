@@ -64,6 +64,7 @@ public class AirportDetailContentView extends ContentView implements Storable {
             airportInfoText.setBackground(ThemeManager.getDefaultColor("Label.background"));
             separator.setBackground(themeManager.getColor("Separator.background"));
             separator.setForeground(themeManager.getColor("Separator.foreground"));
+            loadingLabel.setForeground(themeManager.getColor("Label.foreground"));
             if (theme == AppTheme.Lite)
                 airportDetailPanel.setBorder(BorderFactory.createLineBorder(themeManager.getColor("Separator.foreground")));
             else
@@ -168,7 +169,6 @@ public class AirportDetailContentView extends ContentView implements Storable {
                 JLabel airportImageLabel = new JLabel(airportImageIcon);
                 imagesPanel.add(airportImageLabel);
             }
-            panel.revalidate();
         } catch (HttpStatusException e) {
             String notFound = Translator.getBundleString("not_found");
             airportInfoText.setText(notFound);
@@ -178,7 +178,8 @@ public class AirportDetailContentView extends ContentView implements Storable {
             String message = Translator.getBundleString("cannot_load_wiki");
             airportInfoText.setText(message);
         }
-        SwingUtilities.invokeLater(this::loadMap);
+        loadMap();
+        panel.revalidate();
     }
 
     private void setLabelsLoading() {
