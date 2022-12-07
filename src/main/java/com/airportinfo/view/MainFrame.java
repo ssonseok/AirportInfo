@@ -81,8 +81,8 @@ public abstract class MainFrame extends ComponentGroup {
         if (currentContentView == null)
             throw new IllegalArgumentException();
 
-        currentContentView.load();
         changeContent(currentContentView.getPanel());
+        currentContentView.load();
         for (ContentChangeListener contentChangeListener : contentChangeListeners)
             contentChangeListener.onContentChange(currentContentView);
 

@@ -110,6 +110,7 @@ public class AirportDetailContentView extends ContentView implements Storable {
         try {
             String saveText = Translator.getBundleString("save");
             JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setPreferredSize(new Dimension(700, 500));
             fileChooser.setDialogTitle(saveText);
             fileChooser.setFileFilter(new FileNameExtensionFilter("png", "png"));
             if (fileChooser.showSaveDialog(panel) == JFileChooser.APPROVE_OPTION) {
@@ -131,9 +132,23 @@ public class AirportDetailContentView extends ContentView implements Storable {
                 return;
         }
 
-        Dimension dimension = scrollPane.getViewport().getPreferredSize();
+        Dimension dimension = screenshotPanel.getPreferredSize();
         Rectangle bounds = new Rectangle(dimension);
         Screenshot.createScreenshot(screenshotPanel, bounds, file.getPath());
+    }
+
+    private void loadMap() {
+        try {
+            BufferedImage bufferedImage = GoogleMapAPI.getMapImage(selected.getRawData().englishName, mapPanel.getWidth(), mapPanel.getWidth(), 12);
+            ImageIcon mapImageIcon = new ImageIcon(bufferedImage);
+            mapLabel.setText("");
+            mapLabel.setIcon(mapImageIcon);
+        } catch (IOException e) {
+            String title = Translator.getBundleString("error");
+            String message = Translator.getBundleString("cannot_load_map");
+            mapLabel.setText(message);
+            JOptionPane.showMessageDialog(panel, message, title, JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void loadAirportInformation() {
@@ -142,24 +157,21 @@ public class AirportDetailContentView extends ContentView implements Storable {
             String airportInfo = " " + crawler.getInformation();
             airportInfoTextPane.setText(airportInfo);
 
-            BufferedImage bufferedImage = GoogleMapAPI.getMapImage(selected.getRawData().englishName, mapPanel.getWidth(), mapPanel.getWidth(), 12);
-            ImageIcon mapImageIcon = new ImageIcon(bufferedImage);
-            mapLabel.setText("");
-            mapLabel.setIcon(mapImageIcon);
-
             for (BufferedImage image : crawler.getBufferedImages(3)) {
                 ImageIcon airportImageIcon = new ImageIcon(image);
                 JLabel airportImageLabel = new JLabel(airportImageIcon);
                 imagesPanel.add(airportImageLabel);
             }
+
+            loadMap();
         } catch (HttpStatusException e) {
             String notFound = Translator.getBundleString("not_found");
             airportInfoTextPane.setText(notFound);
             mapLabel.setText(notFound);
-
         } catch (IOException e) {
             String title = Translator.getBundleString("error");
-            String message = Translator.getBundleString("cannot_load");
+            String message = Translator.getBundleString("cannot_load_wiki");
+            airportInfoTextPane.setText(message);
             JOptionPane.showMessageDialog(panel, message, title, JOptionPane.ERROR_MESSAGE);
         }
     }
