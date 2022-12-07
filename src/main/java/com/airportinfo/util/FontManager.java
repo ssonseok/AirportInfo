@@ -18,6 +18,15 @@ public class FontManager {
     private static Font loadedFont;
 
     /**
+     * Get loaded font.
+     *
+     * @return Loaded font
+     */
+    public static Font getFont() {
+        return loadedFont;
+    }
+
+    /**
      * Get font with size.
      *
      * @param size Font size

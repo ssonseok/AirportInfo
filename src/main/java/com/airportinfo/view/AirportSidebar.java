@@ -99,7 +99,6 @@ public class AirportSidebar extends ComponentView {
         airportListModel.addAll(userController.getAllRecent());
         if (airportListModel.getSize() == 0)
             airportListModel.addElement(null);
-        recentLabel.revalidate();
     }
 
     private void loadBookmark() {
@@ -107,7 +106,6 @@ public class AirportSidebar extends ComponentView {
         airportListModel.addAll(userController.getAllBookmark());
         if (airportListModel.getSize() == 0)
             airportListModel.addElement(null);
-        bookmarkPanel.revalidate();
     }
 
     public void selectTab(Tab tab) {
@@ -165,7 +163,7 @@ public class AirportSidebar extends ComponentView {
         this.$$$loadLabelText$$$(bookmarkLabel, this.$$$getMessageFromBundle$$$("string", "bookmark"));
         bookmarkPanel.add(bookmarkLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
-        panel.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(250, -1), null, 0, false));
         scrollPane1.setViewportView(airportList);
     }
 

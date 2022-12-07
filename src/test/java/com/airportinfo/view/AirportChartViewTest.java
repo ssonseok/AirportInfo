@@ -27,5 +27,6 @@ public class AirportChartViewTest {
         mainFrame.setContentView("AirportChartView");
 
         mainFrame.showFrame();
+        mainFrame.load();
     }
 }
