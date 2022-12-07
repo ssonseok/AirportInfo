@@ -12,7 +12,7 @@ public class GoogleMapAPITest {
         TestFrame testFrame = new TestFrame();
         testFrame.showFrame();
         testFrame.load();
-        TestContentView testContentView = new TestContentView();
+        TestContentView testContentView = new TestContentView(testFrame);
         TestComponentView testComponentView = new TestComponentView();
         JLabel label = new JLabel("Loading");
         testComponentView.getPanel().add(label);

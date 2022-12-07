@@ -70,9 +70,6 @@ public class AirportSidebar extends ComponentView {
                 loadRecent();
         }, UserController.HISTORY_CHANGE);
 
-        recentLabel.setForeground(themeManager.getColor("Tab.foreground"));
-        bookmarkLabel.setForeground(themeManager.getColor("Tab.foreground"));
-
         addListeners();
 
         selectTab(currentTab);

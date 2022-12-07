@@ -15,17 +15,31 @@ public class Screenshot {
     /**
      * Take a screenshot with component to png.
      *
-     * @param component screenshot area
-     * @param path      save path
+     * @param component Screenshot area
+     * @param path      Save path
      * @throws IOException If the file exists but is a directory, does not exist but cannot be created or an error occurs during writing
      */
     public static void createScreenshot(Component component, String path) throws IOException {
-        Rectangle rectangle = component.getBounds();
-        BufferedImage bufferedImage = new BufferedImage(rectangle.width, rectangle.height, BufferedImage.TYPE_INT_ARGB);
+        createScreenshot(component, component.getBounds(), path);
+    }
+
+    /**
+     * Take a screenshot with component to png.
+     *
+     * @param component Screenshot area
+     * @param path      Save path
+     * @param bounds    Size to paint component
+     * @throws IOException If the file exists but is a directory, does not exist but cannot be created or an error occurs during writing
+     */
+    public static void createScreenshot(Component component, Rectangle bounds, String path) throws IOException {
+        BufferedImage bufferedImage = new BufferedImage(bounds.width, bounds.height, BufferedImage.TYPE_INT_ARGB);
         component.paint(bufferedImage.getGraphics());
 
+        if (!path.endsWith(".png"))
+            path = path + ".png";
         try (FileOutputStream outputStream = new FileOutputStream(path)) {
             ImageIO.write(bufferedImage, "png", outputStream);
         }
     }
 }
+

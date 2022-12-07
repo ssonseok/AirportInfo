@@ -26,6 +26,7 @@ public class ChartContentView extends ContentView {
     private final HistogramView barChartView = new HistogramView();
 
     public ChartContentView(MainFrame mainFrame) {
+        super(mainFrame);
         chartView = barChartView;
         chartViewPanel.add(chartView.getPanel());
         saveButton.addMouseListener(new MouseAdapter() {

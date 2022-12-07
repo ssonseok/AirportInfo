@@ -10,8 +10,10 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * An abstract JFrame which is able to change ContentView set before.
@@ -19,11 +21,13 @@ import java.util.Locale;
  *
  * @author lalaalal
  */
-public abstract class MainFrame extends ContentView {
+public abstract class MainFrame extends ComponentGroup {
     private final ThemeManager themeManager = ThemeManager.getInstance();
     private static final Dimension DEFAULT_SIZE = new Dimension(700, 500);
     private final HashMap<String, ContentView> contentViewHashMap = new HashMap<>();
+    private final ArrayList<ContentChangeListener> contentChangeListeners = new ArrayList<>();
     protected final JFrame frame = new JFrame();
+    protected ContentView currentContentView = null;
 
     public MainFrame() {
         Locale.setDefault(Locale.KOREAN);
@@ -52,6 +56,8 @@ public abstract class MainFrame extends ContentView {
         frame.addWindowListener(new WindowCloseListener());
     }
 
+    public abstract void load();
+
     protected abstract void destroy();
 
     /**
@@ -62,6 +68,7 @@ public abstract class MainFrame extends ContentView {
      */
     public void addContentView(String name, ContentView contentView) {
         contentViewHashMap.put(name, contentView);
+        contentView.onThemeChange(themeManager.currentTheme);
     }
 
     /**
@@ -70,15 +77,35 @@ public abstract class MainFrame extends ContentView {
      * @param name ContentView name
      */
     public void setContentView(String name) {
-        ContentView contentView = contentViewHashMap.get(name);
-        if (contentView == null)
+        currentContentView = contentViewHashMap.get(name);
+        if (currentContentView == null)
             throw new IllegalArgumentException();
 
-        contentView.load();
-        changeContent(contentView.getPanel());
+        currentContentView.load();
+        changeContent(currentContentView.getPanel());
+        for (ContentChangeListener contentChangeListener : contentChangeListeners)
+            contentChangeListener.onContentChange(currentContentView);
 
         frame.revalidate();
         frame.repaint();
+    }
+
+    public void addContentChangeListener(ContentChangeListener listener) {
+        contentChangeListeners.add(listener);
+    }
+
+    public void removeContentChangeListener(ContentChangeListener listener) {
+        contentChangeListeners.remove(listener);
+    }
+
+    /**
+     * Check following content view is current displaying.
+     *
+     * @param contentView Content view to check
+     * @return True if following content view is equal to current content view
+     */
+    public boolean isDisplaying(ContentView contentView) {
+        return Objects.equals(currentContentView, contentView);
     }
 
     /**
@@ -102,9 +129,9 @@ public abstract class MainFrame extends ContentView {
             else
                 UIManager.setLookAndFeel(ThemeManager.DARK_THEME);
             FontManager.loadFont();
+            onThemeChange(theme);
             for (ContentView contentView : contentViewHashMap.values())
                 contentView.onThemeChange(theme);
-            onThemeChange(theme);
         } catch (UnsupportedLookAndFeelException e) {
             String title = Translator.getBundleString("error");
             JOptionPane.showMessageDialog(frame, e.getMessage(), title, JOptionPane.ERROR_MESSAGE);
@@ -139,6 +166,8 @@ public abstract class MainFrame extends ContentView {
      * @param locale Locale to change
      */
     public void changeLocale(Locale locale) {
+        if (Locale.getDefault().equals(locale))
+            return;
         Locale.setDefault(locale);
         for (ContentView contentView : contentViewHashMap.values())
             contentView.onLocaleChange(locale);

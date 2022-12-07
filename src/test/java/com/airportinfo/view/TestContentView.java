@@ -10,7 +10,8 @@ import java.awt.*;
 public class TestContentView extends ContentView {
     private JPanel panel;
 
-    public TestContentView() {
+    public TestContentView(MainFrame mainFrame) {
+        super(mainFrame);
         panel.setLayout(new BorderLayout());
     }
 

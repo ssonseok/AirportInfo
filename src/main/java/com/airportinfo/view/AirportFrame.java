@@ -10,7 +10,6 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,6 +23,7 @@ import java.util.Locale;
  */
 public class AirportFrame extends MainFrame {
     public static final String AIRPORT_DETAIL_VIEW = "airport_detail_view";
+    public static final String AIRPORT_SEARCH_VIEW = "airport_search_view";
     private JPanel contentPanel;
     private JPanel toolbarPanel;
     private JPanel sidebarPanel;
@@ -56,20 +56,34 @@ public class AirportFrame extends MainFrame {
     }
 
     private void initToolbar() {
-        airportToolBar.addLabel("toggle_theme", (event) -> toggleTheme());
-        airportToolBar.addLabel("english", (event) -> changeLocale(Locale.ENGLISH));
-        airportToolBar.addLabel("korean", (event) -> changeLocale(Locale.KOREAN));
+        airportToolBar.addLabel("search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
+        JLabel saveLabel = airportToolBar.addLabel("save", (event) -> storeContent());
+        airportToolBar.addLabelRight("toggle_theme", (event) -> toggleTheme());
+        airportToolBar.addLabelRight("english", (event) -> changeLocale(Locale.ENGLISH));
+        airportToolBar.addLabelRight("korean", (event) -> changeLocale(Locale.KOREAN));
         // TODO : Fill toolbar.
+
+        addContentChangeListener((selected) -> saveLabel.setEnabled(selected instanceof Storable));
     }
 
     private void initMenuBar() {
         menuBar.addMenu("file");
+        JMenuItem saveMenuItem = menuBar.addMenuItem("file", "save", (event) -> storeContent());
         menuBar.addMenuItem("file", "setting", (event) -> settingDialogView.showDialogLocationRelativeTo(frame));
         menuBar.addMenuSeparator("file");
         menuBar.addMenuItem("file", "exit", (event) -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
+        menuBar.addMenu("view");
+        menuBar.addMenuItem("view", "search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
         // TODO : Fill menus.
 
         frame.setJMenuBar(menuBar);
+
+        addContentChangeListener((selected) -> saveMenuItem.setEnabled(selected instanceof Storable));
+    }
+
+    private void storeContent() {
+        if (currentContentView instanceof Storable storable)
+            storable.store();
     }
 
     /**
@@ -77,6 +91,7 @@ public class AirportFrame extends MainFrame {
      */
     @Override
     public void load() {
+        SwingUtilities.invokeLater(() -> setTheme(AppTheme.Lite));
         frame.setTitle(Translator.getBundleString("application_name"));
         String title = Translator.getBundleString("error");
         try {

@@ -17,7 +17,7 @@ public class AirportChartViewTest {
         airportController.loadFromDB();
 
         MainFrame mainFrame = new AirportFrame();
-        TestContentView contentView = new TestContentView();
+        TestContentView contentView = new TestContentView(mainFrame);
         HistogramView histogramView = new HistogramView();
         AirportChartView airportChartView = new AirportChartView(histogramView, new AttributeStatisticCreator(Airport::getRegion));
         contentView.setComponent(airportChartView);

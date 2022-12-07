@@ -31,7 +31,7 @@ public class AirportTableView extends AirportView {
 
     public AirportTableView() {
         $$$setupUI$$$();
-        addLocaleChangeListener((locale) -> updateTable());
+        addLocaleChangeListener((locale) -> updateTableHeader());
     }
 
     public void addMouseClickAction(Consumer<MouseEvent> consumer) {
@@ -73,7 +73,7 @@ public class AirportTableView extends AirportView {
         return result;
     }
 
-    private void updateTable() {
+    private void updateTableHeader() {
         JTableHeader tableHeader = table.getTableHeader();
         TableColumnModel columnModel = tableHeader.getColumnModel();
         String[] header = Airport.getLocalizedAttributeNames();
