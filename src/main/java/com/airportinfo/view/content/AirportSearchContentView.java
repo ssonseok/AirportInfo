@@ -3,6 +3,7 @@ package com.airportinfo.view.content;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.misc.AirportAttributeSelector;
 import com.airportinfo.misc.BorderedTextField;
+import com.airportinfo.misc.CautiousFileChooser;
 import com.airportinfo.model.Airport;
 import com.airportinfo.util.Translator;
 import com.airportinfo.util.filewriter.AirportWriter;
@@ -84,19 +85,14 @@ public class AirportSearchContentView extends ContentView implements Storable {
 
     @Override
     public void store() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setPreferredSize(new Dimension(700, 500));
-        fileChooser.setDialogTitle(Translator.getBundleString("save"));
+        CautiousFileChooser fileChooser = new CautiousFileChooser();
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("json", "json"));
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("csv", "csv"));
-        if (fileChooser.showSaveDialog(mainFrame.getPanel()) == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            saveAirports(selectedFile.getPath());
-        }
+        fileChooser.setFileFilter(new FileNameExtensionFilter("csv", "csv"));
+        fileChooser.showFileChooser(mainFrame.getPanel(), this::saveAirports);
     }
 
-    private void saveAirports(String savePath) {
-        try (AirportWriter writer = AirportWriter.create(savePath)) {
+    private void saveAirports(File file) {
+        try (AirportWriter writer = AirportWriter.create(file.getPath())) {
             writer.write(airportTableView.getAirports());
         } catch (IllegalArgumentException e) {
             String title = Translator.getBundleString("error");

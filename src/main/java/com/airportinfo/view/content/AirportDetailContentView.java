@@ -3,12 +3,12 @@ package com.airportinfo.view.content;
 import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
+import com.airportinfo.misc.CautiousFileChooser;
 import com.airportinfo.misc.FontCompatibleTextPane;
 import com.airportinfo.model.Airport;
 import com.airportinfo.util.*;
 import com.airportinfo.view.AirportFrame;
 import com.airportinfo.view.AppTheme;
-import com.airportinfo.view.Storable;
 import com.airportinfo.view.airport.AirportDetailView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -21,7 +21,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;
@@ -31,7 +30,7 @@ import java.util.ResourceBundle;
  *
  * @author lalaalal
  */
-public class AirportDetailContentView extends ContentView implements Storable {
+public class AirportDetailContentView extends ImageStorableContentView {
     private JPanel panel;
     private JLabel mapLabel;
     private JLabel airportNameLabel;
@@ -119,34 +118,9 @@ public class AirportDetailContentView extends ContentView implements Storable {
 
     @Override
     public void store() {
-        try {
-            String saveText = Translator.getBundleString("save");
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setPreferredSize(new Dimension(700, 500));
-            fileChooser.setDialogTitle(saveText);
-            fileChooser.setFileFilter(new FileNameExtensionFilter("png", "png"));
-            if (fileChooser.showSaveDialog(mainFrame.getPanel()) == JFileChooser.APPROVE_OPTION) {
-                takeScreenshot(fileChooser.getSelectedFile());
-            }
-        } catch (IOException e) {
-            String title = Translator.getBundleString("error");
-            String message = Translator.getBundleString("cannot_store");
-            JOptionPane.showMessageDialog(mainFrame.getPanel(), message, title, JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void takeScreenshot(File file) throws IOException {
-        if (file.exists()) {
-            String title = Translator.getBundleString("alert");
-            String message = Translator.getBundleString("confirm_overwrite");
-            int result = JOptionPane.showConfirmDialog(mainFrame.getPanel(), message, title, JOptionPane.OK_CANCEL_OPTION);
-            if (result == JOptionPane.CANCEL_OPTION)
-                return;
-        }
-
-        Dimension dimension = screenshotPanel.getPreferredSize();
-        Rectangle bounds = new Rectangle(dimension);
-        Screenshot.createScreenshot(screenshotPanel, bounds, file.getPath());
+        CautiousFileChooser fileChooser = new CautiousFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("png", "png"));
+        fileChooser.showFileChooser(mainFrame.getPanel(), file -> takeScreenshot(file, screenshotPanel, screenshotPanel.getPreferredSize()));
     }
 
     private void loadMap() {

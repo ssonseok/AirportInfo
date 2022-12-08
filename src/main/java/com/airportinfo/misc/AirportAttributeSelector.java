@@ -49,6 +49,10 @@ public final class AirportAttributeSelector {
         return selector.apply(airport);
     }
 
+    public Function<Airport, String> getSelector() {
+        return selector;
+    }
+
     @Override
     public String toString() {
         return Airport.getLocalizedAttributeNames()[attributeIndex];

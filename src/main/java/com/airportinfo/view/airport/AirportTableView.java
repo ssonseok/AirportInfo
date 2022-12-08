@@ -135,6 +135,7 @@ public class AirportTableView extends AirportView {
         scrollPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         table.setAutoCreateRowSorter(true);
         table.setFillsViewportHeight(false);
+        table.setPreferredScrollableViewportSize(new Dimension(-1, 400));
         scrollPane.setViewportView(table);
     }
 

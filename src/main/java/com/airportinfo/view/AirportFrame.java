@@ -25,6 +25,7 @@ import java.util.Locale;
 public class AirportFrame extends MainFrame {
     public static final String AIRPORT_DETAIL_VIEW = "airport_detail_view";
     public static final String AIRPORT_SEARCH_VIEW = "airport_search_view";
+    public static final String AIRPORT_CHART_VIEW = "airport_chart_view";
     private JPanel contentPanel;
     private JPanel toolbarPanel;
     private JPanel sidebarPanel;
@@ -60,6 +61,7 @@ public class AirportFrame extends MainFrame {
 
     private void initToolbar() {
         airportToolBar.addLabel("search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
+        airportToolBar.addLabel("chart", (event) -> setContentView(AIRPORT_CHART_VIEW));
         JLabel saveLabel = airportToolBar.addLabel("save", (event) -> storeContent());
         airportToolBar.addLabelRight("toggle_theme", (event) -> toggleTheme());
         airportToolBar.addLabelRight("english", (event) -> changeLocale(Locale.ENGLISH));
@@ -77,6 +79,7 @@ public class AirportFrame extends MainFrame {
         menuBar.addMenuItem("file", "exit", (event) -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
         menuBar.addMenu("view");
         menuBar.addMenuItem("view", "search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
+        menuBar.addMenuItem("view", "chart", (event) -> setContentView(AIRPORT_CHART_VIEW));
         // TODO : Fill menus.
 
         frame.setJMenuBar(menuBar);
