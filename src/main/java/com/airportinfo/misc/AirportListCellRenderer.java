@@ -46,6 +46,8 @@ public class AirportListCellRenderer extends JLabel implements ListCellRenderer<
 
         while (fontMetrics.stringWidth(shrinkText) > requiredWidth) {
             int endIndex = shrinkText.length() - 6;
+            if (endIndex < 0)
+                return shrinkText;
             shrinkText = text.substring(0, endIndex) + "...";
         }
 

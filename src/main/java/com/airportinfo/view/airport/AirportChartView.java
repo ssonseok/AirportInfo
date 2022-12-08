@@ -9,6 +9,7 @@ import java.awt.*;
 
 /**
  * Airport view showing chart.
+ * AirportChartView doesn't add AbstractChartView as a child component.
  *
  * @author lalaalal
  */

@@ -41,7 +41,7 @@ public class AirportFrame extends MainFrame {
         airportSideBar = new AirportSidebar(this);
         $$$setupUI$$$();
 
-        frame.setContentPane(rootPanel);
+        frame.add(new JLabel(Translator.getBundleString("loading"), SwingConstants.CENTER));
         initToolbar();
         initMenuBar();
 
@@ -91,7 +91,6 @@ public class AirportFrame extends MainFrame {
      */
     @Override
     public void load() {
-        SwingUtilities.invokeLater(() -> setTheme(AppTheme.Lite));
         frame.setTitle(Translator.getBundleString("application_name"));
         String title = Translator.getBundleString("error");
         try {
@@ -106,6 +105,8 @@ public class AirportFrame extends MainFrame {
             String message = Translator.getBundleString("contact_developer");
             JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
         }
+        frame.setContentPane(rootPanel);
+        SwingUtilities.invokeLater(() -> setTheme(AppTheme.Lite));
     }
 
     @Override
