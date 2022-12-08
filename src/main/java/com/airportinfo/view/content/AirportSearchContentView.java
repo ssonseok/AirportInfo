@@ -47,6 +47,7 @@ public class AirportSearchContentView extends ContentView implements Storable {
                 AirportAttributeSelector attributeSelector = new AirportAttributeSelector(localizedAttributeName);
                 attributeComboBox.addItem(attributeSelector);
             }
+            searchButton.setText(Translator.getBundleString("search"));
         });
         searchButton.addMouseListener(new MouseAdapter() {
             @Override
