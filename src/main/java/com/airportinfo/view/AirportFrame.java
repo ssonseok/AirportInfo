@@ -2,6 +2,7 @@ package com.airportinfo.view;
 
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
+import com.airportinfo.util.FontManager;
 import com.airportinfo.util.Translator;
 import com.airportinfo.view.dialog.SettingDialogView;
 import com.airportinfo.view.menubar.AirportMenuBar;
@@ -41,7 +42,9 @@ public class AirportFrame extends MainFrame {
         airportSideBar = new AirportSidebar(this);
         $$$setupUI$$$();
 
-        frame.add(new JLabel(Translator.getBundleString("loading"), SwingConstants.CENTER));
+        JLabel loadingLabel = new JLabel(Translator.getBundleString("loading"), SwingConstants.CENTER);
+        loadingLabel.setFont(FontManager.getFont(FontManager.HEADER_FONT_SIZE).deriveFont(Font.BOLD));
+        frame.add(loadingLabel);
         initToolbar();
         initMenuBar();
 
