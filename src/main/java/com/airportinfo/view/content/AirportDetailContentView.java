@@ -26,6 +26,11 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;
 
+/**
+ * ContentView showing detail (information, images, map) of airport.
+ *
+ * @author lalaalal
+ */
 public class AirportDetailContentView extends ContentView implements Storable {
     private JPanel panel;
     private JLabel mapLabel;
@@ -120,13 +125,13 @@ public class AirportDetailContentView extends ContentView implements Storable {
             fileChooser.setPreferredSize(new Dimension(700, 500));
             fileChooser.setDialogTitle(saveText);
             fileChooser.setFileFilter(new FileNameExtensionFilter("png", "png"));
-            if (fileChooser.showSaveDialog(panel) == JFileChooser.APPROVE_OPTION) {
+            if (fileChooser.showSaveDialog(mainFrame.getPanel()) == JFileChooser.APPROVE_OPTION) {
                 takeScreenshot(fileChooser.getSelectedFile());
             }
         } catch (IOException e) {
             String title = Translator.getBundleString("error");
             String message = Translator.getBundleString("cannot_store");
-            JOptionPane.showMessageDialog(panel, message, title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(mainFrame.getPanel(), message, title, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -134,7 +139,7 @@ public class AirportDetailContentView extends ContentView implements Storable {
         if (file.exists()) {
             String title = Translator.getBundleString("alert");
             String message = Translator.getBundleString("confirm_overwrite");
-            int result = JOptionPane.showConfirmDialog(panel, message, title, JOptionPane.OK_CANCEL_OPTION);
+            int result = JOptionPane.showConfirmDialog(mainFrame.getPanel(), message, title, JOptionPane.OK_CANCEL_OPTION);
             if (result == JOptionPane.CANCEL_OPTION)
                 return;
         }
