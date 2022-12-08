@@ -2,6 +2,7 @@ package com.airportinfo.view.airport;
 
 import com.airportinfo.misc.UneditableTableModel;
 import com.airportinfo.model.Airport;
+import com.airportinfo.util.ThemeManager;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -32,6 +33,9 @@ public class AirportTableView extends AirportView {
     public AirportTableView() {
         $$$setupUI$$$();
         addLocaleChangeListener((locale) -> updateTableHeader());
+        addThemeChangeListener((theme) -> {
+            scrollPane.getViewport().setBackground(ThemeManager.getDefaultColor("Table.background"));
+        });
     }
 
     public void addMouseClickAction(Consumer<MouseEvent> consumer) {
