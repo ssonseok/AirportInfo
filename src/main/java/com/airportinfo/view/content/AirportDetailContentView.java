@@ -146,7 +146,9 @@ public class AirportDetailContentView extends ContentView implements Storable {
 
     private void loadMap() {
         try {
-            BufferedImage bufferedImage = GoogleMapAPI.getMapImage(selected.getRawData().englishName, mapPanel.getWidth(), mapPanel.getWidth(), 12);
+            String location = selected.getRawData().englishName;
+            int width = mapPanel.getWidth(), height = mapPanel.getHeight();
+            BufferedImage bufferedImage = GoogleMapAPI.getMapImage(location, width, height, 12);
             ImageIcon mapImageIcon = new ImageIcon(bufferedImage);
             mapLabel.setText("");
             mapLabel.setIcon(mapImageIcon);
@@ -227,7 +229,7 @@ public class AirportDetailContentView extends ContentView implements Storable {
         panel2.add(airportInfoText, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         mapPanel = new JPanel();
         mapPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(mapPanel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel1.add(mapPanel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(-1, 250), null, null, 0, false));
         mapLabel = new JLabel();
         this.$$$loadLabelText$$$(mapLabel, this.$$$getMessageFromBundle$$$("string", "loading"));
         mapPanel.add(mapLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

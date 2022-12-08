@@ -29,6 +29,7 @@ public class AirportSidebar extends ComponentView {
     private JList<Airport> airportList;
     private JPanel recentPanel;
     private JPanel bookmarkPanel;
+    private JScrollPane scrollPane;
     private final DefaultListModel<Airport> airportListModel = new DefaultListModel<>();
     private final UserController userController;
     private final ThemeManager themeManager = ThemeManager.getInstance();
@@ -39,6 +40,7 @@ public class AirportSidebar extends ComponentView {
         AirportController airportController = airportFrame.getAirportController();
 
         $$$setupUI$$$();
+        scrollPane.getVerticalScrollBar().setUnitIncrement(10);
         recentPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -146,7 +148,7 @@ public class AirportSidebar extends ComponentView {
         panel = new JPanel();
         panel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), 0, -1));
+        panel1.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), 0, -1, true, false));
         panel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(250, -1), null, null, 0, false));
         recentPanel = new JPanel();
         recentPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
@@ -162,9 +164,9 @@ public class AirportSidebar extends ComponentView {
         bookmarkLabel = new JLabel();
         this.$$$loadLabelText$$$(bookmarkLabel, this.$$$getMessageFromBundle$$$("string", "bookmark"));
         bookmarkPanel.add(bookmarkLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JScrollPane scrollPane1 = new JScrollPane();
-        panel.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(250, -1), null, 0, false));
-        scrollPane1.setViewportView(airportList);
+        scrollPane = new JScrollPane();
+        panel.add(scrollPane, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(250, -1), null, 0, false));
+        scrollPane.setViewportView(airportList);
     }
 
     private static Method $$$cachedGetBundleMethod$$$ = null;
