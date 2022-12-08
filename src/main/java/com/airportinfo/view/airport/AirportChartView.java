@@ -1,5 +1,6 @@
 package com.airportinfo.view.airport;
 
+import com.airportinfo.misc.AirportStatisticCreator;
 import com.airportinfo.view.chart.AbstractChartView;
 import com.airportinfo.view.chart.LegendList;
 
