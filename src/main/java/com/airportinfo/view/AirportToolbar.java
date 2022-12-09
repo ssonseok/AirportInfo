@@ -23,7 +23,7 @@ import java.util.function.Consumer;
  */
 public class AirportToolbar extends ComponentView {
     private static final Border LABEL_BORDER = BorderFactory.createEmptyBorder(0, 20, 0, 20);
-    private static final Border SEPARATOR_BORDER = BorderFactory.createEmptyBorder(0, 20, 0, 20);
+    private static final Border SEPARATOR_BORDER = BorderFactory.createEmptyBorder(0, 10, 0, 10);
     private JPanel panel;
     private JPanel leftPanel;
     private JPanel rightPanel;
@@ -58,11 +58,11 @@ public class AirportToolbar extends ComponentView {
         UIManager.put("Label.disabledForeground", themeManager.getColor("Custom.disabledForeground"));
     }
 
-    private JLabel addLabel(JPanel panel, Border border, String key, Consumer<MouseEvent> action) {
+    private JLabel addLabel(JPanel panel, Border border, String key, int cursor, Consumer<MouseEvent> action) {
         JLabel label = new JLabel(Translator.getBundleString(key));
         label.setBorder(border);
         label.setForeground(themeManager.getColor("Toolbar.foreground"));
-        label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        label.setCursor(Cursor.getPredefinedCursor(cursor));
         if (action != null)
             label.addMouseListener(new MouseReleaseListener(action));
         panel.add(label);
@@ -80,14 +80,14 @@ public class AirportToolbar extends ComponentView {
      * @return Created Label
      */
     public JLabel addLabel(String key, Consumer<MouseEvent> action) {
-        return addLabel(leftPanel, LABEL_BORDER, key, action);
+        return addLabel(leftPanel, LABEL_BORDER, key, Cursor.HAND_CURSOR, action);
     }
 
     /**
      * Add a separator to left.
      */
     public void addSeparator() {
-        addLabel(leftPanel, SEPARATOR_BORDER, "|", null);
+        JLabel separatorLabel = addLabel(leftPanel, SEPARATOR_BORDER, "|", Cursor.DEFAULT_CURSOR, null);
     }
 
     /**
@@ -98,11 +98,14 @@ public class AirportToolbar extends ComponentView {
      * @return Created Label
      */
     public JLabel addLabelRight(String key, Consumer<MouseEvent> action) {
-        return addLabel(rightPanel, LABEL_BORDER, key, action);
+        return addLabel(rightPanel, LABEL_BORDER, key, Cursor.HAND_CURSOR, action);
     }
 
+    /**
+     * Add separator to right.
+     */
     public void addSeparatorRight() {
-        addLabel(rightPanel, SEPARATOR_BORDER, "|", null);
+        addLabel(rightPanel, SEPARATOR_BORDER, "|", Cursor.DEFAULT_CURSOR, null);
     }
 
     private void createUIComponents() {

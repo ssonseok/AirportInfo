@@ -62,8 +62,10 @@ public class AirportFrame extends MainFrame {
     private void initToolbar() {
         airportToolBar.addLabel("search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
         airportToolBar.addLabel("chart", (event) -> setContentView(AIRPORT_CHART_VIEW));
+        airportToolBar.addSeparator();
         JLabel saveLabel = airportToolBar.addLabel("save", (event) -> storeContent());
         airportToolBar.addLabelRight("toggle_theme", (event) -> toggleTheme());
+        airportToolBar.addSeparatorRight();
         airportToolBar.addLabelRight("english", (event) -> changeLocale(Locale.ENGLISH));
         airportToolBar.addLabelRight("korean", (event) -> changeLocale(Locale.KOREAN));
         // TODO : Fill toolbar.
