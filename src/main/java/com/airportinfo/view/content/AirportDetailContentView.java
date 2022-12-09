@@ -6,6 +6,7 @@ import com.airportinfo.controller.UserController;
 import com.airportinfo.misc.CautiousFileChooser;
 import com.airportinfo.misc.FontCompatibleTextPane;
 import com.airportinfo.model.Airport;
+import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.util.*;
 import com.airportinfo.view.AirportFrame;
 import com.airportinfo.view.AppTheme;
@@ -18,8 +19,6 @@ import org.jsoup.HttpStatusException;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -76,18 +75,8 @@ public class AirportDetailContentView extends ImageStorableContentView {
         });
         addLocaleChangeListener((locale) -> load());
         Setting.getInstance().attach(this::load, Setting.LOCALIZATION_CHANGE);
-        addBookMarkButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                userController.addBookmark(selected);
-            }
-        });
-        removeBookMarkButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                userController.delBookmark(selected);
-            }
-        });
+        addBookMarkButton.addMouseListener(new MouseReleaseListener(mouseEvent -> userController.addBookmark(selected)));
+        removeBookMarkButton.addMouseListener(new MouseReleaseListener(mouseEvent -> userController.delBookmark(selected)));
     }
 
     @Override

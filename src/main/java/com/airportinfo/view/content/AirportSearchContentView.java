@@ -6,6 +6,7 @@ import com.airportinfo.misc.AirportAttributeSelector;
 import com.airportinfo.misc.BorderedTextField;
 import com.airportinfo.misc.CautiousFileChooser;
 import com.airportinfo.model.Airport;
+import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.util.Translator;
 import com.airportinfo.util.filewriter.AirportWriter;
 import com.airportinfo.view.AirportFrame;
@@ -19,8 +20,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -56,12 +55,7 @@ public class AirportSearchContentView extends ContentView implements Storable {
             }
             searchButton.setText(Translator.getBundleString("search"));
         });
-        searchButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                search();
-            }
-        });
+        searchButton.addMouseListener(new MouseReleaseListener(mouseEvent -> search()));
         airportTableView.addMouseClickAction((mouseEvent) -> {
             if (mouseEvent.getClickCount() == 2) {
                 Airport selected = airportTableView.getSelectedAirport();

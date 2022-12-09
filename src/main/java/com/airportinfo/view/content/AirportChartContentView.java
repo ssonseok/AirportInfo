@@ -6,6 +6,7 @@ import com.airportinfo.misc.AirportAttributeSelector;
 import com.airportinfo.misc.AttributeStatisticCreator;
 import com.airportinfo.misc.CautiousFileChooser;
 import com.airportinfo.model.Airport;
+import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.util.Translator;
 import com.airportinfo.view.AirportFrame;
 import com.airportinfo.view.airport.AirportChartView;
@@ -18,8 +19,6 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.*;
@@ -71,22 +70,16 @@ public class AirportChartContentView extends ImageStorableContentView {
             updateChartTitle();
         });
 
-        showHistogramButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                airportChartView.setChartView(histogramView);
-                statisticTargetAirports();
-                updateChartTitle();
-            }
-        });
-        showPieChartButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                airportChartView.setChartView(pieChartView);
-                statisticTargetAirports();
-                updateChartTitle();
-            }
-        });
+        showHistogramButton.addMouseListener(new MouseReleaseListener(mouseEvent -> {
+            airportChartView.setChartView(histogramView);
+            statisticTargetAirports();
+            updateChartTitle();
+        }));
+        showPieChartButton.addMouseListener(new MouseReleaseListener(mouseEvent -> {
+            airportChartView.setChartView(pieChartView);
+            statisticTargetAirports();
+            updateChartTitle();
+        }));
 
         setting.attach(() -> {
             histogramView.showGuideline = setting.isShowHistogramGuideLine();

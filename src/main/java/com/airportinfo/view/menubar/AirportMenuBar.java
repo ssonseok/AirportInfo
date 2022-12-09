@@ -1,11 +1,11 @@
 package com.airportinfo.view.menubar;
 
+import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.util.ThemeManager;
 import com.airportinfo.util.Translator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,13 +52,8 @@ public class AirportMenuBar extends JMenuBar {
             throw new IllegalArgumentException("Menu key (" + menuKey + ") doesn't exist.");
         JMenuItem item = new JMenuItem(Translator.getBundleString(itemKey));
         item.setPreferredSize(new Dimension(200, item.getPreferredSize().height));
-        item.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (action != null && item.contains(e.getPoint()))
-                    action.accept(e);
-            }
-        });
+        if (action != null)
+            item.addMouseListener(new MouseReleaseListener(action));
         menu.add(item);
         items.put(itemKey, item);
         updateTheme();
