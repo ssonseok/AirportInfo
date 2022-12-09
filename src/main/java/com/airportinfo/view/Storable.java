@@ -1,5 +1,7 @@
 package com.airportinfo.view;
 
+import java.io.File;
+
 /**
  * Able to store.
  *
@@ -7,4 +9,5 @@ package com.airportinfo.view;
  */
 public interface Storable {
     void store();
+    void store(File file);
 }

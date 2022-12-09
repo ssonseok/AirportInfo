@@ -3,7 +3,6 @@ package com.airportinfo.view.content;
 import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
-import com.airportinfo.misc.CautiousFileChooser;
 import com.airportinfo.misc.FontCompatibleTextPane;
 import com.airportinfo.model.Airport;
 import com.airportinfo.model.MouseReleaseListener;
@@ -17,9 +16,9 @@ import com.intellij.uiDesigner.core.Spacer;
 import org.jsoup.HttpStatusException;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;
@@ -106,10 +105,8 @@ public class AirportDetailContentView extends ImageStorableContentView {
     }
 
     @Override
-    public void store() {
-        CautiousFileChooser fileChooser = new CautiousFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("png", "png"));
-        fileChooser.showFileChooser(mainFrame.getPanel(), file -> takeScreenshot(file, screenshotPanel, screenshotPanel.getPreferredSize()));
+    public void store(File file) {
+        takeScreenshot(file, screenshotPanel, screenshotPanel.getPreferredSize());
     }
 
     private void loadMap() {

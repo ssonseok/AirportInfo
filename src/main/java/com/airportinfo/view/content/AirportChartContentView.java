@@ -4,7 +4,6 @@ import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.misc.AirportAttributeSelector;
 import com.airportinfo.misc.AttributeStatisticCreator;
-import com.airportinfo.misc.CautiousFileChooser;
 import com.airportinfo.model.Airport;
 import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.util.Translator;
@@ -17,8 +16,8 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.*;
@@ -104,10 +103,8 @@ public class AirportChartContentView extends ImageStorableContentView {
     }
 
     @Override
-    public void store() {
-        CautiousFileChooser fileChooser = new CautiousFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("png", "png"));
-        fileChooser.showFileChooser(mainFrame.getPanel(), file -> takeScreenshot(file, airportChartPanel, airportChartPanel.getBounds()));
+    public void store(File file) {
+        takeScreenshot(file, airportChartPanel, airportChartPanel.getBounds());
     }
 
     private void statisticTargetAirports() {

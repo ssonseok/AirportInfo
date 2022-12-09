@@ -90,10 +90,11 @@ public class AirportSearchContentView extends ContentView implements Storable {
         CautiousFileChooser fileChooser = new CautiousFileChooser();
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("json", "json"));
         fileChooser.setFileFilter(new FileNameExtensionFilter("csv", "csv"));
-        fileChooser.showFileChooser(mainFrame.getPanel(), this::saveAirports);
+        fileChooser.showFileChooser(mainFrame.getPanel(), this::store);
     }
 
-    private void saveAirports(File file) {
+    @Override
+    public void store(File file) {
         try (AirportWriter writer = AirportWriter.create(file.getPath())) {
             writer.write(airportTableView.getAirports());
         } catch (IllegalArgumentException e) {

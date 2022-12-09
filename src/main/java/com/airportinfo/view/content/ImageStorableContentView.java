@@ -1,11 +1,13 @@
 package com.airportinfo.view.content;
 
+import com.airportinfo.misc.CautiousFileChooser;
 import com.airportinfo.util.Screenshot;
 import com.airportinfo.util.Translator;
 import com.airportinfo.view.MainFrame;
 import com.airportinfo.view.Storable;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +18,13 @@ import java.io.IOException;
  * @author lalaalal
  */
 public abstract class ImageStorableContentView extends ContentView implements Storable {
+    @Override
+    public void store() {
+        CautiousFileChooser fileChooser = new CautiousFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("png", "png"));
+        fileChooser.showFileChooser(mainFrame.getPanel(), this::store);
+    }
+
     public ImageStorableContentView(MainFrame mainFrame) {
         super(mainFrame);
     }
