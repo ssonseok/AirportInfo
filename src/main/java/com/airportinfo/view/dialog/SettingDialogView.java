@@ -39,6 +39,7 @@ public class SettingDialogView extends DialogView {
     private JLabel intervalLabel;
     private JCheckBox localizeEnglishCheckBox;
     private JComboBox<String> extensionComboBox;
+    private JLabel extensionLabel;
     private final Setting setting = Setting.getInstance();
 
     public SettingDialogView(UserController userController) {
@@ -46,6 +47,7 @@ public class SettingDialogView extends DialogView {
         dialog.setContentPane(getPanel());
         dialog.setTitle(Translator.getBundleString("setting"));
         dialog.setSize(700, 500);
+        extensionLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
 
         updateComponentColor();
         intervalSpinner.setModel(new SpinnerPositiveNumberModel());
@@ -183,9 +185,9 @@ public class SettingDialogView extends DialogView {
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 7, 0, 0), 10, -1));
         panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label1 = new JLabel();
-        this.$$$loadLabelText$$$(label1, this.$$$getMessageFromBundle$$$("string", "default_airport_save_extension"));
-        panel3.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        extensionLabel = new JLabel();
+        this.$$$loadLabelText$$$(extensionLabel, this.$$$getMessageFromBundle$$$("string", "default_airport_save_extension"));
+        panel3.add(extensionLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         panel3.add(extensionComboBox, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
