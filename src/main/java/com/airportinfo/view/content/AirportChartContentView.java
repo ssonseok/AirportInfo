@@ -68,6 +68,7 @@ public class AirportChartContentView extends ImageStorableContentView {
         addLocaleChangeListener(locale -> {
             updateComboBox();
             updateButtonText();
+            updateChartTitle();
         });
 
         showHistogramButton.addMouseListener(new MouseAdapter() {
@@ -75,6 +76,7 @@ public class AirportChartContentView extends ImageStorableContentView {
             public void mousePressed(MouseEvent e) {
                 airportChartView.setChartView(histogramView);
                 statisticTargetAirports();
+                updateChartTitle();
             }
         });
         showPieChartButton.addMouseListener(new MouseAdapter() {
@@ -82,6 +84,7 @@ public class AirportChartContentView extends ImageStorableContentView {
             public void mousePressed(MouseEvent e) {
                 airportChartView.setChartView(pieChartView);
                 statisticTargetAirports();
+                updateChartTitle();
             }
         });
 
@@ -128,6 +131,14 @@ public class AirportChartContentView extends ImageStorableContentView {
         if (region.equals(Translator.getBundleString("all")))
             return List.of(airportController.getAirports());
         return Arrays.stream(airportController.getAirports()).filter(airport -> airport.getRegion().equals(region)).toList();
+    }
+
+    private void updateChartTitle() {
+        String attributeName = Objects.requireNonNullElse(selectorComboBox.getSelectedItem(), "").toString();
+        String region = Objects.requireNonNullElse(regionComboBox.getSelectedItem(), "").toString();
+        String title = String.format(Translator.getBundleString("chart_title_format"), attributeName, region);
+        histogramView.setTitle(title);
+        pieChartView.setTitle(title);
     }
 
     private void updateComboBox() {
