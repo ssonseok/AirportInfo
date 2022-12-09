@@ -25,7 +25,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="9aebe" class="javax.swing.JComboBox" binding="attributeComboBox">
+          <component id="9aebe" class="javax.swing.JComboBox" binding="attributeComboBox" custom-create="true">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="2" anchor="8" fill="3" indent="0" use-parent-layout="false">
                 <minimum-size width="150" height="-1"/>

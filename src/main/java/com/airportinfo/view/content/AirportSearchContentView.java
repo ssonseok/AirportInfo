@@ -119,6 +119,7 @@ public class AirportSearchContentView extends ContentView implements Storable {
     }
 
     private void createUIComponents() {
+        attributeComboBox = new JComboBox<>();
         airportTablePanel = airportTableView.getPanel();
         searchTextField = new BorderedTextField();
     }
@@ -138,7 +139,6 @@ public class AirportSearchContentView extends ContentView implements Storable {
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), 10, -1));
         panel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
-        attributeComboBox = new JComboBox();
         panel1.add(attributeComboBox, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(150, -1), null, null, 0, false));
         panel1.add(searchTextField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, -1), null, 0, false));
         searchButton = new JButton();
