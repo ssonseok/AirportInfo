@@ -1,6 +1,7 @@
 package com.airportinfo.view.content;
 
 import com.airportinfo.controller.AirportController;
+import com.airportinfo.controller.UserController;
 import com.airportinfo.misc.AirportAttributeSelector;
 import com.airportinfo.misc.BorderedTextField;
 import com.airportinfo.misc.CautiousFileChooser;
@@ -40,6 +41,7 @@ public class AirportSearchContentView extends ContentView implements Storable {
         super(mainFrame);
         $$$setupUI$$$();
         airportController = mainFrame.getAirportController();
+        UserController userController = mainFrame.getUserController();
 
         addLocaleChangeListener((locale) -> {
             attributeComboBox.removeAllItems();
@@ -59,15 +61,15 @@ public class AirportSearchContentView extends ContentView implements Storable {
             if (mouseEvent.getClickCount() == 2) {
                 Airport selected = airportTableView.getSelectedAirport();
                 airportController.selectAirport(selected);
+                userController.addRecent(selected);
                 mainFrame.setContentView(AirportFrame.AIRPORT_DETAIL_VIEW);
             }
         });
         searchTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER)
                     search();
-                }
             }
         });
 

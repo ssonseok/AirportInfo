@@ -47,13 +47,11 @@ public class AirportDetailContentView extends ImageStorableContentView {
     private final JLabel loadingLabel = new JLabel();
     private final AirportDetailView airportDetailView = new AirportDetailView();
     private final AirportController airportController;
-    private final UserController userController;
     private Airport selected;
 
     public AirportDetailContentView(AirportFrame airportFrame) {
         super(airportFrame);
         this.airportController = airportFrame.getAirportController();
-        this.userController = airportFrame.getUserController();
         UserController userController = airportFrame.getUserController();
         ThemeManager themeManager = ThemeManager.getInstance();
 
@@ -102,7 +100,6 @@ public class AirportDetailContentView extends ImageStorableContentView {
         if (!isDisplaying())
             return;
         selected = airportController.getSelectedAirport();
-        userController.addRecent(selected);
 
         airportDetailView.setAirport(selected);
         setLabelsLoading();
