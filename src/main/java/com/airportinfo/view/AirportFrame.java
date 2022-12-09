@@ -1,9 +1,11 @@
 package com.airportinfo.view;
 
+import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
 import com.airportinfo.util.FontManager;
 import com.airportinfo.util.Translator;
+import com.airportinfo.view.dialog.EmailDialogView;
 import com.airportinfo.view.dialog.SettingDialogView;
 import com.airportinfo.view.menubar.AirportMenuBar;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -12,8 +14,10 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -36,6 +40,7 @@ public class AirportFrame extends MainFrame {
     private final AirportController airportController = new AirportController();
     private final UserController userController = new UserController();
     private final SettingDialogView settingDialogView = new SettingDialogView(userController);
+    private final EmailDialogView emailDialogView = new EmailDialogView();
 
     public AirportFrame() {
         super(Translator.getBundleString("application_name"), 1280, 720);
@@ -64,6 +69,7 @@ public class AirportFrame extends MainFrame {
         airportToolBar.addLabel("chart", (event) -> setContentView(AIRPORT_CHART_VIEW));
         airportToolBar.addSeparator();
         JLabel saveLabel = airportToolBar.addLabel("save", (event) -> storeContent());
+        JLabel emailLabel = airportToolBar.addLabel("email", (event) -> showEmailDialog());
         airportToolBar.addLabelRight("toggle_theme", (event) -> toggleTheme());
         airportToolBar.addSeparatorRight();
         airportToolBar.addLabelRight("english", (event) -> changeLocale(Locale.ENGLISH));
@@ -71,17 +77,21 @@ public class AirportFrame extends MainFrame {
         // TODO : Fill toolbar.
 
         addContentChangeListener((selected) -> saveLabel.setEnabled(selected instanceof Storable));
+        addContentChangeListener((selected) -> emailLabel.setEnabled(selected instanceof Storable));
     }
 
     private void initMenuBar() {
         menuBar.addMenu("file");
         JMenuItem saveMenuItem = menuBar.addMenuItem("file", "save", (event) -> storeContent());
-        menuBar.addMenuItem("file", "setting", (event) -> settingDialogView.showDialogLocationRelativeTo(frame));
+        menuBar.addMenuItem("file", "setting", (event) -> showSettingDialog());
         menuBar.addMenuSeparator("file");
         menuBar.addMenuItem("file", "exit", (event) -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
         menuBar.addMenu("view");
         menuBar.addMenuItem("view", "search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
         menuBar.addMenuItem("view", "chart", (event) -> setContentView(AIRPORT_CHART_VIEW));
+        menuBar.addMenu("help");
+        menuBar.addMenuItem("help", "how_to_use", null);
+        menuBar.addMenuItem("help", "about", null);
         // TODO : Fill menus.
 
         frame.setJMenuBar(menuBar);
@@ -92,6 +102,21 @@ public class AirportFrame extends MainFrame {
     private void storeContent() {
         if (currentContentView instanceof Storable storable)
             storable.store();
+    }
+
+    private void showSettingDialog() {
+        settingDialogView.showDialogLocationRelativeTo(frame);
+        settingDialogView.load();
+    }
+
+    private void showEmailDialog() {
+        String tempDirectory = System.getProperty("java.io.tmpdir");
+        File file = Path.of(tempDirectory, "save." + Setting.getInstance().getAirportTableExtension()).toFile();
+        if (currentContentView instanceof Storable storable)
+            storable.store(file);
+        emailDialogView.showDialogLocationRelativeTo(frame);
+        settingDialogView.load();
+        file.deleteOnExit();
     }
 
     /**

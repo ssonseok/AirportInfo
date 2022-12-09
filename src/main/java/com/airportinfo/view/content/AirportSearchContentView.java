@@ -1,5 +1,6 @@
 package com.airportinfo.view.content;
 
+import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
 import com.airportinfo.misc.AirportAttributeSelector;
@@ -24,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -38,11 +40,13 @@ public class AirportSearchContentView extends ContentView implements Storable {
     private JTextField searchTextField;
     private JButton searchButton;
     private JPanel airportTablePanel;
+    private final CautiousFileChooser fileChooser = new CautiousFileChooser();
     private final AirportTableView airportTableView = new AirportTableView();
     private final AirportController airportController;
 
     public AirportSearchContentView(AirportFrame mainFrame) {
         super(mainFrame);
+
         $$$setupUI$$$();
         airportController = mainFrame.getAirportController();
         UserController userController = mainFrame.getUserController();
@@ -87,15 +91,20 @@ public class AirportSearchContentView extends ContentView implements Storable {
 
     @Override
     public void store() {
-        CautiousFileChooser fileChooser = new CautiousFileChooser();
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("json", "json"));
-        fileChooser.setFileFilter(new FileNameExtensionFilter("csv", "csv"));
+        String defaultExtension = Setting.getInstance().getAirportTableExtension();
+        fileChooser.resetChoosableFileFilters();
+        for (String extension : Setting.SUPPORTED_AIRPORT_TABLE_SAVE_EXTENSIONS) {
+            if (!extension.equals(defaultExtension))
+                fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(extension, extension));
+        }
+        fileChooser.setFileFilter(new FileNameExtensionFilter(defaultExtension, defaultExtension));
         fileChooser.showFileChooser(mainFrame.getPanel(), this::store);
     }
 
     @Override
     public void store(File file) {
-        try (AirportWriter writer = AirportWriter.create(file.getPath())) {
+        String path = ensureExtension(file);
+        try (AirportWriter writer = AirportWriter.create(path)) {
             writer.write(airportTableView.getAirports());
         } catch (IllegalArgumentException e) {
             String title = Translator.getBundleString("error");
@@ -106,6 +115,17 @@ public class AirportSearchContentView extends ContentView implements Storable {
             String message = Translator.getBundleString("save_error");
             JOptionPane.showMessageDialog(mainFrame.getPanel(), message, title, JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private String ensureExtension(File file) {
+        String path = file.getPath();
+        String selectedExtension = fileChooser.getFileFilter().getDescription();
+        if (Arrays.stream(Setting.SUPPORTED_AIRPORT_TABLE_SAVE_EXTENSIONS).anyMatch(s -> path.endsWith("." + s)))
+            return path;
+
+        if (List.of(Setting.SUPPORTED_AIRPORT_TABLE_SAVE_EXTENSIONS).contains(selectedExtension))
+            return path + "." + selectedExtension;
+        return path + "." + Setting.getInstance().getAirportTableExtension();
     }
 
     private void search() {

@@ -13,7 +13,7 @@ public class Setting extends Subject {
     public static final Aspect CHART_CHANGE = new Aspect("chart_change");
     public static final Aspect HISTOGRAM_CHANGE = new Aspect(CHART_CHANGE, "histogram_change");
     public static final Aspect LOCALIZATION_CHANGE = new Aspect("localization_change");
-
+    public final static String[] SUPPORTED_AIRPORT_TABLE_SAVE_EXTENSIONS = {"csv", "json"};
     private static Setting instance;
 
     private boolean showChartLabel = true;
@@ -21,6 +21,8 @@ public class Setting extends Subject {
     private boolean showHistogramGuideLine = true;
 
     private boolean localizeEnglish = false;
+
+    private String airportTableExtension = SUPPORTED_AIRPORT_TABLE_SAVE_EXTENSIONS[0];
 
     public static Setting getInstance() {
         if (instance == null)
@@ -110,5 +112,13 @@ public class Setting extends Subject {
 
     public void setSilentLocalizeEnglishOnly(boolean localizeEnglish) {
         this.localizeEnglish = localizeEnglish;
+    }
+
+    public String getAirportTableExtension() {
+        return airportTableExtension;
+    }
+
+    public void setAirportTableExtension(String airportTableExtension) {
+        this.airportTableExtension = airportTableExtension;
     }
 }

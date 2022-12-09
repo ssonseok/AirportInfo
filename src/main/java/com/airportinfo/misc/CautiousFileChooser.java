@@ -8,6 +8,8 @@ import java.io.File;
 import java.util.function.Consumer;
 
 /**
+ * File chooser confirm overwrite.
+ *
  * @author lalaalal
  */
 public class CautiousFileChooser extends JFileChooser {

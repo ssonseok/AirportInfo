@@ -26,4 +26,9 @@ public abstract class DialogView extends ComponentView {
         dialog.setLocationRelativeTo(component);
         dialog.setVisible(true);
     }
+
+    /**
+     * Call after showDialogLocationRelativeTo.
+     */
+    public abstract void load();
 }
