@@ -21,7 +21,7 @@
           <background color="-4605511"/>
         </properties>
         <border type="empty">
-          <size top="15" left="20" bottom="15" right="20"/>
+          <size top="15" left="10" bottom="15" right="10"/>
         </border>
         <children/>
       </grid>
@@ -38,7 +38,7 @@
           <background color="-4605511"/>
         </properties>
         <border type="empty">
-          <size top="15" left="20" bottom="15" right="20"/>
+          <size top="15" left="10" bottom="15" right="10"/>
         </border>
         <children/>
       </grid>

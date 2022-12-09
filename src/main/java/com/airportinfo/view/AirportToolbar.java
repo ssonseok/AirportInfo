@@ -1,5 +1,6 @@
 package com.airportinfo.view;
 
+import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.util.ThemeManager;
 import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -10,7 +11,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +22,8 @@ import java.util.function.Consumer;
  * @author lalaalal
  */
 public class AirportToolbar extends ComponentView {
+    private static final Border LABEL_BORDER = BorderFactory.createEmptyBorder(0, 20, 0, 20);
+    private static final Border SEPARATOR_BORDER = BorderFactory.createEmptyBorder(0, 20, 0, 20);
     private JPanel panel;
     private JPanel leftPanel;
     private JPanel rightPanel;
@@ -60,34 +62,14 @@ public class AirportToolbar extends ComponentView {
         JLabel label = new JLabel(Translator.getBundleString(key));
         label.setBorder(border);
         label.setForeground(themeManager.getColor("Toolbar.foreground"));
-        label.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (action != null && label.contains(e.getPoint()))
-                    action.accept(e);
-            }
-        });
         label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        if (action != null)
+            label.addMouseListener(new MouseReleaseListener(action));
         panel.add(label);
         labels.add(label);
         translationLabels.put(key, label);
 
         return label;
-    }
-
-    /**
-     * Add new label.
-     *
-     * @param key Label text or translation key
-     */
-    @Deprecated
-    public void addLabel(String key) {
-        JLabel label = new JLabel(key);
-        label.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
-        label.setForeground(themeManager.getColor("Toolbar.foreground"));
-        label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        leftPanel.add(label);
-        labels.add(label);
     }
 
     /**
@@ -98,8 +80,14 @@ public class AirportToolbar extends ComponentView {
      * @return Created Label
      */
     public JLabel addLabel(String key, Consumer<MouseEvent> action) {
-        Border leftBorder = BorderFactory.createEmptyBorder(0, 10, 0, 30);
-        return addLabel(leftPanel, leftBorder, key, action);
+        return addLabel(leftPanel, LABEL_BORDER, key, action);
+    }
+
+    /**
+     * Add a separator to left.
+     */
+    public void addSeparator() {
+        addLabel(leftPanel, SEPARATOR_BORDER, "|", null);
     }
 
     /**
@@ -110,8 +98,11 @@ public class AirportToolbar extends ComponentView {
      * @return Created Label
      */
     public JLabel addLabelRight(String key, Consumer<MouseEvent> action) {
-        Border rightBorder = BorderFactory.createEmptyBorder(0, 30, 0, 10);
-        return addLabel(rightPanel, rightBorder, key, action);
+        return addLabel(rightPanel, LABEL_BORDER, key, action);
+    }
+
+    public void addSeparatorRight() {
+        addLabel(rightPanel, SEPARATOR_BORDER, "|", null);
     }
 
     private void createUIComponents() {
@@ -136,12 +127,12 @@ public class AirportToolbar extends ComponentView {
         panel.setForeground(new Color(-4605511));
         leftPanel.setBackground(new Color(-4605511));
         panel.add(leftPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        leftPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
+        leftPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         final Spacer spacer1 = new Spacer();
         panel.add(spacer1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         rightPanel.setBackground(new Color(-4605511));
         panel.add(rightPanel, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        rightPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
+        rightPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
     }
 
     /**
