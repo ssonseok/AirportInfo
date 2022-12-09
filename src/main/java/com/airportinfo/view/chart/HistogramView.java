@@ -31,12 +31,14 @@ public class HistogramView extends AbstractChartView {
     public HistogramView() {
         super(DEFAULT_TITLE);
         $$$setupUI$$$();
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
     }
 
     public HistogramView(String title) {
         super(title);
         $$$setupUI$$$();
         updateTitle();
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
     }
 
     @Override

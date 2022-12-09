@@ -25,6 +25,7 @@ class LegendDetailView extends ComponentView {
         panel.add(indicator);
         JLabel label = new JLabel();
         label.setText(name);
+        label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
         panel.add(label);
 
         indicator.setBorder(BorderFactory.createLineBorder(color, INDICATOR_THICKNESS));

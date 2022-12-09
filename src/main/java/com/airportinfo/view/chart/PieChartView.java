@@ -24,6 +24,7 @@ public class PieChartView extends AbstractChartView {
     public PieChartView() {
         super(DEFAULT_TITLE);
         $$$setupUI$$$();
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
     }
 
     /**
@@ -34,6 +35,7 @@ public class PieChartView extends AbstractChartView {
     public PieChartView(String title) {
         super(title);
         $$$setupUI$$$();
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
         updateTitle();
     }
 

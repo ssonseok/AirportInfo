@@ -35,6 +35,11 @@ public abstract class AbstractChartView extends ComponentView {
         addLocaleChangeListener(locale -> updateTitle());
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+        updateTitle();
+    }
+
     /**
      * Update
      */
