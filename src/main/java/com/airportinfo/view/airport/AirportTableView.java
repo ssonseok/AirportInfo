@@ -2,6 +2,7 @@ package com.airportinfo.view.airport;
 
 import com.airportinfo.misc.UneditableTableModel;
 import com.airportinfo.model.Airport;
+import com.airportinfo.util.ThemeManager;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -14,6 +15,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -28,10 +30,12 @@ public class AirportTableView extends AirportView {
     private final UneditableTableModel tableModel = new UneditableTableModel(Airport.getLocalizedAttributeNames(), 0);
     private JTable table;
     private JScrollPane scrollPane;
+    private final ArrayList<String> removedAttributes = new ArrayList<>();
 
     public AirportTableView() {
         $$$setupUI$$$();
-        addLocaleChangeListener((locale) -> updateTableHeader());
+        addLocaleChangeListener(locale -> updateTableHeader());
+        addThemeChangeListener(theme -> scrollPane.getViewport().setBackground(ThemeManager.getDefaultColor("Table.background")));
     }
 
     public void addMouseClickAction(Consumer<MouseEvent> consumer) {
@@ -73,10 +77,21 @@ public class AirportTableView extends AirportView {
         return result;
     }
 
+    /**
+     * Remove column.
+     *
+     * @param attributeName Header name
+     */
+    public void removeColumn(String attributeName) {
+        TableColumn tableColumn = table.getColumn(attributeName);
+        table.getColumnModel().removeColumn(tableColumn);
+        removedAttributes.add(attributeName);
+    }
+
     private void updateTableHeader() {
         JTableHeader tableHeader = table.getTableHeader();
         TableColumnModel columnModel = tableHeader.getColumnModel();
-        String[] header = Airport.getLocalizedAttributeNames();
+        String[] header = Arrays.stream(Airport.getLocalizedAttributeNames()).filter(s -> !removedAttributes.contains(s)).toArray(String[]::new);
         for (int i = 0; i < columnModel.getColumnCount(); i++) {
             TableColumn tableColumn = columnModel.getColumn(i);
             tableColumn.setHeaderValue(header[i]);
@@ -120,6 +135,7 @@ public class AirportTableView extends AirportView {
         scrollPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         table.setAutoCreateRowSorter(true);
         table.setFillsViewportHeight(false);
+        table.setPreferredScrollableViewportSize(new Dimension(-1, 400));
         scrollPane.setViewportView(table);
     }
 

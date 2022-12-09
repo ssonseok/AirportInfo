@@ -1,4 +1,4 @@
-package com.airportinfo.view.airport;
+package com.airportinfo.misc;
 
 import com.airportinfo.model.Airport;
 import com.airportinfo.view.chart.LegendList;

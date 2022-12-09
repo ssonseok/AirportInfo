@@ -21,14 +21,15 @@ public abstract class AirportWriter implements AutoCloseable {
      *
      * @param path Path to save. Should be csv or json
      * @return AirportWriter
-     * @throws IOException If an I/O error occurs
+     * @throws IOException              If an I/O error occurs
+     * @throws IllegalArgumentException If path extension not supported
      */
     public static AirportWriter create(String path) throws IOException {
         String extension = path.substring(path.lastIndexOf(".") + 1);
         return switch (extension) {
             case "csv" -> new CSVWriter(path);
             case "json" -> new JSONWriter(path);
-            default -> throw new IllegalStateException("Unexpected value: " + extension);
+            default -> throw new IllegalArgumentException("Unexpected value: " + extension);
         };
     }
 

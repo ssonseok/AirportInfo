@@ -1,5 +1,6 @@
 package com.airportinfo.view.airport;
 
+import com.airportinfo.misc.AirportStatisticCreator;
 import com.airportinfo.view.chart.AbstractChartView;
 import com.airportinfo.view.chart.LegendList;
 
@@ -8,6 +9,7 @@ import java.awt.*;
 
 /**
  * Airport view showing chart.
+ * AirportChartView doesn't add AbstractChartView as a child component.
  *
  * @author lalaalal
  */

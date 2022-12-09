@@ -103,9 +103,6 @@ public abstract class AbstractChartView extends ComponentView {
      * @param legends New legends
      */
     public void setLegends(Iterable<? extends Legend> legends) {
-        if (this.legends.equals(legends))
-            return;
-
         clear();
         for (Legend legend : legends)
             addLegend(legend);

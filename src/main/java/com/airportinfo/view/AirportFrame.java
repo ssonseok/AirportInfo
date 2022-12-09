@@ -2,6 +2,7 @@ package com.airportinfo.view;
 
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
+import com.airportinfo.util.FontManager;
 import com.airportinfo.util.Translator;
 import com.airportinfo.view.dialog.SettingDialogView;
 import com.airportinfo.view.menubar.AirportMenuBar;
@@ -24,6 +25,7 @@ import java.util.Locale;
 public class AirportFrame extends MainFrame {
     public static final String AIRPORT_DETAIL_VIEW = "airport_detail_view";
     public static final String AIRPORT_SEARCH_VIEW = "airport_search_view";
+    public static final String AIRPORT_CHART_VIEW = "airport_chart_view";
     private JPanel contentPanel;
     private JPanel toolbarPanel;
     private JPanel sidebarPanel;
@@ -41,7 +43,9 @@ public class AirportFrame extends MainFrame {
         airportSideBar = new AirportSidebar(this);
         $$$setupUI$$$();
 
-        frame.setContentPane(rootPanel);
+        JLabel loadingLabel = new JLabel(Translator.getBundleString("loading"), SwingConstants.CENTER);
+        loadingLabel.setFont(FontManager.getFont(FontManager.HEADER_FONT_SIZE).deriveFont(Font.BOLD));
+        frame.add(loadingLabel);
         initToolbar();
         initMenuBar();
 
@@ -57,6 +61,7 @@ public class AirportFrame extends MainFrame {
 
     private void initToolbar() {
         airportToolBar.addLabel("search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
+        airportToolBar.addLabel("chart", (event) -> setContentView(AIRPORT_CHART_VIEW));
         JLabel saveLabel = airportToolBar.addLabel("save", (event) -> storeContent());
         airportToolBar.addLabelRight("toggle_theme", (event) -> toggleTheme());
         airportToolBar.addLabelRight("english", (event) -> changeLocale(Locale.ENGLISH));
@@ -74,6 +79,7 @@ public class AirportFrame extends MainFrame {
         menuBar.addMenuItem("file", "exit", (event) -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
         menuBar.addMenu("view");
         menuBar.addMenuItem("view", "search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
+        menuBar.addMenuItem("view", "chart", (event) -> setContentView(AIRPORT_CHART_VIEW));
         // TODO : Fill menus.
 
         frame.setJMenuBar(menuBar);
@@ -91,7 +97,6 @@ public class AirportFrame extends MainFrame {
      */
     @Override
     public void load() {
-        SwingUtilities.invokeLater(() -> setTheme(AppTheme.Lite));
         frame.setTitle(Translator.getBundleString("application_name"));
         String title = Translator.getBundleString("error");
         try {
@@ -106,6 +111,8 @@ public class AirportFrame extends MainFrame {
             String message = Translator.getBundleString("contact_developer");
             JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
         }
+        frame.setContentPane(rootPanel);
+        SwingUtilities.invokeLater(() -> setTheme(AppTheme.Lite));
     }
 
     @Override

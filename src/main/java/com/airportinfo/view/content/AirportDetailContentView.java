@@ -3,12 +3,12 @@ package com.airportinfo.view.content;
 import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
+import com.airportinfo.misc.CautiousFileChooser;
 import com.airportinfo.misc.FontCompatibleTextPane;
 import com.airportinfo.model.Airport;
 import com.airportinfo.util.*;
 import com.airportinfo.view.AirportFrame;
 import com.airportinfo.view.AppTheme;
-import com.airportinfo.view.Storable;
 import com.airportinfo.view.airport.AirportDetailView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -21,12 +21,16 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;
 
-public class AirportDetailContentView extends ContentView implements Storable {
+/**
+ * ContentView showing detail (information, images, map) of airport.
+ *
+ * @author lalaalal
+ */
+public class AirportDetailContentView extends ImageStorableContentView {
     private JPanel panel;
     private JLabel mapLabel;
     private JLabel airportNameLabel;
@@ -43,11 +47,13 @@ public class AirportDetailContentView extends ContentView implements Storable {
     private final JLabel loadingLabel = new JLabel();
     private final AirportDetailView airportDetailView = new AirportDetailView();
     private final AirportController airportController;
+    private final UserController userController;
     private Airport selected;
 
     public AirportDetailContentView(AirportFrame airportFrame) {
         super(airportFrame);
         this.airportController = airportFrame.getAirportController();
+        this.userController = airportFrame.getUserController();
         UserController userController = airportFrame.getUserController();
         ThemeManager themeManager = ThemeManager.getInstance();
 
@@ -96,6 +102,7 @@ public class AirportDetailContentView extends ContentView implements Storable {
         if (!isDisplaying())
             return;
         selected = airportController.getSelectedAirport();
+        userController.addRecent(selected);
 
         airportDetailView.setAirport(selected);
         setLabelsLoading();
@@ -114,34 +121,9 @@ public class AirportDetailContentView extends ContentView implements Storable {
 
     @Override
     public void store() {
-        try {
-            String saveText = Translator.getBundleString("save");
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setPreferredSize(new Dimension(700, 500));
-            fileChooser.setDialogTitle(saveText);
-            fileChooser.setFileFilter(new FileNameExtensionFilter("png", "png"));
-            if (fileChooser.showSaveDialog(panel) == JFileChooser.APPROVE_OPTION) {
-                takeScreenshot(fileChooser.getSelectedFile());
-            }
-        } catch (IOException e) {
-            String title = Translator.getBundleString("error");
-            String message = Translator.getBundleString("cannot_store");
-            JOptionPane.showMessageDialog(panel, message, title, JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void takeScreenshot(File file) throws IOException {
-        if (file.exists()) {
-            String title = Translator.getBundleString("alert");
-            String message = Translator.getBundleString("confirm_overwrite");
-            int result = JOptionPane.showConfirmDialog(panel, message, title, JOptionPane.OK_CANCEL_OPTION);
-            if (result == JOptionPane.CANCEL_OPTION)
-                return;
-        }
-
-        Dimension dimension = screenshotPanel.getPreferredSize();
-        Rectangle bounds = new Rectangle(dimension);
-        Screenshot.createScreenshot(screenshotPanel, bounds, file.getPath());
+        CautiousFileChooser fileChooser = new CautiousFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("png", "png"));
+        fileChooser.showFileChooser(mainFrame.getPanel(), file -> takeScreenshot(file, screenshotPanel, screenshotPanel.getPreferredSize()));
     }
 
     private void loadMap() {
