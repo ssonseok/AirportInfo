@@ -10,11 +10,23 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * A ContentView can store image.
+ *
+ * @author lalaalal
+ */
 public abstract class ImageStorableContentView extends ContentView implements Storable {
     public ImageStorableContentView(MainFrame mainFrame) {
         super(mainFrame);
     }
 
+    /**
+     * Take a screenshot with panel and its bounds.
+     *
+     * @param file            File to save
+     * @param screenshotPanel Panel to take screenshot
+     * @param bounds          Bounds of panel
+     */
     public void takeScreenshot(File file, JPanel screenshotPanel, Rectangle bounds) {
         try {
             Screenshot.createScreenshot(screenshotPanel, bounds, file.getPath());
@@ -25,6 +37,13 @@ public abstract class ImageStorableContentView extends ContentView implements St
         }
     }
 
+    /**
+     * Take a screenshot with panel and its dimension.
+     *
+     * @param file            File to save
+     * @param screenshotPanel Panel to take screenshot
+     * @param dimension       Dimension of panel
+     */
     public void takeScreenshot(File file, JPanel screenshotPanel, Dimension dimension) {
         takeScreenshot(file, screenshotPanel, new Rectangle(dimension));
     }

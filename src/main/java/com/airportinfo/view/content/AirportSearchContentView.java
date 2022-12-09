@@ -28,6 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Airport search ContentView. Storable table to csv, json.
+ *
+ * @author lalaalal
+ */
 public class AirportSearchContentView extends ContentView implements Storable {
     private JPanel panel;
     private JComboBox<AirportAttributeSelector> attributeComboBox;
