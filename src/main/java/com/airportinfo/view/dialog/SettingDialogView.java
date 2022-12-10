@@ -2,7 +2,7 @@ package com.airportinfo.view.dialog;
 
 import com.airportinfo.Setting;
 import com.airportinfo.controller.UserController;
-import com.airportinfo.misc.SpinnerPositiveNumberModel;
+import com.airportinfo.misc.RangedSpinnerNumberModel;
 import com.airportinfo.util.ThemeManager;
 import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -50,7 +50,7 @@ public class SettingDialogView extends DialogView {
         extensionLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
 
         updateComponentColor();
-        intervalSpinner.setModel(new SpinnerPositiveNumberModel());
+        intervalSpinner.setModel(new RangedSpinnerNumberModel(0));
         load();
 
         resetBookmarkButton.addMouseListener(new MouseAdapter() {
