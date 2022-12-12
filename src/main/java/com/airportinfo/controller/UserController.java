@@ -131,6 +131,8 @@ public class UserController extends Subject {
             history = (ArrayList<Airport>) objectInputStream.readObject();
             rating = (HashMap<Airport, Integer>) objectInputStream.readObject();
             notice();
+        } catch (FileNotFoundException ignored) {
+
         }
     }
 }

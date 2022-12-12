@@ -129,8 +129,6 @@ public class AirportFrame extends MainFrame {
         try {
             userController.load();
             airportController.loadFromDB();
-        } catch (FileNotFoundException ignored) {
-
         } catch (SQLException | IOException e) {
             String message = Translator.getBundleString("cannot_load");
             JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
