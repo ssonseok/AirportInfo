@@ -21,6 +21,7 @@ import java.util.ArrayList;
  */
 public class AirportController extends Subject {
     public static final Aspect SELECTED_AIRPORT_CHANGE = new Aspect("selected_airport_change");
+    public static final Aspect DB_INSERT = new Aspect("db_insert");
     private Airport selectedAirport;
     private ArrayList<Airport> airports = new ArrayList<>();
 
@@ -52,6 +53,7 @@ public class AirportController extends Subject {
             dbManager.clear();
             for (Airport airport : airports) {
                 dbManager.insertAirport(airport.getRawData());
+                notice(DB_INSERT);
             }
         }
     }

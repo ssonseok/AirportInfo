@@ -1,8 +1,8 @@
 package com.airportinfo.view.dialog;
 
 import com.airportinfo.Setting;
-import com.airportinfo.swing.BorderedTextField;
 import com.airportinfo.model.MouseReleaseListener;
+import com.airportinfo.swing.BorderedTextField;
 import com.airportinfo.util.EmailManager;
 import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -27,11 +27,12 @@ public class EmailDialogView extends DialogView {
     private JTextField emailTextField;
     private JButton sendButton;
     private JLabel toLabel;
+    private JEditorPane editorPane;
+    private JButton previewFileButton;
 
     public EmailDialogView() {
         $$$setupUI$$$();
         dialog.setContentPane(panel);
-        dialog.setSize(500, 50);
 
         sendButton.addMouseListener(new MouseReleaseListener(mouseEvent -> sendEmail()));
         addLocaleChangeListener(locale -> {
