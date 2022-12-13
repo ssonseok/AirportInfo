@@ -2,7 +2,7 @@ package com.airportinfo.view.dialog;
 
 import com.airportinfo.Setting;
 import com.airportinfo.controller.UserController;
-import com.airportinfo.misc.RangedSpinnerNumberModel;
+import com.airportinfo.swing.RangedSpinnerNumberModel;
 import com.airportinfo.util.ThemeManager;
 import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;

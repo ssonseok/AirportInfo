@@ -1,4 +1,4 @@
-package com.airportinfo.misc;
+package com.airportinfo.swing;
 
 import com.airportinfo.util.Translator;
 

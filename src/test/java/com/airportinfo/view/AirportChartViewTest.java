@@ -3,7 +3,7 @@ package com.airportinfo.view;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.model.Airport;
 import com.airportinfo.view.airport.AirportChartView;
-import com.airportinfo.misc.AttributeStatisticCreator;
+import com.airportinfo.view.airport.AttributeStatisticCreator;
 import com.airportinfo.view.chart.HistogramView;
 
 import java.sql.SQLException;

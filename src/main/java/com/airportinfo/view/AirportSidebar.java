@@ -2,7 +2,7 @@ package com.airportinfo.view;
 
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
-import com.airportinfo.misc.AirportListCellRenderer;
+import com.airportinfo.swing.AirportListCellRenderer;
 import com.airportinfo.model.Airport;
 import com.airportinfo.util.ThemeManager;
 import com.airportinfo.util.Translator;

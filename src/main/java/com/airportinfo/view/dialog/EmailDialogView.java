@@ -1,7 +1,7 @@
 package com.airportinfo.view.dialog;
 
 import com.airportinfo.Setting;
-import com.airportinfo.misc.BorderedTextField;
+import com.airportinfo.swing.BorderedTextField;
 import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.util.EmailManager;
 import com.airportinfo.util.Translator;

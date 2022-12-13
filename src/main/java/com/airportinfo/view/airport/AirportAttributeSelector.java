@@ -1,4 +1,4 @@
-package com.airportinfo.misc;
+package com.airportinfo.view.airport;
 
 import com.airportinfo.model.Airport;
 

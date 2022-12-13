@@ -1,6 +1,6 @@
-package com.airportinfo.misc;
+package com.airportinfo.view.airport;
 
-import com.airportinfo.misc.AirportStatisticCreator;
+import com.airportinfo.view.airport.AirportStatisticCreator;
 import com.airportinfo.model.Airport;
 import com.airportinfo.view.chart.LegendList;
 

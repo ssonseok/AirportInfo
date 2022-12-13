@@ -2,8 +2,8 @@ package com.airportinfo.view.content;
 
 import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
-import com.airportinfo.misc.AirportAttributeSelector;
-import com.airportinfo.misc.AttributeStatisticCreator;
+import com.airportinfo.view.airport.AirportAttributeSelector;
+import com.airportinfo.view.airport.AttributeStatisticCreator;
 import com.airportinfo.model.Airport;
 import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.util.Translator;

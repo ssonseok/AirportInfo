@@ -1,6 +1,6 @@
 package com.airportinfo.view.content;
 
-import com.airportinfo.misc.CautiousFileChooser;
+import com.airportinfo.swing.CautiousFileChooser;
 import com.airportinfo.util.Screenshot;
 import com.airportinfo.util.Translator;
 import com.airportinfo.view.MainFrame;
