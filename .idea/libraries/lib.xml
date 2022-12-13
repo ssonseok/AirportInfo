@@ -8,6 +8,7 @@
       <root url="jar://$PROJECT_DIR$/lib/javax.mail-1.6.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/json-20220924.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jsoup-1.15.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/unfolding.0.9.6.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

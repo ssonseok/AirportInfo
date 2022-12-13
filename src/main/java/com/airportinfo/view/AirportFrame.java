@@ -5,6 +5,7 @@ import com.airportinfo.controller.UserController;
 import com.airportinfo.swing.LocalizedOptionPane;
 import com.airportinfo.util.FontManager;
 import com.airportinfo.util.Translator;
+import com.airportinfo.view.dialog.AboutDialogView;
 import com.airportinfo.view.dialog.EmailDialogView;
 import com.airportinfo.view.dialog.SettingDialogView;
 import com.airportinfo.view.menubar.AirportMenuBar;
@@ -29,7 +30,6 @@ public class AirportFrame extends MainFrame {
     public static final String AIRPORT_DETAIL_VIEW = "airport_detail_view";
     public static final String AIRPORT_SEARCH_VIEW = "airport_search_view";
     public static final String AIRPORT_CHART_VIEW = "airport_chart_view";
-    public static final String WORLD_MAP_VIEW = "world_map_view";
     private JPanel contentPanel;
     private JPanel toolbarPanel;
     private JPanel sidebarPanel;
@@ -57,6 +57,7 @@ public class AirportFrame extends MainFrame {
         addComponentView(airportToolBar);
         addComponentView(airportSideBar);
         addComponentView(settingDialogView);
+        addComponentView(emailDialogView);
     }
 
     @Override
@@ -67,7 +68,6 @@ public class AirportFrame extends MainFrame {
     private void initToolbar() {
         airportToolBar.addLabel("search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
         airportToolBar.addLabel("chart", (event) -> setContentView(AIRPORT_CHART_VIEW));
-        airportToolBar.addLabel("map", (event) -> setContentView(WORLD_MAP_VIEW));
         airportToolBar.addSeparator();
         JLabel saveLabel = airportToolBar.addLabel("save", (event) -> storeContent());
         JLabel emailLabel = airportToolBar.addLabel("email", (event) -> showEmailDialog());
@@ -92,8 +92,11 @@ public class AirportFrame extends MainFrame {
         menuBar.addMenuItem("view", "search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
         menuBar.addMenuItem("view", "chart", (event) -> setContentView(AIRPORT_CHART_VIEW));
         menuBar.addMenu("help");
-        menuBar.addMenuItem("help", "how_to_use", null);
-        menuBar.addMenuItem("help", "about", null);
+//        menuBar.addMenuItem("help", "how_to_use", null);
+        menuBar.addMenuItem("help", "about", (event) -> {
+            AboutDialogView aboutDialogView = new AboutDialogView();
+            aboutDialogView.showDialogLocationRelativeTo(frame);
+        });
 
         frame.setJMenuBar(menuBar);
 

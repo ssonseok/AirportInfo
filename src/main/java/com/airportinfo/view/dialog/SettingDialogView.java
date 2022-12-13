@@ -153,6 +153,7 @@ public class SettingDialogView extends DialogView {
         intervalSpinner.setValue(setting.getHistogramLegendInterval());
         showGuidelineCheckBox.setSelected(setting.isShowHistogramGuideLine());
         localizeEnglishCheckBox.setSelected(setting.isLocalizeEnglish());
+        extensionComboBox.removeAllItems();
         for (String supportedAirportTableSaveExtension : Setting.SUPPORTED_AIRPORT_TABLE_SAVE_EXTENSIONS)
             extensionComboBox.addItem(supportedAirportTableSaveExtension);
         extensionComboBox.setSelectedItem(setting.getAirportTableExtension());

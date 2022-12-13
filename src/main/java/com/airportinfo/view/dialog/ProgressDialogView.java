@@ -2,6 +2,7 @@ package com.airportinfo.view.dialog;
 
 import com.airportinfo.misc.Observer;
 import com.airportinfo.model.MouseReleaseListener;
+import com.airportinfo.util.ThemeManager;
 import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -25,6 +26,8 @@ public class ProgressDialogView extends DialogView implements Observer {
     private int current = 0;
 
     public ProgressDialogView(String progressName, int max) {
+        panel.setBorder(BorderFactory.createLineBorder(ThemeManager.getDefaultColor("Label.foreground")));
+
         dialog.setAlwaysOnTop(true);
         dialog.setUndecorated(true);
         dialog.setContentPane(panel);
