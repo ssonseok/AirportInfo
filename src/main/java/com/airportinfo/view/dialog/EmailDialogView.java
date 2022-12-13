@@ -2,6 +2,7 @@ package com.airportinfo.view.dialog;
 
 import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.swing.BorderedTextField;
+import com.airportinfo.swing.LocalizedOptionPane;
 import com.airportinfo.util.EmailManager;
 import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -59,14 +60,10 @@ public class EmailDialogView extends DialogView {
             String content = contentTextArea.getText();
             File file = targetFile;
             EmailManager.send(email, content, file.getPath());
-            String title = Translator.getBundleString("info");
-            String message = Translator.getBundleString("succeed");
-            JOptionPane.showMessageDialog(dialog, message, title, JOptionPane.INFORMATION_MESSAGE);
+            LocalizedOptionPane.showInfoMessageDialog(dialog, "succeed");
             dialog.setVisible(false);
         } catch (IOException | MessagingException e) {
-            String title = Translator.getBundleString("error");
-            String message = Translator.getBundleString("email_send_failed");
-            JOptionPane.showMessageDialog(dialog, message, title, JOptionPane.ERROR_MESSAGE);
+            LocalizedOptionPane.showErrorMessageDialog(dialog, "email_send_failed");
         }
     }
 

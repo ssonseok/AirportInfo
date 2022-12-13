@@ -40,6 +40,7 @@ public class AirportController extends Subject {
     public void loadFromDB() throws SQLException, ClassNotFoundException, NoSuchMethodException {
         try (DBManager dbManager = new DBManager()) {
             airports = dbManager.selectAirport();
+            notice(AIRPORT_LIST_CHANGE);
         }
     }
 
@@ -68,6 +69,7 @@ public class AirportController extends Subject {
     public void loadFromFile(String path) throws IOException {
         try (CSVReader reader = new CSVReader(path)) {
             readCSVFile(reader);
+            notice(AIRPORT_LIST_CHANGE);
         }
     }
 
@@ -80,6 +82,7 @@ public class AirportController extends Subject {
     public void loadFromFile(InputStream inputStream) throws IOException {
         try (CSVReader reader = new CSVReader(inputStream)) {
             readCSVFile(reader);
+            notice(AIRPORT_LIST_CHANGE);
         }
     }
 

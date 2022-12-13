@@ -19,10 +19,9 @@ public class Setting extends Subject {
     private boolean showChartLabel = true;
     private int histogramLegendInterval = HistogramView.DEFAULT_LEGEND_INTERVAL;
     private boolean showHistogramGuideLine = true;
-
     private boolean localizeEnglish = false;
-
     private String airportTableExtension = SUPPORTED_AIRPORT_TABLE_SAVE_EXTENSIONS[0];
+    private boolean saveAirportOnlyCurrentLanguage = true;
 
     public static Setting getInstance() {
         if (instance == null)
@@ -120,5 +119,13 @@ public class Setting extends Subject {
 
     public void setAirportTableExtension(String airportTableExtension) {
         this.airportTableExtension = airportTableExtension;
+    }
+
+    public boolean isSaveAirportOnlyCurrentLanguage() {
+        return saveAirportOnlyCurrentLanguage;
+    }
+
+    public void setSaveAirportOnlyCurrentLanguage(boolean saveAirportOnlyCurrentLanguage) {
+        this.saveAirportOnlyCurrentLanguage = saveAirportOnlyCurrentLanguage;
     }
 }

@@ -1,7 +1,8 @@
 package com.airportinfo.view.airport;
 
-import com.airportinfo.swing.UneditableTableModel;
 import com.airportinfo.model.Airport;
+import com.airportinfo.model.MouseReleaseListener;
+import com.airportinfo.swing.UneditableTableModel;
 import com.airportinfo.util.ThemeManager;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -34,6 +35,15 @@ public class AirportTableView extends AirportView {
 
     public AirportTableView() {
         $$$setupUI$$$();
+
+        table.addMouseListener(new MouseReleaseListener(mouseEvent -> {
+            if (mouseEvent.getButton() != MouseEvent.BUTTON3)
+                return;
+            int row = table.rowAtPoint(mouseEvent.getPoint());
+            if (0 <= row && row < table.getRowCount())
+                table.setRowSelectionInterval(row, row);
+        }));
+
         addLocaleChangeListener(locale -> updateTableHeader());
         addThemeChangeListener(theme -> scrollPane.getViewport().setBackground(ThemeManager.getDefaultColor("Table.background")));
     }
@@ -86,6 +96,10 @@ public class AirportTableView extends AirportView {
         TableColumn tableColumn = table.getColumn(attributeName);
         table.getColumnModel().removeColumn(tableColumn);
         removedAttributes.add(attributeName);
+    }
+
+    public void showPopupMenu(JPopupMenu popupMenu, Point point) {
+        popupMenu.show(table, point.x, point.y);
     }
 
     private void updateTableHeader() {

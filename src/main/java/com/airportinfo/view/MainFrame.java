@@ -1,5 +1,6 @@
 package com.airportinfo.view;
 
+import com.airportinfo.swing.LocalizedOptionPane;
 import com.airportinfo.util.FontManager;
 import com.airportinfo.util.ThemeManager;
 import com.airportinfo.util.Translator;
@@ -137,9 +138,7 @@ public abstract class MainFrame extends ComponentGroup {
             String title = Translator.getBundleString("error");
             JOptionPane.showMessageDialog(frame, e.getMessage(), title, JOptionPane.ERROR_MESSAGE);
         } catch (IOException | FontFormatException e) {
-            String title = Translator.getBundleString("error");
-            String message = Translator.getBundleString("font_load_fail");
-            JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
+            LocalizedOptionPane.showErrorMessageDialog(frame, "font_load_fail");
         }
     }
 

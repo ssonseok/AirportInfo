@@ -25,6 +25,7 @@ public class ProgressDialogView extends DialogView implements Observer {
     private int current = 0;
 
     public ProgressDialogView(String progressName, int max) {
+        dialog.setAlwaysOnTop(true);
         dialog.setUndecorated(true);
         dialog.setContentPane(panel);
 
@@ -35,7 +36,8 @@ public class ProgressDialogView extends DialogView implements Observer {
         progressBar.setStringPainted(true);
 
         doneButton.addMouseListener(new MouseReleaseListener(mouseEvent -> {
-            dialog.setVisible(false);
+            if (doneButton.isEnabled())
+                dialog.setVisible(false);
         }));
 
         addThemeChangeListener(theme -> doneButton.setText(Translator.getBundleString("done")));
@@ -52,12 +54,6 @@ public class ProgressDialogView extends DialogView implements Observer {
         current = 0;
         progressBar.setValue(0);
         doneButton.setEnabled(false);
-    }
-
-    @Override
-    public void showDialogLocationRelativeTo(Component component) {
-        super.showDialogLocationRelativeTo(component);
-
     }
 
     @Override
