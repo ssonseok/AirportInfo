@@ -29,6 +29,7 @@ public class AirportFrame extends MainFrame {
     public static final String AIRPORT_DETAIL_VIEW = "airport_detail_view";
     public static final String AIRPORT_SEARCH_VIEW = "airport_search_view";
     public static final String AIRPORT_CHART_VIEW = "airport_chart_view";
+    public static final String WORLD_MAP_VIEW = "world_map_view";
     private JPanel contentPanel;
     private JPanel toolbarPanel;
     private JPanel sidebarPanel;
@@ -66,6 +67,7 @@ public class AirportFrame extends MainFrame {
     private void initToolbar() {
         airportToolBar.addLabel("search", (event) -> setContentView(AIRPORT_SEARCH_VIEW));
         airportToolBar.addLabel("chart", (event) -> setContentView(AIRPORT_CHART_VIEW));
+        airportToolBar.addLabel("map", (event) -> setContentView(WORLD_MAP_VIEW));
         airportToolBar.addSeparator();
         JLabel saveLabel = airportToolBar.addLabel("save", (event) -> storeContent());
         JLabel emailLabel = airportToolBar.addLabel("email", (event) -> showEmailDialog());
@@ -73,7 +75,6 @@ public class AirportFrame extends MainFrame {
         airportToolBar.addSeparatorRight();
         airportToolBar.addLabelRight("english", (event) -> changeLocale(Locale.ENGLISH));
         airportToolBar.addLabelRight("korean", (event) -> changeLocale(Locale.KOREAN));
-        // TODO : Fill toolbar.
 
         addContentChangeListener((selected) -> saveLabel.setEnabled(selected instanceof Storable));
         addContentChangeListener((selected) -> emailLabel.setEnabled(selected instanceof Storable));
@@ -82,6 +83,8 @@ public class AirportFrame extends MainFrame {
     private void initMenuBar() {
         menuBar.addMenu("file");
         JMenuItem saveMenuItem = menuBar.addMenuItem("file", "save", (event) -> storeContent());
+        JMenuItem emailMenuItem = menuBar.addMenuItem("file", "email", (event) -> showEmailDialog());
+        menuBar.addMenuSeparator("file");
         menuBar.addMenuItem("file", "setting", (event) -> showSettingDialog());
         menuBar.addMenuSeparator("file");
         menuBar.addMenuItem("file", "exit", (event) -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
@@ -91,11 +94,11 @@ public class AirportFrame extends MainFrame {
         menuBar.addMenu("help");
         menuBar.addMenuItem("help", "how_to_use", null);
         menuBar.addMenuItem("help", "about", null);
-        // TODO : Fill menus.
 
         frame.setJMenuBar(menuBar);
 
         addContentChangeListener((selected) -> saveMenuItem.setEnabled(selected instanceof Storable));
+        addContentChangeListener((selected) -> emailMenuItem.setEnabled(selected instanceof Storable));
     }
 
     private void storeContent() {
@@ -131,7 +134,7 @@ public class AirportFrame extends MainFrame {
             airportController.loadFromDB();
         } catch (SQLException | IOException e) {
             LocalizedOptionPane.showErrorMessageDialog(frame, "cannot_load");
-        } catch (ClassNotFoundException | NoSuchMethodException e) {
+        } catch (ClassNotFoundException e) {
             LocalizedOptionPane.showErrorMessageDialog(frame, "contact_developer");
         }
         frame.setContentPane(rootPanel);

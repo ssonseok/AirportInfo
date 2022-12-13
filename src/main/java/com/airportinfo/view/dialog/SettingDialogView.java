@@ -94,7 +94,7 @@ public class SettingDialogView extends DialogView {
         }
     }
 
-    private void dbUpdateProgress(AirportController airportController, String path) throws IOException, SQLException, ClassNotFoundException, NoSuchMethodException {
+    private void dbUpdateProgress(AirportController airportController, String path) throws IOException, SQLException, ClassNotFoundException {
         airportController.loadFromFile(path);
         String progressName = Translator.getBundleString("updating");
         int max = airportController.getAirports().length;
@@ -130,6 +130,8 @@ public class SettingDialogView extends DialogView {
         resetHistoryButton.setToolTipText(Translator.getBundleString("reset_tooltip"));
         localizeEnglishCheckBox.setText(Translator.getBundleString("localize_english_only"));
         saveCurrentLanguageOnlyCheckBox.setText(Translator.getBundleString("save_current_lang_only"));
+        updateDBButton.setText(Translator.getBundleString("update_db"));
+        extensionLabel.setText(Translator.getBundleString("default_airport_save_extension"));
     }
 
     private void updateTitledBorder() {

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Locale;
 
 class AirportControllerTest {
@@ -48,6 +49,16 @@ class AirportControllerTest {
         AirportController airportController = new AirportController();
         airportController.loadFromDB();
         for (Airport airport : airportController.getAirports()) {
+            System.out.println(airport);
+        }
+    }
+
+    @Test
+    public void testSearch() throws SQLException, ClassNotFoundException {
+        AirportController airportController = new AirportController();
+        airportController.loadFromDB();
+        ArrayList<Airport> airports = airportController.search(airport -> airport.getRegion().equals("아시아"));
+        for (Airport airport : airports) {
             System.out.println(airport);
         }
     }

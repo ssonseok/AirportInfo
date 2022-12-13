@@ -37,7 +37,7 @@ public class AirportController extends Subject {
      * @throws SQLException           If a database access error occurs
      * @throws ClassNotFoundException If mysql driver not found
      */
-    public void loadFromDB() throws SQLException, ClassNotFoundException, NoSuchMethodException {
+    public void loadFromDB() throws SQLException, ClassNotFoundException {
         try (DBManager dbManager = new DBManager()) {
             airports = dbManager.selectAirport();
             notice(AIRPORT_LIST_CHANGE);
