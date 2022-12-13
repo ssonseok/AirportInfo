@@ -80,7 +80,7 @@ public class AirportSearchContentView extends ContentView implements Storable {
     }
 
     private void handleAirportDoubleClick(MouseEvent mouseEvent) {
-        if (mouseEvent.getClickCount() == 2) {
+        if (mouseEvent.getClickCount() == 2 && mouseEvent.getButton() == MouseEvent.BUTTON1) {
             Airport selected = airportTableView.getSelectedAirport();
             airportController.selectAirport(selected);
             userController.addRecent(selected);
