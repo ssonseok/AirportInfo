@@ -10,4 +10,6 @@ import java.io.File;
 public interface Storable {
     void store();
     void store(File file);
+
+    String getFileExtension();
 }

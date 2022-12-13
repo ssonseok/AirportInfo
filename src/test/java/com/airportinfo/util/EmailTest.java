@@ -35,10 +35,10 @@ public class EmailTest {
             if (fileDir.isBlank()) {
                 System.out.println("\nSending Email without Attachment file...");
                 fileDir = "NONE";
-                EmailManager.send(Email, fileDir);
+                EmailManager.send(Email, "test", fileDir);
             } else {
                 System.out.println("\nSending Email with Attachment file...");
-                EmailManager.send(Email, fileDir);
+                EmailManager.send(Email, "test", fileDir);
             }
 
         } catch (MessagingException | UnsupportedEncodingException e) {

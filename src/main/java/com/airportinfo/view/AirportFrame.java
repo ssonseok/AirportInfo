@@ -1,6 +1,5 @@
 package com.airportinfo.view;
 
-import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
 import com.airportinfo.util.FontManager;
@@ -15,7 +14,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.SQLException;
@@ -110,12 +108,14 @@ public class AirportFrame extends MainFrame {
     }
 
     private void showEmailDialog() {
+        if (!(currentContentView instanceof Storable storable))
+            return;
         String tempDirectory = System.getProperty("java.io.tmpdir");
-        File file = Path.of(tempDirectory, "save." + Setting.getInstance().getAirportTableExtension()).toFile();
-        if (currentContentView instanceof Storable storable)
-            storable.store(file);
+        File file = Path.of(tempDirectory, "save." + storable.getFileExtension()).toFile();
+        storable.store(file);
+        emailDialogView.setTargetFile(file);
         emailDialogView.showDialogLocationRelativeTo(frame);
-        settingDialogView.load();
+        emailDialogView.load();
         file.deleteOnExit();
     }
 

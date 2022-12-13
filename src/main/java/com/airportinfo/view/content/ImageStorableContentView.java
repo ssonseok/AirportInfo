@@ -18,11 +18,18 @@ import java.io.IOException;
  * @author lalaalal
  */
 public abstract class ImageStorableContentView extends ContentView implements Storable {
+    public static final String EXTENSION_NAME = "png";
+
     @Override
     public void store() {
         CautiousFileChooser fileChooser = new CautiousFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("png", "png"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter(EXTENSION_NAME, EXTENSION_NAME));
         fileChooser.showFileChooser(mainFrame.getPanel(), this::store);
+    }
+
+    @Override
+    public String getFileExtension() {
+        return EXTENSION_NAME;
     }
 
     public ImageStorableContentView(MainFrame mainFrame) {

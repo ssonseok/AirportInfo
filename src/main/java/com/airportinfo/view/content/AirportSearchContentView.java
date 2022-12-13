@@ -3,15 +3,15 @@ package com.airportinfo.view.content;
 import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
-import com.airportinfo.view.airport.AirportAttributeSelector;
-import com.airportinfo.swing.BorderedTextField;
-import com.airportinfo.swing.CautiousFileChooser;
 import com.airportinfo.model.Airport;
 import com.airportinfo.model.MouseReleaseListener;
+import com.airportinfo.swing.BorderedTextField;
+import com.airportinfo.swing.CautiousFileChooser;
 import com.airportinfo.util.Translator;
 import com.airportinfo.util.filewriter.AirportWriter;
 import com.airportinfo.view.AirportFrame;
 import com.airportinfo.view.Storable;
+import com.airportinfo.view.airport.AirportAttributeSelector;
 import com.airportinfo.view.airport.AirportTableView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -115,6 +115,11 @@ public class AirportSearchContentView extends ContentView implements Storable {
             String message = Translator.getBundleString("save_error");
             JOptionPane.showMessageDialog(mainFrame.getPanel(), message, title, JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    @Override
+    public String getFileExtension() {
+        return Setting.getInstance().getAirportTableExtension();
     }
 
     private String ensureExtension(File file) {
