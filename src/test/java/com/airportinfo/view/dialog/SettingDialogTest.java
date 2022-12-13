@@ -2,6 +2,7 @@ package com.airportinfo.view.dialog;
 
 import com.airportinfo.Main;
 import com.airportinfo.Setting;
+import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
 import com.airportinfo.view.TestFrame;
 
@@ -14,7 +15,9 @@ public class SettingDialogTest {
         setting.attach(() -> System.out.println("show histogram guideline is now " + setting.isShowHistogramGuideLine()), Setting.HISTOGRAM_CHANGE);
         setting.attach(() -> System.out.println("histogram legend interval is now " + setting.getHistogramLegendInterval()), Setting.HISTOGRAM_CHANGE);
         UserController userController = new UserController();
-        SettingDialogView settingDialogView = new SettingDialogView(userController);
+        AirportController airportController = new AirportController();
+        SettingDialogView settingDialogView = new SettingDialogView(airportController, userController);
         settingDialogView.showDialogLocationRelativeTo(testFrame.getPanel());
+        settingDialogView.load();
     }
 }

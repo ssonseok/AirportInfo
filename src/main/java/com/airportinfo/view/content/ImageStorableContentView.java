@@ -1,8 +1,8 @@
 package com.airportinfo.view.content;
 
-import com.airportinfo.misc.CautiousFileChooser;
+import com.airportinfo.swing.CautiousFileChooser;
+import com.airportinfo.swing.LocalizedOptionPane;
 import com.airportinfo.util.Screenshot;
-import com.airportinfo.util.Translator;
 import com.airportinfo.view.MainFrame;
 import com.airportinfo.view.Storable;
 
@@ -18,11 +18,19 @@ import java.io.IOException;
  * @author lalaalal
  */
 public abstract class ImageStorableContentView extends ContentView implements Storable {
+    public static final String EXTENSION_NAME = "png";
+
     @Override
     public void store() {
         CautiousFileChooser fileChooser = new CautiousFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("png", "png"));
-        fileChooser.showFileChooser(mainFrame.getPanel(), this::store);
+        fileChooser.setFileFilter(new FileNameExtensionFilter(EXTENSION_NAME, EXTENSION_NAME));
+        if (fileChooser.showSaveDialog(mainFrame.getPanel()) == JFileChooser.APPROVE_OPTION)
+            store(fileChooser.getSelectedFile());
+    }
+
+    @Override
+    public String getFileExtension() {
+        return EXTENSION_NAME;
     }
 
     public ImageStorableContentView(MainFrame mainFrame) {
@@ -40,9 +48,7 @@ public abstract class ImageStorableContentView extends ContentView implements St
         try {
             Screenshot.createScreenshot(screenshotPanel, bounds, file.getPath());
         } catch (IOException e) {
-            String title = Translator.getBundleString("error");
-            String message = Translator.getBundleString("cannot_store");
-            JOptionPane.showMessageDialog(mainFrame.getPanel(), message, title, JOptionPane.ERROR_MESSAGE);
+            LocalizedOptionPane.showErrorMessageDialog(mainFrame.getPanel(), "cannot_store");
         }
     }
 

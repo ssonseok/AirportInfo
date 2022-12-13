@@ -1,12 +1,13 @@
 package com.airportinfo.view.dialog;
 
-import com.airportinfo.Setting;
-import com.airportinfo.misc.BorderedTextField;
 import com.airportinfo.model.MouseReleaseListener;
+import com.airportinfo.swing.BorderedTextField;
+import com.airportinfo.swing.LocalizedOptionPane;
 import com.airportinfo.util.EmailManager;
 import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.mail.MessagingException;
 import javax.swing.*;
@@ -14,7 +15,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.nio.file.Path;
 import java.util.ResourceBundle;
 
 /**
@@ -27,16 +27,20 @@ public class EmailDialogView extends DialogView {
     private JTextField emailTextField;
     private JButton sendButton;
     private JLabel toLabel;
+    private JTextArea contentTextArea;
+    private JButton previewFileButton;
+    private File targetFile;
 
     public EmailDialogView() {
         $$$setupUI$$$();
         dialog.setContentPane(panel);
-        dialog.setSize(500, 50);
 
         sendButton.addMouseListener(new MouseReleaseListener(mouseEvent -> sendEmail()));
+        previewFileButton.addMouseListener(new MouseReleaseListener(mouseEvent -> previewFile()));
         addLocaleChangeListener(locale -> {
             toLabel.setText(Translator.getBundleString("to"));
             sendButton.setText(Translator.getBundleString("send"));
+            previewFileButton.setText(Translator.getBundleString("preview_file"));
         });
     }
 
@@ -47,26 +51,35 @@ public class EmailDialogView extends DialogView {
 
     @Override
     public void load() {
-
+        contentTextArea.setText(" " + Translator.getBundleString("content"));
     }
 
     private void sendEmail() {
         try {
             String email = emailTextField.getText();
-            String tempDirectory = System.getProperty("java.io.tmpdir");
-            File file = Path.of(tempDirectory, "save." + Setting.getInstance().getAirportTableExtension()).toFile();
-            // TODO : Verify email format
-            EmailManager.send(email, file.getPath());
-            // TODO : Show progress dialog
-            String title = Translator.getBundleString("info");
-            String message = Translator.getBundleString("succeed");
-            JOptionPane.showMessageDialog(dialog, message, title, JOptionPane.INFORMATION_MESSAGE);
+            String content = contentTextArea.getText();
+            File file = targetFile;
+            EmailManager.send(email, content, file.getPath());
+            LocalizedOptionPane.showInfoMessageDialog(dialog, "succeed");
             dialog.setVisible(false);
         } catch (IOException | MessagingException e) {
-            String title = Translator.getBundleString("error");
-            String message = Translator.getBundleString("email_send_failed");
-            JOptionPane.showMessageDialog(dialog, message, title, JOptionPane.ERROR_MESSAGE);
+            LocalizedOptionPane.showErrorMessageDialog(dialog, "email_send_failed");
         }
+    }
+
+    private void previewFile() {
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(targetFile);
+        } catch (IOException e) {
+            String title = Translator.getBundleString("error");
+            String message = Translator.getBundleString("cannot_open_file") + String.format(" (%s)", targetFile);
+            JOptionPane.showMessageDialog(panel, message, title, JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void setTargetFile(File targetFile) {
+        this.targetFile = targetFile;
     }
 
     private void createUIComponents() {
@@ -83,14 +96,27 @@ public class EmailDialogView extends DialogView {
     private void $$$setupUI$$$() {
         createUIComponents();
         panel = new JPanel();
-        panel.setLayout(new GridLayoutManager(1, 3, new Insets(10, 10, 10, 10), 10, -1));
+        panel.setLayout(new GridLayoutManager(3, 1, new Insets(10, 10, 10, 10), 10, 10));
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), 10, -1));
+        panel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         toLabel = new JLabel();
         this.$$$loadLabelText$$$(toLabel, this.$$$getMessageFromBundle$$$("string", "to"));
-        panel.add(toLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        panel.add(emailTextField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), new Dimension(-1, 35), 0, false));
+        panel1.add(toLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(emailTextField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), new Dimension(-1, 35), 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), 10, -1));
+        panel.add(panel2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         sendButton = new JButton();
         this.$$$loadButtonText$$$(sendButton, this.$$$getMessageFromBundle$$$("string", "send"));
-        panel.add(sendButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, new Dimension(-1, 35), 0, false));
+        panel2.add(sendButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, new Dimension(-1, 35), 0, false));
+        final Spacer spacer1 = new Spacer();
+        panel2.add(spacer1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        previewFileButton = new JButton();
+        this.$$$loadButtonText$$$(previewFileButton, this.$$$getMessageFromBundle$$$("string", "preview_file"));
+        panel2.add(previewFileButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        contentTextArea = new JTextArea();
+        panel.add(contentTextArea, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(500, 300), null, 0, false));
     }
 
     private static Method $$$cachedGetBundleMethod$$$ = null;

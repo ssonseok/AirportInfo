@@ -3,15 +3,17 @@ package com.airportinfo.view.content;
 import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
-import com.airportinfo.misc.AirportAttributeSelector;
-import com.airportinfo.misc.BorderedTextField;
-import com.airportinfo.misc.CautiousFileChooser;
 import com.airportinfo.model.Airport;
 import com.airportinfo.model.MouseReleaseListener;
+import com.airportinfo.swing.AirportPopupMenu;
+import com.airportinfo.swing.BorderedTextField;
+import com.airportinfo.swing.CautiousFileChooser;
+import com.airportinfo.swing.LocalizedOptionPane;
 import com.airportinfo.util.Translator;
 import com.airportinfo.util.filewriter.AirportWriter;
 import com.airportinfo.view.AirportFrame;
 import com.airportinfo.view.Storable;
+import com.airportinfo.view.airport.AirportAttributeSelector;
 import com.airportinfo.view.airport.AirportTableView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -21,6 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -40,16 +43,16 @@ public class AirportSearchContentView extends ContentView implements Storable {
     private JTextField searchTextField;
     private JButton searchButton;
     private JPanel airportTablePanel;
-    private final CautiousFileChooser fileChooser = new CautiousFileChooser();
     private final AirportTableView airportTableView = new AirportTableView();
     private final AirportController airportController;
+    private final UserController userController;
 
     public AirportSearchContentView(AirportFrame mainFrame) {
         super(mainFrame);
 
         $$$setupUI$$$();
         airportController = mainFrame.getAirportController();
-        UserController userController = mainFrame.getUserController();
+        userController = mainFrame.getUserController();
 
         addLocaleChangeListener((locale) -> {
             attributeComboBox.removeAllItems();
@@ -60,14 +63,11 @@ public class AirportSearchContentView extends ContentView implements Storable {
             searchButton.setText(Translator.getBundleString("search"));
         });
         searchButton.addMouseListener(new MouseReleaseListener(mouseEvent -> search()));
-        airportTableView.addMouseClickAction((mouseEvent) -> {
-            if (mouseEvent.getClickCount() == 2) {
-                Airport selected = airportTableView.getSelectedAirport();
-                airportController.selectAirport(selected);
-                userController.addRecent(selected);
-                mainFrame.setContentView(AirportFrame.AIRPORT_DETAIL_VIEW);
-            }
-        });
+        airportTableView.addMouseClickAction(this::handleAirportDoubleClick);
+        airportTableView.addMouseClickAction(this::handleAirportRightClick);
+        airportController.attach(() -> {
+            airportTableView.setAirports(List.of(airportController.getAirports()));
+        }, AirportController.AIRPORT_LIST_CHANGE);
         searchTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -77,6 +77,23 @@ public class AirportSearchContentView extends ContentView implements Storable {
         });
 
         addComponentView(airportTableView);
+    }
+
+    private void handleAirportDoubleClick(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() == 2 && mouseEvent.getButton() == MouseEvent.BUTTON1) {
+            Airport selected = airportTableView.getSelectedAirport();
+            airportController.selectAirport(selected);
+            userController.addRecent(selected);
+            mainFrame.setContentView(AirportFrame.AIRPORT_DETAIL_VIEW);
+        }
+    }
+
+    private void handleAirportRightClick(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseEvent.BUTTON3) {
+            Airport selectedAirport = airportTableView.getSelectedAirport();
+            AirportPopupMenu popupMenu = new AirportPopupMenu(mainFrame, airportController, userController, selectedAirport);
+            airportTableView.showPopupMenu(popupMenu, mouseEvent.getPoint());
+        }
     }
 
     @Override
@@ -92,34 +109,40 @@ public class AirportSearchContentView extends ContentView implements Storable {
     @Override
     public void store() {
         String defaultExtension = Setting.getInstance().getAirportTableExtension();
+        CautiousFileChooser fileChooser = new CautiousFileChooser();
         fileChooser.resetChoosableFileFilters();
         for (String extension : Setting.SUPPORTED_AIRPORT_TABLE_SAVE_EXTENSIONS) {
             if (!extension.equals(defaultExtension))
                 fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(extension, extension));
         }
         fileChooser.setFileFilter(new FileNameExtensionFilter(defaultExtension, defaultExtension));
-        fileChooser.showFileChooser(mainFrame.getPanel(), this::store);
+        if (fileChooser.showSaveDialog(mainFrame.getPanel()) == JFileChooser.APPROVE_OPTION)
+            store(fileChooser.getSelectedFile());
     }
 
     @Override
     public void store(File file) {
         String path = ensureExtension(file);
         try (AirportWriter writer = AirportWriter.create(path)) {
-            writer.write(airportTableView.getAirports());
+            if (Setting.getInstance().isSaveAirportOnlyCurrentLanguage())
+                writer.write(airportTableView.getAirports());
+            else
+                writer.writeRawAirports(airportTableView.getAirports());
         } catch (IllegalArgumentException e) {
-            String title = Translator.getBundleString("error");
-            String message = Translator.getBundleString("unsupported_extension");
-            JOptionPane.showMessageDialog(mainFrame.getPanel(), message, title, JOptionPane.ERROR_MESSAGE);
+            LocalizedOptionPane.showErrorMessageDialog(mainFrame.getPanel(), "unsupported_extension");
         } catch (IOException e) {
-            String title = Translator.getBundleString("error");
-            String message = Translator.getBundleString("save_error");
-            JOptionPane.showMessageDialog(mainFrame.getPanel(), message, title, JOptionPane.ERROR_MESSAGE);
+            LocalizedOptionPane.showErrorMessageDialog(mainFrame.getPanel(), "save_error");
         }
+    }
+
+    @Override
+    public String getFileExtension() {
+        return Setting.getInstance().getAirportTableExtension();
     }
 
     private String ensureExtension(File file) {
         String path = file.getPath();
-        String selectedExtension = fileChooser.getFileFilter().getDescription();
+        String selectedExtension = path.substring(path.lastIndexOf(".") + 1);
         if (Arrays.stream(Setting.SUPPORTED_AIRPORT_TABLE_SAVE_EXTENSIONS).anyMatch(s -> path.endsWith("." + s)))
             return path;
 

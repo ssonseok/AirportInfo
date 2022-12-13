@@ -3,7 +3,7 @@ package com.airportinfo.view.content;
 import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
-import com.airportinfo.misc.FontCompatibleTextPane;
+import com.airportinfo.swing.FontCompatibleTextPane;
 import com.airportinfo.model.Airport;
 import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.util.*;

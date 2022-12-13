@@ -23,8 +23,9 @@ public abstract class DialogView extends ComponentView {
      * @param component Component to position dialog
      */
     public void showDialogLocationRelativeTo(Component component) {
+        dialog.pack();
         dialog.setLocationRelativeTo(component);
-        dialog.setVisible(true);
+        SwingUtilities.invokeLater(() -> dialog.setVisible(true));
     }
 
     /**

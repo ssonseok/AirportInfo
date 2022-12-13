@@ -1,42 +1,32 @@
 package com.airportinfo.util;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.*;
+import javax.mail.internet.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 import java.util.Properties;
 
-import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.internet.MimeUtility;
-
 /**
  * Sending Email with attachments
- * 
+ *
  * @author ShinHeeYoun
  */
 public class EmailManager {
 
     private static final String USER = "MJUairportFile@gmail.com";
     private static final String PASSWORD = "kpflpgpvgvxxzcxh";
-    
-	public static void send(String email, String filePath) throws MessagingException, UnsupportedEncodingException {
+
+    public static void send(String email, String content, String filePath) throws MessagingException, UnsupportedEncodingException {
         /*
-    	 * put SMTP server information in Property
-    	 * 1) host : gmail.com
-    	 * 2) port number : 465 (google)
-    	 * 3) using SMTP auth : true
-    	 * 4) using SSL : true
-    	 * 5) SSL trust : true
-    	 */
+         * put SMTP server information in Property
+         * 1) host : gmail.com
+         * 2) port number : 465 (google)
+         * 3) using SMTP auth : true
+         * 4) using SSL : true
+         * 5) SSL trust : true
+         */
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", 465);
@@ -58,15 +48,12 @@ public class EmailManager {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(USER));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-        System.out.println("Succeed : Destination Email (" + email + ") exist");
         
         /*
          * Subject
          * content
          */
         message.setSubject("MJU Airport information");
-    	String content = "This email was sent by using the Email sending function which is developed by team project of the advanced object-oriented class."
-    			+ "\nYou can send attachments with mail by entering the absolute path of the file which you want to send.";
     	/*
     	 * Attachment part
     	 * divide 'text part' and 'attachment part' with MimeBodyPart object
@@ -77,18 +64,18 @@ public class EmailManager {
     		message.setText(content);
         }
     	else {
-    		MimeBodyPart attachPart = new MimeBodyPart();
+            MimeBodyPart attachPart = new MimeBodyPart();
             FileDataSource fds = new FileDataSource(filePath);
             attachPart.setDataHandler(new DataHandler(fds));
-            attachPart.setFileName(MimeUtility.encodeText(fds.getName(), "euc-kr","B"));
-            MimeBodyPart bodypart = new MimeBodyPart();
-            bodypart.setContent(content, "text/html;charset=euc-kr");
+            attachPart.setFileName(MimeUtility.encodeText(fds.getName(), "euc-kr", "B"));
+            MimeBodyPart bodyPart = new MimeBodyPart();
+            bodyPart.setContent(content, "text/html;charset=euc-kr");
 
             /*
              * Combine two divided part(text+attachment) by using Multipart object
              */
             Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(bodypart);
+            multipart.addBodyPart(bodyPart);
             multipart.addBodyPart(attachPart);
             message.setContent(multipart);
             /*
@@ -96,9 +83,6 @@ public class EmailManager {
              */
 
         }
-        System.out.println("Sending...");
         Transport.send(message);
-
-        System.out.println("Send Complete!");
-	}
+    }
 }

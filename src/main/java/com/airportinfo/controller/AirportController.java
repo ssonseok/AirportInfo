@@ -21,6 +21,8 @@ import java.util.ArrayList;
  */
 public class AirportController extends Subject {
     public static final Aspect SELECTED_AIRPORT_CHANGE = new Aspect("selected_airport_change");
+    public static final Aspect DB_INSERT = new Aspect("db_insert");
+    public static final Aspect AIRPORT_LIST_CHANGE = new Aspect("airport_list_change");
     private Airport selectedAirport;
     private ArrayList<Airport> airports = new ArrayList<>();
 
@@ -38,6 +40,7 @@ public class AirportController extends Subject {
     public void loadFromDB() throws SQLException, ClassNotFoundException, NoSuchMethodException {
         try (DBManager dbManager = new DBManager()) {
             airports = dbManager.selectAirport();
+            notice(AIRPORT_LIST_CHANGE);
         }
     }
 
@@ -52,6 +55,7 @@ public class AirportController extends Subject {
             dbManager.clear();
             for (Airport airport : airports) {
                 dbManager.insertAirport(airport.getRawData());
+                notice(DB_INSERT);
             }
         }
     }
@@ -65,6 +69,7 @@ public class AirportController extends Subject {
     public void loadFromFile(String path) throws IOException {
         try (CSVReader reader = new CSVReader(path)) {
             readCSVFile(reader);
+            notice(AIRPORT_LIST_CHANGE);
         }
     }
 
@@ -77,6 +82,7 @@ public class AirportController extends Subject {
     public void loadFromFile(InputStream inputStream) throws IOException {
         try (CSVReader reader = new CSVReader(inputStream)) {
             readCSVFile(reader);
+            notice(AIRPORT_LIST_CHANGE);
         }
     }
 
@@ -91,6 +97,16 @@ public class AirportController extends Subject {
 
     public Airport[] getAirports() {
         return airports.toArray(new Airport[0]);
+    }
+
+    public void addAirport(Airport airport) {
+        airports.add(airport);
+        notice(AIRPORT_LIST_CHANGE);
+    }
+
+    public void removeAirport(Airport airport) {
+        airports.remove(airport);
+        notice(AIRPORT_LIST_CHANGE);
     }
 
     /**

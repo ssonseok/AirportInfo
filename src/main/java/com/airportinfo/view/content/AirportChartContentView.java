@@ -2,14 +2,14 @@ package com.airportinfo.view.content;
 
 import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
-import com.airportinfo.misc.AirportAttributeSelector;
-import com.airportinfo.misc.AttributeStatisticCreator;
 import com.airportinfo.model.Airport;
 import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.util.Translator;
 import com.airportinfo.view.AirportFrame;
+import com.airportinfo.view.airport.AirportAttributeSelector;
 import com.airportinfo.view.airport.AirportChartView;
 import com.airportinfo.view.airport.AirportTableView;
+import com.airportinfo.view.airport.AttributeStatisticCreator;
 import com.airportinfo.view.chart.HistogramView;
 import com.airportinfo.view.chart.PieChartView;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -66,6 +66,7 @@ public class AirportChartContentView extends ImageStorableContentView {
         addLocaleChangeListener(locale -> {
             updateComboBox();
             updateButtonText();
+            statisticTargetAirports();
             updateChartTitle();
         });
 
@@ -134,14 +135,18 @@ public class AirportChartContentView extends ImageStorableContentView {
     private void updateComboBox() {
         HashSet<String> selectableRegions = new HashSet<>();
         Arrays.stream(airportController.getAirports()).forEach(airport -> selectableRegions.add(airport.getRegion()));
+        int regionSelectionIndex = Math.max(regionComboBox.getSelectedIndex(), 0);
         regionComboBox.removeAllItems();
         regionComboBox.addItem(Translator.getBundleString("all"));
         for (String selectableRegion : selectableRegions)
             regionComboBox.addItem(selectableRegion);
+        regionComboBox.setSelectedIndex(regionSelectionIndex);
 
+        int selectorSelectionIndex = Math.max(selectorComboBox.getSelectedIndex(), 0);
         selectorComboBox.removeAllItems();
         for (AirportAttributeSelector attributeSelector : ATTRIBUTE_SELECTORS)
             selectorComboBox.addItem(attributeSelector);
+        selectorComboBox.setSelectedIndex(selectorSelectionIndex);
     }
 
     private void updateButtonText() {

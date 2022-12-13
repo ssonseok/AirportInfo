@@ -1,6 +1,6 @@
 package com.airportinfo.view.airport;
 
-import com.airportinfo.misc.UneditableTableModel;
+import com.airportinfo.swing.UneditableTableModel;
 import com.airportinfo.model.Airport;
 import com.airportinfo.util.ThemeManager;
 import com.airportinfo.view.ComponentView;

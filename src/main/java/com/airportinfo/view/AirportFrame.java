@@ -1,8 +1,8 @@
 package com.airportinfo.view;
 
-import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
+import com.airportinfo.swing.LocalizedOptionPane;
 import com.airportinfo.util.FontManager;
 import com.airportinfo.util.Translator;
 import com.airportinfo.view.dialog.EmailDialogView;
@@ -15,7 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.SQLException;
@@ -39,7 +38,7 @@ public class AirportFrame extends MainFrame {
     private final AirportSidebar airportSideBar;
     private final AirportController airportController = new AirportController();
     private final UserController userController = new UserController();
-    private final SettingDialogView settingDialogView = new SettingDialogView(userController);
+    private final SettingDialogView settingDialogView = new SettingDialogView(airportController, userController);
     private final EmailDialogView emailDialogView = new EmailDialogView();
 
     public AirportFrame() {
@@ -110,12 +109,14 @@ public class AirportFrame extends MainFrame {
     }
 
     private void showEmailDialog() {
+        if (!(currentContentView instanceof Storable storable))
+            return;
         String tempDirectory = System.getProperty("java.io.tmpdir");
-        File file = Path.of(tempDirectory, "save." + Setting.getInstance().getAirportTableExtension()).toFile();
-        if (currentContentView instanceof Storable storable)
-            storable.store(file);
+        File file = Path.of(tempDirectory, "save." + storable.getFileExtension()).toFile();
+        storable.store(file);
+        emailDialogView.setTargetFile(file);
         emailDialogView.showDialogLocationRelativeTo(frame);
-        settingDialogView.load();
+        emailDialogView.load();
         file.deleteOnExit();
     }
 
@@ -125,16 +126,13 @@ public class AirportFrame extends MainFrame {
     @Override
     public void load() {
         frame.setTitle(Translator.getBundleString("application_name"));
-        String title = Translator.getBundleString("error");
         try {
             userController.load();
             airportController.loadFromDB();
         } catch (SQLException | IOException e) {
-            String message = Translator.getBundleString("cannot_load");
-            JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
+            LocalizedOptionPane.showErrorMessageDialog(frame, "cannot_load");
         } catch (ClassNotFoundException | NoSuchMethodException e) {
-            String message = Translator.getBundleString("contact_developer");
-            JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
+            LocalizedOptionPane.showErrorMessageDialog(frame, "contact_developer");
         }
         frame.setContentPane(rootPanel);
         SwingUtilities.invokeLater(() -> setTheme(AppTheme.Lite));
@@ -145,9 +143,7 @@ public class AirportFrame extends MainFrame {
         try {
             userController.save();
         } catch (IOException e) {
-            String title = Translator.getBundleString("error");
-            String message = Translator.getBundleString("save_error");
-            JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
+            LocalizedOptionPane.showErrorMessageDialog(frame, "save_error");
         }
     }
 

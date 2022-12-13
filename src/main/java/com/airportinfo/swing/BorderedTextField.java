@@ -1,4 +1,4 @@
-package com.airportinfo.misc;
+package com.airportinfo.swing;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -13,6 +13,6 @@ public class BorderedTextField extends JTextField {
     public void updateUI() {
         super.updateUI();
         Border defaultBorder = getBorder();
-        setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5), defaultBorder));
+        setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5), defaultBorder));
     }
 }
