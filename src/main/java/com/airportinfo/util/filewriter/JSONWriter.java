@@ -1,6 +1,7 @@
 package com.airportinfo.util.filewriter;
 
 import com.airportinfo.model.Airport;
+import com.airportinfo.model.RawAirport;
 
 import java.io.IOException;
 
@@ -24,11 +25,7 @@ class JSONWriter extends AirportWriter {
         writer.write("[");
     }
 
-    @Override
-    public void write(Airport airport) throws IOException {
-        String[] keys = Airport.ATTRIBUTE_NAMES;
-        String[] values = airport.toArray();
-
+    private void write(String[] keys, String[] values) throws IOException {
         if (!isFirstAirport)
             writer.write(",");
         else
@@ -45,9 +42,33 @@ class JSONWriter extends AirportWriter {
     }
 
     @Override
+    public void write(Airport airport) throws IOException {
+        String[] keys = Airport.ATTRIBUTE_NAMES;
+        String[] values = airport.toArray();
+
+        write(keys, values);
+    }
+
+    @Override
+    public void writeRawAirport(Airport airport) throws IOException {
+        String[] keys = RawAirport.ATTRIBUTE_NAMES;
+        String[] values = airport.getRawData().toArray();
+
+        write(keys, values);
+    }
+
+    @Override
     public void write(Airport[] airports) throws IOException {
         for (Airport airport : airports)
             write(airport);
+    }
+
+    @Override
+    public void writeRawAirports(Airport[] airports) throws IOException {
+        String[] keys = RawAirport.ATTRIBUTE_NAMES;
+
+        for (Airport airport : airports)
+            write(keys, airport.getRawData().toArray());
     }
 
     @Override

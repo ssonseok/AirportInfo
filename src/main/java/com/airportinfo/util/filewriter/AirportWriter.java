@@ -50,9 +50,19 @@ public abstract class AirportWriter implements AutoCloseable {
     public abstract void write(Airport airport) throws IOException;
 
     /**
+     * An abstract method to make file with RawAirport
+     */
+    public abstract void writeRawAirport(Airport airport) throws IOException;
+
+    /**
      * An abstract method to make file with Airport array
      */
     public abstract void write(Airport[] airports) throws IOException;
+
+    /**
+     * An abstract method to make file with RawAirport array
+     */
+    public abstract void writeRawAirports(Airport[] airports) throws IOException;
 
     @Override
     public void close() throws IOException {
