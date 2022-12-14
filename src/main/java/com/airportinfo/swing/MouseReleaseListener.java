@@ -1,4 +1,4 @@
-package com.airportinfo.model;
+package com.airportinfo.swing;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

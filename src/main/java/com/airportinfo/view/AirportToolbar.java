@@ -1,6 +1,6 @@
 package com.airportinfo.view;
 
-import com.airportinfo.model.MouseReleaseListener;
+import com.airportinfo.swing.MouseReleaseListener;
 import com.airportinfo.util.ThemeManager;
 import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;

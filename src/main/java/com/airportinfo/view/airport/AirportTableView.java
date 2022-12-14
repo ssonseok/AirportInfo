@@ -1,7 +1,7 @@
 package com.airportinfo.view.airport;
 
 import com.airportinfo.model.Airport;
-import com.airportinfo.model.MouseReleaseListener;
+import com.airportinfo.swing.MouseReleaseListener;
 import com.airportinfo.swing.UneditableTableModel;
 import com.airportinfo.util.ThemeManager;
 import com.intellij.uiDesigner.core.GridConstraints;

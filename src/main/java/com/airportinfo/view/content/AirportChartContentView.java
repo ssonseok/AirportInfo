@@ -3,7 +3,7 @@ package com.airportinfo.view.content;
 import com.airportinfo.Setting;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.model.Airport;
-import com.airportinfo.model.MouseReleaseListener;
+import com.airportinfo.swing.MouseReleaseListener;
 import com.airportinfo.util.Translator;
 import com.airportinfo.view.AirportFrame;
 import com.airportinfo.view.airport.AirportAttributeSelector;

@@ -3,7 +3,6 @@ package com.airportinfo.swing;
 import com.airportinfo.controller.AirportController;
 import com.airportinfo.controller.UserController;
 import com.airportinfo.model.Airport;
-import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.util.ThemeManager;
 import com.airportinfo.util.Translator;
 import com.airportinfo.view.AirportFrame;

@@ -1,8 +1,8 @@
 package com.airportinfo.view.dialog;
 
-import com.airportinfo.model.MouseReleaseListener;
 import com.airportinfo.swing.BorderedTextField;
 import com.airportinfo.swing.LocalizedOptionPane;
+import com.airportinfo.swing.MouseReleaseListener;
 import com.airportinfo.util.EmailManager;
 import com.airportinfo.util.Translator;
 import com.intellij.uiDesigner.core.GridConstraints;

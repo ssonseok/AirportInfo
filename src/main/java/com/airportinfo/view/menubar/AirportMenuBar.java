@@ -1,6 +1,6 @@
 package com.airportinfo.view.menubar;
 
-import com.airportinfo.model.MouseReleaseListener;
+import com.airportinfo.swing.MouseReleaseListener;
 import com.airportinfo.util.ThemeManager;
 import com.airportinfo.util.Translator;
 
