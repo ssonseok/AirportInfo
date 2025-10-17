@@ -12,9 +12,9 @@ import java.util.ArrayList;
  * @author lalaalal
  */
 public class DBManager implements AutoCloseable {
-    private static final String URL = "jdbc:mysql://aws.lalaalal.com:3306/airport?characterEncoding=UTF-8&serverTimezone=UTC";
-    private static final String USER = "airport";
-    private static final String PASSWORD = "rhrorcp0809";
+    private static final String URL = "jdbc:mysql://localhost:3306/airport?characterEncoding=UTF-8&serverTimezone=UTC";
+    private static final String USER = "root";
+    private static final String PASSWORD = "1234";
     private final Connection connection;
 
     /**
@@ -26,6 +26,7 @@ public class DBManager implements AutoCloseable {
     public DBManager() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        System.out.println("DB 연결 성공: " + connection);
     }
 
     /**
