@@ -15,8 +15,8 @@ import java.util.Properties;
  */
 public class EmailManager {
 
-    private static final String USER = "MJUairportFile@gmail.com";
-    private static final String PASSWORD = "kpflpgpvgvxxzcxh";
+    private static final String USER = "shson1849@gmail.com";
+    private static final String PASSWORD = "dlxh sjwr aayc opdc";
 
     public static void send(String email, String content, String filePath) throws MessagingException, UnsupportedEncodingException {
         /*

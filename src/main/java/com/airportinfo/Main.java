@@ -4,6 +4,7 @@ import com.airportinfo.view.AirportFrame;
 import com.airportinfo.view.content.AirportChartContentView;
 import com.airportinfo.view.content.AirportDetailContentView;
 import com.airportinfo.view.content.AirportSearchContentView;
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 
 public class Main {
     public static void setSystemProperties() {
