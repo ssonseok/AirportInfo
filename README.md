@@ -16,3 +16,12 @@ https://www.data.go.kr/data/3051587/fileData.do
 차트 : 공항 관련 통계 데이터를 시각적으로 확인
 
 +테마 변경으로 black과 white, 영어/한국어 지원
+
+### 메인 화면
+![메인 화면](docs/main.png)
+
+### 이메일 화면
+- 이메일 보내기 화면:  
+![이메일 화면](docs/email.png)
+- 이메일 전송 결과 화면:  
+![이메일 결과 화면](docs/emailR.png)
