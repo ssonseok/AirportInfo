@@ -54,3 +54,9 @@
 ![이메일 화면](docs/email.png)
 - 이메일 전송 결과 화면:  
 ![이메일 결과 화면](docs/emailR.png)
+
+### 즐겨찾기 화면
+![즐겨찾기](docs/Favorites.png)
+
+### 최근기록 화면
+![즐겨찾기](docs/RecentRecords.png)
