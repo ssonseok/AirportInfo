@@ -12,10 +12,11 @@ import java.util.ArrayList;
  * @author lalaalal
  */
 public class DBManager implements AutoCloseable {
-    private static final String URL = "jdbc:mysql://localhost:3306/airport?characterEncoding=UTF-8&serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://localhost:3306/airport";
     private static final String USER = "root";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "sshbd0505";
     private final Connection connection;
+
 
     /**
      * Initialize connection with server.

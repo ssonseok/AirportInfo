@@ -87,6 +87,9 @@ public class SettingDialogView extends DialogView {
         } catch (IOException e) {
             LocalizedOptionPane.showErrorMessageDialog(panel, "cannot_load");
         } catch (SQLException e) {
+            System.err.println("--- DB 업데이트 상세 실패 정보 ---");
+            e.printStackTrace(); // <--- 이 줄이 핵심입니다.
+            System.err.println("------------------------------------");
             LocalizedOptionPane.showErrorMessageDialog(panel, "update_db_failed");
         } catch (Exception e) {
             LocalizedOptionPane.showErrorMessageDialog(panel, "something_went_wrong");

@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.nio.charset.Charset;
 
 /**
  * Read csv file. Need to close after use.
@@ -20,7 +21,8 @@ public class CSVReader implements AutoCloseable {
      * @throws IOException If file not found
      */
     public CSVReader(String path) throws IOException {
-        reader = new BufferedReader(new FileReader(path, StandardCharsets.UTF_8));
+        //reader = new BufferedReader(new FileReader(path, StandardCharsets.UTF_8));
+        reader = new BufferedReader(new FileReader(path, Charset.forName("CP949")));
     }
 
     /**
